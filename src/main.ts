@@ -91,8 +91,8 @@ import { joinWaitlist } from './lib/supabase';
         track.formSubmit(loc);
         if(success){
           success.innerHTML = res.already
-            ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#59e6a0" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> You're already on the list — see you on the road!`
-            : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#59e6a0" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> You're on the list! We'll email <b style="color:#fff">${val.replace(/</g,'&lt;')}</b> the moment pre-orders open.`;
+            ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#59e6a0" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span>You're already on the list — see you on the road!</span>`
+            : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#59e6a0" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span>You're on the list! We'll email <b style="color:#fff">${val.replace(/</g,'&lt;')}</b> the moment pre-orders open.</span>`;
           success.classList.add('show'); form.style.display='none';
         } else {
           form.innerHTML = `<div class="form-success show" style="display:flex">🎉 You're on the list! We'll be in touch soon.</div>`;
@@ -299,5 +299,38 @@ import { joinWaitlist } from './lib/supabase';
   /* ---------- FAQ: single-open + track ---------- */
   var qas=[].slice.call(document.querySelectorAll('.faq details'));
   qas.forEach(function(d){ d.addEventListener('toggle',function(){ if(d.open){ qas.forEach(function(o){ if(o!==d) o.open=false; }); track.buttonClick('faq:'+d.querySelector('summary').textContent.trim().slice(0,40)); } }); });
+
+
+  /* ---------- Header logo eyes follow the cursor (keep blinking) ---------- */
+  (function(){
+    var eyes=[].slice.call(document.querySelectorAll('#nav .brand .mark i'));
+    var mark=document.querySelector('#nav .brand .mark');
+    if(!eyes.length || !mark || TOUCH || REDUCE) return;
+    eyes.forEach(function(el){ el.style.animation='none'; });
+    var tx=0,ty=0,cx=0,cy=0,blink=1;
+    window.addEventListener('mousemove',function(ev){
+      var r=mark.getBoundingClientRect(); var mx=r.left+r.width/2, my=r.top+r.height/2;
+      var dx=ev.clientX-mx, dy=ev.clientY-my, mag=Math.max(1,Math.sqrt(dx*dx+dy*dy));
+      tx=dx/mag*2.3; ty=dy/mag*1.8;
+    });
+    (function loop(){ cx+=(tx-cx)*.15; cy+=(ty-cy)*.15;
+      for(var i=0;i<eyes.length;i++){ eyes[i].style.transform='translate('+cx.toFixed(2)+'px,'+cy.toFixed(2)+'px) scaleY('+blink+')'; }
+      requestAnimationFrame(loop);
+    })();
+    setInterval(function(){ blink=.12; setTimeout(function(){ blink=1; },130); }, 4600);
+  })();
+
+  /* ---------- "Watch the film" modal ---------- */
+  (function(){
+    var modal=document.getElementById('demoModal'); if(!modal) return;
+    var closeBtn=document.getElementById('demoClose'); var lastFocus=null;
+    function openModal(){ lastFocus=document.activeElement; modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; if(lenis){try{lenis.stop();}catch(_){}} setTimeout(function(){ if(closeBtn) closeBtn.focus(); },60); }
+    function closeModal(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; if(lenis){try{lenis.start();}catch(_){}} if(lastFocus && lastFocus.focus) lastFocus.focus(); }
+    document.querySelectorAll('[data-cta="watch-film"]').forEach(function(b){ b.addEventListener('click', function(e){ e.preventDefault(); openModal(); }); });
+    if(closeBtn) closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function(e){ if(e.target===modal) closeModal(); });
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape' && modal.classList.contains('open')) closeModal(); });
+    modal.querySelectorAll('[data-join]').forEach(function(b){ b.addEventListener('click', function(){ closeModal(); }); });
+  })();
 
 })();

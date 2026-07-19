@@ -117,7 +117,9 @@ h2{font-size:clamp(30px,4.6vw,54px)}
 .waitlist-form .btn{flex:0 0 auto}
 .form-note{font-size:13px;color:var(--faint);margin-top:14px;display:flex;align-items:center;gap:8px}
 .form-note .dot{width:6px;height:6px;border-radius:50%;background:#39d98a;box-shadow:0 0 8px #39d98a}
-.form-success{display:none;align-items:center;gap:12px;padding:15px 20px;border-radius:16px;background:rgba(57,217,138,.1);border:1px solid rgba(57,217,138,.35);color:#c9f7de;font-size:15px;max-width:480px}
+.form-success{display:none;align-items:flex-start;gap:11px;padding:15px 18px;border-radius:16px;background:rgba(57,217,138,.1);border:1px solid rgba(57,217,138,.35);color:#c9f7de;font-size:15px;line-height:1.5;max-width:480px}
+.form-success svg{flex:0 0 auto;margin-top:3px}
+.form-success span{flex:1 1 auto;min-width:0}
 .form-success.show{display:flex}
 .secondary-line{display:flex;align-items:center;gap:10px;margin-top:8px}
 .play{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:var(--panel);border:1px solid var(--stroke-strong)}
@@ -219,31 +221,27 @@ h2{font-size:clamp(30px,4.6vw,54px)}
 .screen{position:absolute;inset:11%;border-radius:50%;background:radial-gradient(circle at 50% 40%,#0b0f14,#05070a);border:1px solid rgba(255,255,255,.06);overflow:hidden;box-shadow:inset 0 0 40px rgba(0,0,0,.7)}
 .screen::before{content:"";position:absolute;top:8%;left:14%;width:44%;height:26%;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.12),transparent 70%)}
 .eyes{position:absolute;left:0;right:0;top:44%;display:flex;justify-content:center;gap:16%;transform:translateY(-50%);transition:transform .18s ease-out}
-.eye{width:20%;padding-bottom:20%;position:relative}
-.eye .ball{position:absolute;inset:0;border-radius:46%;background:var(--nimo);box-shadow:0 0 22px var(--nimo),0 0 44px rgba(53,224,255,.5);transition:transform .28s var(--ease),border-radius .28s,background .5s}
-.eye .lid{position:absolute;left:-6%;right:-6%;top:-6%;height:0;background:#05070a;transition:height .18s ease;z-index:2}
-.eye .lid.bottom{top:auto;bottom:-6%}
+.eye{width:21%;padding-bottom:21%;position:relative;transition:transform .3s var(--ease)}
+.eye .ball{position:absolute;inset:0;border-radius:50%;background:var(--nimo);transform-origin:center;transform:scaleY(var(--sy,1));box-shadow:0 0 22px var(--nimo),0 0 46px rgba(53,224,255,.45);transition:transform .18s var(--ease),border-radius .3s,background .5s}
+.eye::before{content:"";position:absolute;left:6%;right:6%;top:-26%;height:14%;border-radius:6px;background:var(--nimo);box-shadow:0 0 10px var(--nimo);opacity:0;transition:opacity .3s var(--ease),transform .3s var(--ease)}
 .mouth{position:absolute;left:50%;top:70%;width:16%;height:8%;transform:translateX(-50%);border-radius:0 0 60px 60px;border-bottom:3px solid var(--nimo);opacity:.9;box-shadow:0 3px 10px rgba(53,224,255,.4);transition:.35s}
-.blink .eye .lid{height:56%}
-/* emotion variants */
-.emo-happy .eye .ball{border-radius:50% 50% 44% 44%;transform:scaleY(.72) translateY(10%)}
-.emo-happy .mouth{width:22%;height:11%}
-.emo-sleepy .eye .lid{height:52%}
-.emo-sleepy .mouth{width:9%;border-bottom-width:2px;opacity:.5}
-.emo-sleepy .eye .ball{background:#6fd6ea}
-.emo-angry .eye{transform:rotate(0)}
-.emo-angry .eye.left .ball{transform:rotate(14deg) scaleY(.8)}
-.emo-angry .eye.right .ball{transform:rotate(-14deg) scaleY(.8)}
-.emo-angry .eye .lid{height:26%;transform:skewY(0)}
-.emo-angry .eye.left .lid{transform:rotate(12deg)}
-.emo-angry .eye.right .lid{transform:rotate(-12deg)}
-.emo-angry .mouth{width:12%;height:5%;border-radius:60px 60px 0 0;border-bottom:none;border-top:3px solid var(--nimo);top:74%}
-.emo-angry{--nimo:#ff8a5c}
-.emo-lonely .eye .ball{transform:scale(.82) translateY(6%)}
-.emo-lonely .mouth{width:9%;height:5%;border-radius:60px 60px 0 0;border-bottom:none;border-top:2px solid var(--nimo);opacity:.7}
-.emo-lonely .tear{opacity:1!important}
 .tear{position:absolute;left:34%;top:56%;width:7%;padding-bottom:10%;background:linear-gradient(180deg,#7be7ff,#35e0ff);border-radius:50% 50% 50% 50%/60% 60% 40% 40%;opacity:0;transition:opacity .4s;box-shadow:0 0 12px rgba(53,224,255,.7)}
-.emo-lonely{--nimo:#6cc8ff}
+.nimo-face{--sy:1}
+.nimo-face.blink{--sy:.08}
+.emo-happy{--sy:.66}
+.emo-happy .eye .ball{border-radius:60% 60% 46% 46%}
+.emo-happy .mouth{width:24%;height:12%}
+.emo-sleepy{--sy:.24;--nimo:#7fd8ea}
+.emo-sleepy .mouth{width:9%;border-bottom-width:2px;opacity:.5}
+.emo-angry{--sy:.72;--nimo:#ff8a5c}
+.emo-angry .eye.left{transform:rotate(10deg)}
+.emo-angry .eye.right{transform:rotate(-10deg)}
+.emo-angry .eye.left::before{opacity:.95;transform:rotate(15deg)}
+.emo-angry .eye.right::before{opacity:.95;transform:rotate(-15deg)}
+.emo-angry .mouth{width:12%;height:5%;border-radius:60px 60px 0 0;border-bottom:none;border-top:3px solid var(--nimo);top:74%}
+.emo-lonely{--sy:.9;--nimo:#6cc8ff}
+.emo-lonely .mouth{width:9%;height:5%;border-radius:60px 60px 0 0;border-bottom:none;border-top:2px solid var(--nimo);opacity:.7}
+.emo-lonely .tear{opacity:1}
 
 .emotion-panel{max-width:460px}
 .emo-chips{display:flex;flex-wrap:wrap;gap:12px;margin:26px 0 22px}
@@ -352,6 +350,27 @@ footer{border-top:1px solid var(--stroke);padding:70px 0 40px;position:relative}
 
 .skip{position:absolute;left:-999px;top:8px;z-index:200;background:var(--cyan);color:#04222b;padding:10px 18px;border-radius:8px;font-weight:600}
 .skip:focus{left:16px}
+
+.modal-overlay{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(3,5,8,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity .35s var(--ease)}
+.modal-overlay.open{opacity:1;pointer-events:auto}
+.modal{position:relative;max-width:440px;width:100%;text-align:center;padding:42px 32px 32px;border-radius:26px;transform:translateY(18px) scale(.96);opacity:0;transition:transform .4s var(--ease),opacity .4s}
+.modal-overlay.open .modal{transform:none;opacity:1}
+.modal-close{position:absolute;top:15px;right:15px;width:36px;height:36px;border-radius:50%;background:var(--panel);border:1px solid var(--stroke);color:var(--muted);font-size:14px;transition:.25s}
+.modal-close:hover{color:#fff;background:var(--panel-2);border-color:rgba(53,224,255,.4)}
+.modal .m-face{width:98px;height:98px;margin:0 auto 20px;border-radius:50%;position:relative;background:radial-gradient(circle at 42% 34%,#20262e,#0a0d12 70%);border:1px solid rgba(255,255,255,.1);box-shadow:0 0 42px -8px rgba(53,224,255,.6),inset 0 4px 14px rgba(255,255,255,.05)}
+.modal .m-ear{position:absolute;top:-8%;width:26%;height:28%;background:radial-gradient(circle at 50% 60%,#20262e,#0a0d12);border:1px solid rgba(255,255,255,.09);border-radius:50% 50% 46% 46%}
+.modal .m-ear.l{left:12%;transform:rotate(-16deg)}
+.modal .m-ear.r{right:12%;transform:rotate(16deg)}
+.modal .m-screen{position:absolute;inset:15%;border-radius:50%;background:radial-gradient(circle at 50% 40%,#0b0f14,#05070a);overflow:hidden}
+.modal .m-eye{position:absolute;top:40%;width:19%;height:19%;border-radius:50%;background:var(--cyan);box-shadow:0 0 14px var(--cyan);transform-origin:center;animation:mblink 3.6s infinite}
+.modal .m-eye.l{left:27%}
+.modal .m-eye.r{right:27%}
+.modal .m-mouth{position:absolute;left:50%;top:60%;width:20%;height:12%;transform:translateX(-50%);border-radius:0 0 40px 40px;border-bottom:3px solid var(--cyan);opacity:.9}
+@keyframes mblink{0%,92%,100%{transform:scaleY(1)}96%{transform:scaleY(.12)}}
+.modal .m-tag{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
+.modal h3{font-size:23px;font-weight:700;margin:0 0 10px}
+.modal p{color:var(--muted);font-size:15.5px;margin:0 0 22px}
+.modal .btn{width:100%;justify-content:center}
 
 /* ============ responsive ============ */
 @media(max-width:960px){
