@@ -179,6 +179,16 @@ h2{font-size:clamp(30px,4.6vw,54px)}
 .bento>.tile:nth-child(4){grid-column:1 / -1;min-height:190px}
 @media(max-width:860px){.tile.big{grid-column:span 3;grid-row:auto;min-height:320px}}
 
+.feature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.feat{padding:34px 32px;border-radius:var(--radius);position:relative;transition:transform .4s var(--ease),border-color .4s,box-shadow .4s}
+.feat:hover{transform:translateY(-6px);border-color:rgba(53,224,255,.35);box-shadow:0 34px 70px -34px rgba(53,224,255,.45)}
+.feat .ic{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:rgba(53,224,255,.12);color:var(--cyan);border:1px solid rgba(53,224,255,.22);margin-bottom:20px;transition:transform .5s var(--ease)}
+.feat:hover .ic{transform:translateY(-2px) scale(1.06)}
+.feat h3{font-size:22px;font-weight:600;margin:0 0 9px;letter-spacing:-.01em}
+.feat p{color:var(--muted);font-size:15.5px;line-height:1.6;margin:0}
+@media(max-width:720px){.feature-grid{grid-template-columns:1fr}}
+
+
 /* ============ how it works (pinned) ============ */
 .how-wrap{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:56px;align-items:start}
 .how-sticky{position:sticky;top:96px;align-self:start}
