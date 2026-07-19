@@ -12,7 +12,7 @@ import { createClient, type SupabaseClient } from '@supabase/supabase-js';
  * submissions are inserted into the `waitlist` table (see README for SQL).
  */
 const url = (import.meta.env.VITE_SUPABASE_URL as string) || 'https://ymzdchbgtkoiokgoqkdc.supabase.co';
-const anon = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
+const anon = (import.meta.env.VITE_SUPABASE_ANON_KEY as string) || 'sb_publishable_wcreCwzQjd3XLcpTk28KbQ_dfFiiEPt';
 const TABLE = (import.meta.env.VITE_WAITLIST_TABLE as string) || 'waitlist';
 
 let client: SupabaseClient | null = null;

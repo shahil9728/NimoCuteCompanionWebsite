@@ -11,7 +11,7 @@ services:
       - key: VITE_SUPABASE_URL
         value: https://ymzdchbgtkoiokgoqkdc.supabase.co
       - key: VITE_SUPABASE_ANON_KEY
-        sync: false          # set this in the Render dashboard (Environment)
+        value: sb_publishable_wcreCwzQjd3XLcpTk28KbQ_dfFiiEPt
       - key: VITE_WAITLIST_TABLE
         value: waitlist
     routes:
