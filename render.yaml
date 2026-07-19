@@ -1,0 +1,20 @@
+# Render.com Blueprint — static site.
+# Deploy: push to GitHub, then in Render click "New +" -> "Blueprint" and pick this repo.
+services:
+  - type: web
+    name: nimo-cute-companion
+    runtime: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    pullRequestPreviewsEnabled: true
+    envVars:
+      - key: VITE_SUPABASE_URL
+        value: https://ymzdchbgtkoiokgoqkdc.supabase.co
+      - key: VITE_SUPABASE_ANON_KEY
+        sync: false          # set this in the Render dashboard (Environment)
+      - key: VITE_WAITLIST_TABLE
+        value: waitlist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nimo-cute-companion.onrender.com/sitemap.xml

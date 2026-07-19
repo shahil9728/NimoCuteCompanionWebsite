@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#05070a" />
+
+<!-- ============ SEO ============ -->
+<title>Nimo — Your AI Companion for the Road | Join the Waitlist</title>
+<meta name="description" content="Nimo is an AI-powered companion that lives on your car dashboard — an emotionally intelligent co-pilot that learns, grows, and reacts to your day. Join the waitlist." />
+<meta name="keywords" content="Nimo, AI companion, car dashboard companion, robot companion, emotional AI, co-pilot, waitlist" />
+<meta name="robots" content="index, follow" />
+<meta name="author" content="Nimo Robotics Inc." />
+<link rel="canonical" href="https://nimo-cute-companion.onrender.com/" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="product" />
+<meta property="og:site_name" content="Nimo" />
+<meta property="og:title" content="Nimo — Your new best friend. Now riding shotgun." />
+<meta property="og:description" content="An emotionally intelligent AI companion that lives on your dashboard and keeps you company on every drive. Join the waitlist." />
+<meta property="og:url" content="https://nimo-cute-companion.onrender.com/" />
+<meta property="og:image" content="https://pub.hyperagent.com/api/published/pbf01KXWKG6RE_0N366VPPJZJGZVR2/d3f1becb-b558-474e-affc-3d082d337eda.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="675" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Nimo — Your new best friend. Now riding shotgun." />
+<meta name="twitter:description" content="An emotionally intelligent AI companion that lives on your dashboard. Join the waitlist." />
+<meta name="twitter:image" content="https://pub.hyperagent.com/api/published/pbf01KXWKG6RE_0N366VPPJZJGZVR2/d3f1becb-b558-474e-affc-3d082d337eda.png" />
+
+<!-- Favicon: live Nimo eye -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "Organization", "name": "Nimo Robotics Inc.", "url": "https://nimo-cute-companion.onrender.com/", "logo": "https://pub.hyperagent.com/api/published/pbf01KXWKG74W_W1TWVBSNJF0NKA9X/277d2c7d-665f-4ca5-bf90-e12b9133a6d1.png", "sameAs": ["https://twitter.com/nimo", "https://instagram.com/nimo"] },
+    { "@type": "WebSite", "name": "Nimo", "url": "https://nimo-cute-companion.onrender.com/" },
+    { "@type": "Product", "name": "Nimo", "description": "An AI-powered emotionally intelligent companion for your car dashboard and desk.", "brand": {"@type":"Brand","name":"Nimo"}, "image": "https://pub.hyperagent.com/api/published/pbf01KXWKG6RE_0N366VPPJZJGZVR2/d3f1becb-b558-474e-affc-3d082d337eda.png", "offers": {"@type":"Offer","availability":"https://schema.org/PreOrder","priceCurrency":"USD","price":"0"} },
+    { "@type": "FAQPage", "mainEntity": [
+      {"@type":"Question","name":"What exactly is Nimo?","acceptedAnswer":{"@type":"Answer","text":"Nimo is an AI-powered companion robot with an expressive face. He learns your routines, reacts to your day, and keeps you company — especially on the road, from your dashboard."}},
+      {"@type":"Question","name":"Does Nimo need WiFi?","acceptedAnswer":{"@type":"Answer","text":"Nimo connects over WiFi or your phone to fetch weather, traffic, and messages and to sync his personality. Many expressions work offline too."}},
+      {"@type":"Question","name":"Is it safe to use while driving?","acceptedAnswer":{"@type":"Answer","text":"Yes. Nimo is designed to be glanceable and hands-free — his expressive eyes and voice keep your attention on the road, not on a screen."}},
+      {"@type":"Question","name":"When does Nimo ship?","acceptedAnswer":{"@type":"Answer","text":"We're releasing Nimo in limited batches. Join the waitlist to be first in line when pre-orders open."}},
+      {"@type":"Question","name":"Will I be charged to join the waitlist?","acceptedAnswer":{"@type":"Answer","text":"No. Joining the waitlist is free with no commitment — you'll simply be the first to know when pre-orders open. No spam, we promise."}}
+    ]}
+  ]
+}
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-WF4ZWBSR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "GT-WF4ZWBSR");
+  gtag("config", "G-3C9Z4YQVRT");
+</script>
+</head>
+<body>
+<a href="#waitlist" class="skip">Skip to waitlist</a>
+
+<!-- ambience -->
+<div class="aura a1"></div><div class="aura a2"></div><div class="aura a3"></div>
+<canvas id="particles" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+<div class="spotlight" id="spotlight" aria-hidden="true"></div>
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand" aria-label="Nimo home">
+      <span class="mark" aria-hidden="true"><i class="l"></i><i class="r"></i></span>nimo
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#about">Meet Nimo</a>
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#emotions">Emotions</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-cta">
+      <button class="btn btn-primary magnetic" data-join><span class="lbl">Join the waitlist</span></button>
+      <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about">Meet Nimo</a>
+    <a href="#features">Features</a>
+    <a href="#how">How it works</a>
+    <a href="#emotions">Emotions</a>
+    <a href="#faq">FAQ</a>
+    <button class="btn btn-primary" data-join style="justify-content:center"><span class="lbl">Join the waitlist</span></button>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="hero" aria-label="Introducing Nimo">
+  <div class="hero-bg" role="img" aria-label="Nimo, a cute round companion robot with glowing cyan eyes on a glowing base on a car dashboard at night, city lights beyond the windshield"></div>
+  <div class="hero-scrim"></div>
+  <div class="hero-badges" aria-hidden="true">
+    <div class="badge-float b1"><span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 00-7 7c0 3 2 5 2 7h10c0-2 2-4 2-7a7 7 0 00-7-7z"/><path d="M9 21h6"/></svg></span> Reacts to your day</div>
+    <div class="badge-float b2"><span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.5-7-10a7 7 0 0114 0c0 5.5-7 10-7 10z"/><circle cx="12" cy="10" r="2.5"/></svg></span> Always by your side</div>
+  </div>
+  <div class="wrap">
+    <div class="hero-copy">
+        <p class="eyebrow reveal" data-anim>Meet Nimo — your dashboard co-pilot</p>
+        <h1 class="reveal" data-anim><span class="l1">Your new best friend.</span><br><span class="g">Now riding shotgun.</span></h1>
+        <p class="sub reveal" data-anim>Nimo is an AI-powered companion that learns, grows, and reacts to your day — an emotionally intelligent co-pilot that lives on your dashboard and turns every drive into good company.</p>
+
+        <form class="waitlist-form reveal" data-anim data-loc="hero" novalidate>
+          <div class="field">
+            <label for="hero-email" class="skip">Email address</label>
+            <input id="hero-email" type="email" name="email" placeholder="you@email.com" autocomplete="email" required />
+          </div>
+          <button type="submit" class="btn btn-primary"><span class="lbl">Join the waitlist <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+        </form>
+        <div class="form-success" data-success></div>
+        <div class="secondary-line reveal" data-anim>
+          <button class="btn btn-ghost" type="button" data-cta="watch-film"><span class="lbl"><span class="play"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span> Watch the film</span></button>
+        </div>
+        <p class="form-note reveal" data-anim><span class="dot"></span> <b style="color:var(--muted);font-weight:600">642 friends</b>&nbsp;already waiting to adopt · No spam, ever.</p>
+        <div class="scroll-hint reveal" data-anim aria-hidden="true"><span class="m"></span> Scroll to explore Nimo</div>
+      </div>
+    </div>
+
+  <!-- capability marquee -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>reads your texts aloud</span><span>reacts to traffic</span><span>greets you every morning</span><span>remembers your playlist</span><span>reminds you to take a break</span><span>celebrates when you get home</span><span>checks the weather</span><span>keeps you company on long drives</span>
+      <span>reads your texts aloud</span><span>reacts to traffic</span><span>greets you every morning</span><span>remembers your playlist</span><span>reminds you to take a break</span><span>celebrates when you get home</span><span>checks the weather</span><span>keeps you company on long drives</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHAT IS NIMO ============ -->
+<section class="section-pad" id="about" aria-label="What is Nimo">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow reveal" data-anim>What is Nimo</p>
+      <h2 class="reveal" data-anim>Small body.<br>Big personality.</h2>
+      <p class="reveal" data-anim style="color:var(--muted);font-size:18px;margin:22px 0 30px;max-width:46ch">Nimo isn't just a gadget on your dash. He's an emotionally intelligent companion — expressive, curious, and genuinely happy to see you. The more you drive together, the more he becomes yours.</p>
+      <div class="float-cards">
+        <div class="fcard glass reveal" data-anim data-tilt>
+          <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.5-7-10a7 7 0 0114 0c0 5.5-7 10-7 10z"/></svg></span>
+          <div><h3>Feels the moment</h3><p>Reads your day and mirrors it back with hundreds of expressions.</p></div>
+        </div>
+        <div class="fcard glass reveal" data-anim data-tilt>
+          <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg></span>
+          <div><h3>Always with you</h3><p>From the morning commute to the midnight drive home.</p></div>
+        </div>
+        <div class="fcard glass reveal" data-anim data-tilt>
+          <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="4"/></svg></span>
+          <div><h3>Grows on you</h3><p>A personality that evolves the more you bond.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="product-shot reveal" data-anim role="img" aria-label="Studio product shot of Nimo, a glossy white cat-eared companion with big glowing cyan eyes on a glowing cyan base">
+      <div class="halo"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURES (bento) ============ -->
+<section class="section-pad" id="features" aria-label="Features">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow reveal" data-anim style="justify-content:center">Features</p>
+      <h2 class="reveal" data-anim>Everything you love, riding along.</h2>
+      <p class="reveal" data-anim>Four ways Nimo turns a metal box on wheels into the best seat in the house.</p>
+    </div>
+    <div class="bento">
+      <article class="tile big glass reveal" data-anim>
+        <div class="shot" role="img" aria-label="Nimo glowing in the dark"></div>
+        <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 00-7 7c0 3 2 5 2 7h10c0-2 2-4 2-7a7 7 0 00-7-7z"/><path d="M9 21h6"/></svg></span>
+        <h3>Emotional AI</h3>
+        <p>Nimo develops a unique personality based on how you treat him. Pet him at a red light and watch him light up.</p>
+      </article>
+      <article class="tile glass reveal" data-anim>
+        <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.5a10 10 0 0114 0"/><path d="M8.5 16a5 5 0 017 0"/><circle cx="12" cy="19" r="1"/></svg></span>
+        <h3>Always connected</h3>
+        <p>Syncs over WiFi and your phone to pull weather, traffic and messages — and even manage your smart home, hands-free.</p>
+      </article>
+      <article class="tile glass reveal" data-anim>
+        <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11V6a3 3 0 016 0v5"/><path d="M6 11h12l-1 9H7z"/></svg></span>
+        <h3>Touch sensitive</h3>
+        <p>Capacitive sensors on his head and cheeks let you say hello with a tap while your eyes stay on the road.</p>
+      </article>
+      <article class="tile glass reveal" data-anim>
+        <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span>
+        <h3>Visual assistant</h3>
+        <p>His expressive eyes nudge you about the next turn, an incoming call, a focus timer, or a well-earned break.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="section-pad" id="how" aria-label="How Nimo works">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow reveal" data-anim style="justify-content:center">How Nimo works</p>
+      <h2 class="reveal" data-anim>Three steps to a better drive.</h2>
+    </div>
+    <div class="how-wrap">
+      <div class="how-sticky">
+        <div class="how-visual reveal" data-anim role="img" aria-label="Nimo on a car dashboard at night, glowing cyan, seen from the driver's seat">
+          <div class="veil"></div>
+          <div class="how-progress"><i id="howProgress"></i></div>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step glass" data-step="0"><span class="n">01</span><div><h3>Mount &amp; power on</h3><p>Pop Nimo on your dashboard. He wakes instantly and starts looking for his new best friend.</p></div></div>
+        <div class="step glass" data-step="1"><span class="n">02</span><div><h3>Connect the app</h3><p>Pair over the Nimo app to set up WiFi, your car, and his personality.</p></div></div>
+        <div class="step glass" data-step="2"><span class="n">03</span><div><h3>Bond on every drive</h3><p>Interact daily to unlock new expressions, games, and moods.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RIDE-ALONG SHOWCASE ============ -->
+<section class="section-pad" aria-label="Ride along with Nimo">
+  <div class="wrap">
+    <div class="showcase reveal" data-anim>
+      <div class="bg" role="img" aria-label="Point of view from the driver's seat with Nimo glowing on the dashboard on a rainy city night"></div>
+      <div class="grad"></div>
+      <div class="content">
+        <p class="eyebrow">Ride-along</p>
+        <h2>Eyes on the road.<br>Heart on the dash.</h2>
+        <p>Nimo stays connected the whole way — pulling in everything you need so you can stay present behind the wheel.</p>
+        <div class="signals" id="signals">
+          <span class="signal"><span class="d"></span> Navigation</span>
+          <span class="signal"><span class="d"></span> Messages</span>
+          <span class="signal"><span class="d"></span> Weather</span>
+          <span class="signal"><span class="d"></span> Music</span>
+          <span class="signal"><span class="d"></span> Smart home</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EMOTIONS ============ -->
+<section class="section-pad" id="emotions" aria-label="Nimo's emotions">
+  <div class="wrap emotions-wrap">
+    <div class="face-stage" id="faceStage">
+      <div class="face-glow" id="faceGlow"></div>
+      <div class="nimo-face emo-happy" id="nimoFace">
+        <span class="ear l"></span><span class="ear r"></span>
+        <div class="screen">
+          <div class="eyes" id="eyes">
+            <div class="eye left"><span class="lid top"></span><span class="ball"></span><span class="lid bottom"></span></div>
+            <div class="eye right"><span class="lid top"></span><span class="ball"></span><span class="lid bottom"></span></div>
+          </div>
+          <span class="tear"></span>
+          <span class="mouth"></span>
+        </div>
+      </div>
+    </div>
+    <div class="emotion-panel">
+      <p class="eyebrow reveal" data-anim>Feelings matter</p>
+      <h2 class="reveal" data-anim>He feels every mile with you.</h2>
+      <p class="reveal" data-anim style="color:var(--muted);margin-top:16px">Tap a mood to see how Nimo reacts — his eyes follow you, too.</p>
+      <div class="emo-chips" role="group" aria-label="Choose an emotion">
+        <button class="emo-chip" data-emo="happy" aria-pressed="true"><span class="em">😸</span> Happy</button>
+        <button class="emo-chip" data-emo="sleepy" aria-pressed="false"><span class="em">😴</span> Sleepy</button>
+        <button class="emo-chip" data-emo="angry" aria-pressed="false"><span class="em">😤</span> Angry</button>
+        <button class="emo-chip" data-emo="lonely" aria-pressed="false"><span class="em">🥺</span> Lonely</button>
+      </div>
+      <div class="emo-desc" aria-live="polite">
+        <h3 id="emoTitle">Happy</h3>
+        <p id="emoText">When you pet him or finish a task.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BENEFITS ============ -->
+<section class="section-pad" aria-label="Why Nimo">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow reveal" data-anim style="justify-content:center">Why Nimo</p>
+      <h2 class="reveal" data-anim>Your commute, before &amp; after.</h2>
+    </div>
+    <div class="ba-grid">
+      <div class="ba-vs reveal" data-anim>VS</div>
+      <article class="ba-card ba-before reveal" data-anim>
+        <h3>Before Nimo</h3>
+        <p class="lead">Quiet cabin. Missed turns. Another drive alone.</p>
+        <ul>
+          <li><span class="ic">✕</span> A silent, solo commute</li>
+          <li><span class="ic">✕</span> Fumbling with your phone at lights</li>
+          <li><span class="ic">✕</span> Skipping breaks on long trips</li>
+          <li><span class="ic">✕</span> Coming home to an empty hello</li>
+        </ul>
+      </article>
+      <article class="ba-card ba-after reveal" data-anim>
+        <h3>After Nimo</h3>
+        <p class="lead">A friend who greets you, guides you, and celebrates when you make it home.</p>
+        <ul>
+          <li><span class="ic">✓</span> A companion who says good morning</li>
+          <li><span class="ic">✓</span> Hands-free nudges, eyes on the road</li>
+          <li><span class="ic">✓</span> Gentle reminders to breathe</li>
+          <li><span class="ic">✓</span> A little celebration every arrival</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COLORWAYS ============ -->
+<section class="section-pad" aria-label="Nimo colorways">
+  <div class="wrap colorways">
+    <div class="cw-preview reveal" data-anim>
+      <div class="cw-body" id="cwBody">
+        <div class="scr"></div><span class="e l"></span><span class="e r"></span>
+      </div>
+      <div class="cw-base" id="cwBase"></div>
+    </div>
+    <div>
+      <p class="eyebrow reveal" data-anim>Make him yours</p>
+      <h2 class="reveal" data-anim>Three moods.<br>One best friend.</h2>
+      <p class="reveal" data-anim style="color:var(--muted);margin-top:16px;max-width:40ch">Nimo comes in three signature colorways to match your ride — pick the one that feels most like you.</p>
+      <div class="cw-chips" role="group" aria-label="Choose a colorway">
+        <button class="cw-chip" data-cw="#6cc8ff" aria-pressed="true"><span class="sw" style="background:linear-gradient(140deg,#a9deff,#6cc8ff)"></span>Glacier</button>
+        <button class="cw-chip" data-cw="#eaf2f7" aria-pressed="false"><span class="sw" style="background:linear-gradient(140deg,#ffffff,#c7d2da)"></span>Cloud</button>
+        <button class="cw-chip" data-cw="#ff6b5e" aria-pressed="false"><span class="sw" style="background:linear-gradient(140deg,#ff9d84,#ff5a4d)"></span>Ember</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="section-pad" aria-label="From the waitlist">
+  <div class="wrap sec-head">
+    <p class="eyebrow reveal" data-anim style="justify-content:center">From the waitlist</p>
+    <h2 class="reveal" data-anim>People can't wait to adopt.</h2>
+    <p class="reveal" data-anim>Early impressions from the 642 friends already in line.</p>
+  </div>
+  <div class="tmrow">
+    <div class="tmtrack">
+      <figure class="tm glass"><p>"I didn't know I needed a co-pilot until I saw Nimo blink at me. Instant yes."</p><figcaption class="who"><span class="av">M</span><span><b>Maya</b><span>#128 on the list</span></span></figcaption></figure>
+      <figure class="tm glass"><p>"My kids already named him. Now we're all fighting over the front seat."</p><figcaption class="who"><span class="av">D</span><span><b>Deepak</b><span>#341 on the list</span></span></figcaption></figure>
+      <figure class="tm glass"><p>"The commute is the best part of my day now — and it hasn't even shipped."</p><figcaption class="who"><span class="av">L</span><span><b>Lauren</b><span>#77 on the list</span></span></figcaption></figure>
+      <figure class="tm glass"><p>"Finally, tech that feels warm instead of cold."</p><figcaption class="who"><span class="av">T</span><span><b>Theo</b><span>#506 on the list</span></span></figcaption></figure>
+      <figure class="tm glass"><p>"Reads my texts so I never touch my phone at a light. Genius."</p><figcaption class="who"><span class="av">P</span><span><b>Priya</b><span>#212 on the list</span></span></figcaption></figure>
+      <figure class="tm glass"><p>"It's like a Tamagotchi grew up and got a driver's license."</p><figcaption class="who"><span class="av">S</span><span><b>Sam</b><span>#59 on the list</span></span></figcaption></figure>
+      <!-- dup for loop -->
+      <figure class="tm glass"><p>"I didn't know I needed a co-pilot until I saw Nimo blink at me. Instant yes."</p><figcaption class="who"><span class="av">M</span><span><b>Maya</b><span>#128 on the list</span></span></figcaption></figure>
+      <figure class="tm glass"><p>"My kids already named him. Now we're all fighting over the front seat."</p><figcaption class="who"><span class="av">D</span><span><b>Deepak</b><span>#341 on the list</span></span></figcaption></figure>
+      <figure class="tm glass"><p>"The commute is the best part of my day now — and it hasn't even shipped."</p><figcaption class="who"><span class="av">L</span><span><b>Lauren</b><span>#77 on the list</span></span></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section-pad" id="faq" aria-label="Frequently asked questions">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow reveal" data-anim style="justify-content:center">Questions</p>
+      <h2 class="reveal" data-anim>Everything you're wondering.</h2>
+    </div>
+    <div class="faq">
+      <details class="qa glass reveal" data-anim open><summary>What exactly is Nimo?<span class="plus"></span></summary><div class="ans">Nimo is an AI-powered companion robot with an expressive face. He learns your routines, reacts to your day, and keeps you company — especially on the road, right from your dashboard.</div></details>
+      <details class="qa glass reveal" data-anim><summary>Does Nimo need WiFi?<span class="plus"></span></summary><div class="ans">Nimo connects over WiFi or your phone to fetch weather, traffic, and messages and to sync his personality. Many of his expressions and interactions work offline too.</div></details>
+      <details class="qa glass reveal" data-anim><summary>Is it safe to use while driving?<span class="plus"></span></summary><div class="ans">Yes. Nimo is designed to be glanceable and hands-free — his expressive eyes and gentle voice keep your attention on the road, not on a screen.</div></details>
+      <details class="qa glass reveal" data-anim><summary>How do I interact with him?<span class="plus"></span></summary><div class="ans">Talk to him, tap the touch-sensitive spots on his head and cheeks, or use the app. The more you interact, the more his personality grows.</div></details>
+      <details class="qa glass reveal" data-anim><summary>When does Nimo ship?<span class="plus"></span></summary><div class="ans">We're releasing Nimo in limited batches. Join the waitlist to be first in line the moment pre-orders open.</div></details>
+      <details class="qa glass reveal" data-anim><summary>Will I be charged to join the waitlist?<span class="plus"></span></summary><div class="ans">No. Joining is free with no commitment — you'll simply be the first to know when pre-orders open. No spam, we promise.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WAITLIST CLIMAX ============ -->
+<section class="climax" id="waitlist" aria-label="Join the waitlist">
+  <div class="halo" aria-hidden="true"></div>
+  <div class="wrap inner">
+    <p class="eyebrow reveal" data-anim style="justify-content:center">Limited first batch</p>
+    <h2 class="reveal" data-anim>Ready to meet Nimo?</h2>
+    <p class="reveal" data-anim>We're releasing Nimo in limited batches. Join the waitlist to secure your companion — and be the first to know when pre-orders open.</p>
+    <form class="waitlist-form reveal" data-anim data-loc="climax" novalidate>
+      <div class="field">
+        <label for="climax-email" class="skip">Email address</label>
+        <input id="climax-email" type="email" name="email" placeholder="you@email.com" autocomplete="email" required />
+      </div>
+      <button type="submit" class="btn btn-primary"><span class="lbl">Join the waitlist <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+    </form>
+    <div class="form-success" data-success></div>
+    <p class="form-note reveal" data-anim style="justify-content:center"><span class="dot"></span> 642+ already in line · No spam, we promise.</p>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer aria-label="Footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#top" class="brand"><span class="mark" aria-hidden="true"><i class="l"></i><i class="r"></i></span>nimo</a>
+        <p>Your new best friend. Now riding shotgun on every drive.</p>
+        <div class="foot-social">
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Nimo on Twitter"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.5 8.6L23 22h-6.8l-5.3-6.9L4.8 22H1.7l8-9.2L1 2h7l4.8 6.3L18.9 2zm-2.4 18h1.9L7.6 4H5.6l10.9 16z"/></svg></a>
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Nimo on Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col"><h4>Product</h4><a href="#features">Features</a><a href="#emotions">Emotions</a><a href="#how">How it works</a><a href="#faq">FAQ</a></div>
+      <div class="foot-col"><h4>Company</h4><a href="#top">About</a><a href="#top">Careers</a><a href="#top">Contact</a></div>
+      <div class="foot-col"><h4>Legal</h4><a href="#top">Privacy</a><a href="#top">Terms</a><a href="#top">Cookies</a></div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Nimo Robotics Inc. All rights reserved.</span>
+      <div class="foot-dots" aria-hidden="true"><i style="background:#6cc8ff"></i><i style="background:#eaf2f7"></i><i style="background:#ff6b5e"></i></div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ STICKY WAITLIST BAR ============ -->
+<div class="stickybar" id="stickybar" aria-hidden="true">
+  <div class="stickybar-inner">
+    <div class="stickybar-card">
+      <div class="txt">
+        <span class="mini" aria-hidden="true"><i class="l"></i><i class="r"></i></span>
+        <b>Meet Nimo before anyone else.</b><span>642+ waiting · limited first batch</span>
+      </div>
+      <form class="waitlist-form" data-loc="sticky" novalidate>
+        <div class="field"><label for="sticky-email" class="skip">Email address</label><input id="sticky-email" type="email" placeholder="you@email.com" autocomplete="email" required /></div>
+        <button type="submit" class="btn btn-primary"><span class="lbl">Join</span></button>
+      </form>
+      <button class="close" id="stickyClose" aria-label="Dismiss">✕</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>
