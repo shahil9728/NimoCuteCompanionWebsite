@@ -1,5 +1,7 @@
 # Nimo — AI Car‑Dashboard Companion (Landing Page)
 
+#Website link - https://nimo-cute-companion.onrender.com/
+
 A premium, dark‑mode, motion‑driven landing page for **Nimo**, an emotionally intelligent AI companion that rides on your car dashboard. Optimised for one conversion: **Join the Waitlist**.
 
 Built as a lightweight **Vite + TypeScript** static site — no framework runtime, fast to build, trivial to deploy on Render.
@@ -58,89 +60,6 @@ Built as a lightweight **Vite + TypeScript** static site — no framework runtim
 └── package.json
 ```
 
----
-
-## 🚀 Local development
-
-```bash
-npm install
-cp .env.example .env       # then paste your Supabase anon key
-npm run dev                # http://localhost:5173
-npm run build              # outputs ./dist
-npm run preview            # serve the production build
-```
-
----
-
-## 🔑 Environment variables
-
-| Variable | Required | Default | Notes |
-|---|---|---|---|
-| `VITE_SUPABASE_URL` | no | `https://ymzdchbgtkoiokgoqkdc.supabase.co` | Your Supabase project URL |
-| `VITE_SUPABASE_ANON_KEY` | **yes** (to persist) | — | Supabase → Project Settings → API → **anon public** |
-| `VITE_WAITLIST_TABLE` | no | `waitlist` | Destination table name |
-
-Until the anon key is set, the form still works — emails are cached in `localStorage` and the success state shows. Once the key is present, submissions are written to Supabase.
-
----
-
-## 🗄️ Supabase setup
-
-1. Open your project → **SQL Editor** → run:
-
-```sql
--- Waitlist table + anonymous-insert policy
-create extension if not exists "pgcrypto";
-
-create table if not exists public.waitlist (
-  id         uuid primary key default gen_random_uuid(),
-  email      text not null unique,
-  source     text default 'website',
-  created_at timestamptz not null default now()
-);
-
-alter table public.waitlist enable row level security;
-
--- Anonymous visitors may INSERT (join) but cannot read the list.
-create policy "anon can join waitlist"
-  on public.waitlist
-  for insert
-  to anon
-  with check (true);
-```
-
-2. Copy your **anon public** key (Project Settings → API) into `VITE_SUPABASE_ANON_KEY` (locally in `.env`, and in Render → Environment).
-
-That's all the client needs — RLS lets anonymous users insert only, so nobody can read other people's emails from the browser. View signups in the Supabase Table Editor.
-
----
-
-## 📈 Google Analytics / Tag
-
-`gtag.js` is bootstrapped in `index.html` and configured for both IDs:
-
-- `G-3C9Z4YQVRT` — GA4 Measurement ID
-- `GT-WF4ZWBSR` — Google Tag
-
-Custom events (in `src/lib/analytics.ts`, fired throughout the UI): `waitlist_click`, `form_submit`, `cta_click`, `button_click`, `scroll_depth`. To change IDs, edit the two `gtag('config', …)` lines in `index.html`.
-
----
-
-## ☁️ Deploy to Render
-
-**Option A — Blueprint (recommended):** push this repo, then in Render click **New + → Blueprint** and select it. `render.yaml` provisions a static site with:
-
-- Build: `npm install && npm run build`
-- Publish dir: `./dist`
-
-After the first deploy, add `VITE_SUPABASE_ANON_KEY` under the service's **Environment** tab and redeploy.
-
-**Option B — Manual static site:** New + → **Static Site** → connect this repo →
-Build Command `npm install && npm run build`, Publish Directory `dist`, add the env vars.
-
-> Update `SITE` references (`canonical`, `og:url`, `sitemap.xml`, `robots.txt`) to your final domain once known.
-
----
 
 ## 📝 Notes
 
