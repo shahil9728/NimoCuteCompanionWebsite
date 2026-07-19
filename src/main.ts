@@ -125,8 +125,8 @@ import { joinWaitlist } from './lib/supabase';
   var sticky=document.getElementById('stickybar');
   var dismissed=false;
   try{ dismissed=sessionStorage.getItem('nimo_sticky_closed')==='1'; }catch(_){}
-  function showSticky(){ if(!dismissed) sticky.classList.add('show'); }
-  function hideSticky(){ sticky.classList.remove('show'); }
+  function showSticky(){ if(!dismissed) sticky.classList.add('show'); var _fb=document.getElementById('fbOpen'); if(_fb) _fb.classList.add('raised'); }
+  function hideSticky(){ sticky.classList.remove('show'); var _fb=document.getElementById('fbOpen'); if(_fb) _fb.classList.remove('raised'); }
   document.getElementById('stickyClose').addEventListener('click', function(){
     dismissed=true; hideSticky(); try{sessionStorage.setItem('nimo_sticky_closed','1');}catch(_){}
   });
@@ -331,6 +331,33 @@ import { joinWaitlist } from './lib/supabase';
     modal.addEventListener('click', function(e){ if(e.target===modal) closeModal(); });
     document.addEventListener('keydown', function(e){ if(e.key==='Escape' && modal.classList.contains('open')) closeModal(); });
     modal.querySelectorAll('[data-join]').forEach(function(b){ b.addEventListener('click', function(){ closeModal(); }); });
+  })();
+
+
+  /* ---------- Feedback -> email (mailto: nimo.cutu@gmail.com) ---------- */
+  (function(){
+    var TO='nimo.cutu@gmail.com';
+    var openBtn=document.getElementById('fbOpen'), modal=document.getElementById('fbModal'), closeBtn=document.getElementById('fbClose');
+    if(!openBtn || !modal) return;
+    var sendBtn=document.getElementById('fbSend'), msg=document.getElementById('fbMessage'), em=document.getElementById('fbEmail'), note=document.getElementById('fbNote');
+    var lastFocus=null;
+    function openFb(){ lastFocus=document.activeElement; modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; if(lenis){try{lenis.stop();}catch(_){}} setTimeout(function(){ if(msg) msg.focus(); },60); }
+    function closeFb(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; if(lenis){try{lenis.start();}catch(_){}} if(lastFocus && lastFocus.focus) lastFocus.focus(); }
+    openBtn.addEventListener('click', openFb);
+    if(closeBtn) closeBtn.addEventListener('click', closeFb);
+    modal.addEventListener('click', function(e){ if(e.target===modal) closeFb(); });
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape' && modal.classList.contains('open')) closeFb(); });
+    if(sendBtn) sendBtn.addEventListener('click', function(){
+      var m=((msg&&msg.value)||'').trim();
+      if(!m){ if(note){ note.textContent='Please write a short message first.'; note.className='fb-note'; } if(msg) msg.focus(); return; }
+      try{ track.buttonClick('feedback-send'); }catch(_){}
+      var mail=((em&&em.value)||'').trim();
+      var subject='Nimo — feedback from the website';
+      var body=m+'\n\n—\n'+(mail?('Reply to: '+mail+'\n'):'')+'Sent from the Nimo website';
+      window.location.href='mailto:'+TO+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+      if(note){ note.textContent='Opening your email app… thank you! 💜'; note.className='fb-note ok'; }
+      setTimeout(closeFb, 2200);
+    });
   })();
 
 })();

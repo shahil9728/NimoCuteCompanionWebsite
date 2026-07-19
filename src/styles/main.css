@@ -224,23 +224,23 @@ h2{font-size:clamp(30px,4.6vw,54px)}
 .eye{width:21%;padding-bottom:21%;position:relative;transition:transform .3s var(--ease)}
 .eye .ball{position:absolute;inset:0;border-radius:50%;background:var(--nimo);transform-origin:center;transform:scaleY(var(--sy,1));box-shadow:0 0 22px var(--nimo),0 0 46px rgba(53,224,255,.45);transition:transform .18s var(--ease),border-radius .3s,background .5s}
 .eye::before{content:"";position:absolute;left:6%;right:6%;top:-26%;height:14%;border-radius:6px;background:var(--nimo);box-shadow:0 0 10px var(--nimo);opacity:0;transition:opacity .3s var(--ease),transform .3s var(--ease)}
-.mouth{position:absolute;left:50%;top:70%;width:16%;height:8%;transform:translateX(-50%);border-radius:0 0 60px 60px;border-bottom:3px solid var(--nimo);opacity:.9;box-shadow:0 3px 10px rgba(53,224,255,.4);transition:.35s}
+.mouth{position:absolute;left:50%;top:70%;width:19%;height:9%;transform:translateX(-50%);background:var(--nimo);border-radius:14% 14% 88% 88% / 20% 20% 100% 100%;box-shadow:0 0 14px var(--nimo);opacity:.95;transition:.35s}
 .tear{position:absolute;left:34%;top:56%;width:7%;padding-bottom:10%;background:linear-gradient(180deg,#7be7ff,#35e0ff);border-radius:50% 50% 50% 50%/60% 60% 40% 40%;opacity:0;transition:opacity .4s;box-shadow:0 0 12px rgba(53,224,255,.7)}
 .nimo-face{--sy:1}
 .nimo-face.blink{--sy:.08}
 .emo-happy{--sy:.66}
 .emo-happy .eye .ball{border-radius:60% 60% 46% 46%}
-.emo-happy .mouth{width:24%;height:12%}
+.emo-happy .mouth{width:22%;height:11%}
 .emo-sleepy{--sy:.24;--nimo:#7fd8ea}
-.emo-sleepy .mouth{width:9%;border-bottom-width:2px;opacity:.5}
+.emo-sleepy .mouth{width:11%;height:5%;opacity:.6}
 .emo-angry{--sy:.72;--nimo:#ff8a5c}
 .emo-angry .eye.left{transform:rotate(10deg)}
 .emo-angry .eye.right{transform:rotate(-10deg)}
 .emo-angry .eye.left::before{opacity:.95;transform:rotate(15deg)}
 .emo-angry .eye.right::before{opacity:.95;transform:rotate(-15deg)}
-.emo-angry .mouth{width:12%;height:5%;border-radius:60px 60px 0 0;border-bottom:none;border-top:3px solid var(--nimo);top:74%}
+.emo-angry .mouth{width:13%;height:7%;top:75%;border-radius:88% 88% 14% 14% / 100% 100% 20% 20%}
 .emo-lonely{--sy:.9;--nimo:#6cc8ff}
-.emo-lonely .mouth{width:9%;height:5%;border-radius:60px 60px 0 0;border-bottom:none;border-top:2px solid var(--nimo);opacity:.7}
+.emo-lonely .mouth{width:11%;height:6%;top:73%;border-radius:88% 88% 14% 14% / 100% 100% 20% 20%;opacity:.75}
 .emo-lonely .tear{opacity:1}
 
 .emotion-panel{max-width:460px}
@@ -365,12 +365,27 @@ footer{border-top:1px solid var(--stroke);padding:70px 0 40px;position:relative}
 .modal .m-eye{position:absolute;top:40%;width:19%;height:19%;border-radius:50%;background:var(--cyan);box-shadow:0 0 14px var(--cyan);transform-origin:center;animation:mblink 3.6s infinite}
 .modal .m-eye.l{left:27%}
 .modal .m-eye.r{right:27%}
-.modal .m-mouth{position:absolute;left:50%;top:60%;width:20%;height:12%;transform:translateX(-50%);border-radius:0 0 40px 40px;border-bottom:3px solid var(--cyan);opacity:.9}
+.modal .m-mouth{position:absolute;left:50%;top:60%;width:20%;height:11%;transform:translateX(-50%);background:var(--cyan);border-radius:14% 14% 88% 88% / 20% 20% 100% 100%;box-shadow:0 0 12px var(--cyan);opacity:.95}
 @keyframes mblink{0%,92%,100%{transform:scaleY(1)}96%{transform:scaleY(.12)}}
 .modal .m-tag{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
 .modal h3{font-size:23px;font-weight:700;margin:0 0 10px}
 .modal p{color:var(--muted);font-size:15.5px;margin:0 0 22px}
 .modal .btn{width:100%;justify-content:center}
+
+.fab-feedback{position:fixed;left:20px;bottom:20px;z-index:95;display:inline-flex;align-items:center;gap:9px;padding:12px 18px 12px 15px;border-radius:100px;background:rgba(9,13,18,.82);border:1px solid var(--stroke-strong);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--text);font-family:inherit;font-size:14px;font-weight:600;box-shadow:0 12px 30px -10px rgba(0,0,0,.6),0 0 26px -12px rgba(53,224,255,.7);transition:bottom .4s var(--ease),transform .3s var(--ease),box-shadow .3s,border-color .3s}
+.fab-feedback svg{color:var(--cyan)}
+.fab-feedback:hover{transform:translateY(-3px);border-color:rgba(53,224,255,.5);box-shadow:0 16px 36px -10px rgba(0,0,0,.7),0 0 34px -8px rgba(53,224,255,.85)}
+.fab-feedback.raised{bottom:104px}
+.fb-form{display:flex;flex-direction:column;gap:11px;text-align:left;margin-top:4px}
+.fb-form textarea,.fb-form input{width:100%;background:var(--panel);border:1px solid var(--stroke-strong);border-radius:13px;color:var(--text);padding:13px 15px;font-family:inherit;font-size:14.5px;transition:border-color .25s,box-shadow .25s}
+.fb-form textarea{resize:vertical;min-height:104px;line-height:1.55}
+.fb-form textarea::placeholder,.fb-form input::placeholder{color:var(--faint)}
+.fb-form textarea:focus,.fb-form input:focus{outline:none;border-color:rgba(53,224,255,.6);box-shadow:0 0 0 4px rgba(53,224,255,.12)}
+.fb-form .btn{width:100%;justify-content:center;margin-top:2px}
+.fb-note{font-size:13px;color:var(--faint);min-height:18px;text-align:center;margin-top:2px}
+.fb-note.ok{color:#8fe6b6}
+@media(max-width:620px){.fab-feedback span{display:none}.fab-feedback{padding:14px;border-radius:50%}}
+
 
 /* ============ responsive ============ */
 @media(max-width:960px){
