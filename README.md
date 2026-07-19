@@ -1,6 +1,6 @@
 # Nimo — AI Car‑Dashboard Companion (Landing Page)
 
-#Website link - https://nimo-cute-companion.onrender.com/
+## Website link - https://nimo-cute-companion.onrender.com
 
 A premium, dark‑mode, motion‑driven landing page for **Nimo**, an emotionally intelligent AI companion that rides on your car dashboard. Optimised for one conversion: **Join the Waitlist**.
 
