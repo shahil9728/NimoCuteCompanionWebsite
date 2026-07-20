@@ -16,5 +16,8 @@ services:
         value: waitlist
     routes:
       - type: rewrite
+        source: /sitemap
+        destination: /sitemap.xml
+      - type: rewrite
         source: /*
         destination: /index.html
