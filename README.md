@@ -79,6 +79,7 @@ npm run preview            # serve the production build
 | `VITE_SUPABASE_URL` | no | `https://ymzdchbgtkoiokgoqkdc.supabase.co` | Your Supabase project URL |
 | `VITE_SUPABASE_ANON_KEY` | **yes** (to persist) | — | Supabase → Project Settings → API → **anon public** |
 | `VITE_WAITLIST_TABLE` | no | `waitlist` | Destination table name |
+| `VITE_WEB3FORMS_KEY` | no | — | Emails you on each signup. Free key at [web3forms.com](https://web3forms.com) |
 
 Until the anon key is set, the form still works — emails are cached in `localStorage` and the success state shows. Once the key is present, submissions are written to Supabase.
 
@@ -114,6 +115,16 @@ create policy "anon can join waitlist"
 That's all the client needs — RLS lets anonymous users insert only, so nobody can read other people's emails from the browser. View signups in the Supabase Table Editor.
 
 ---
+
+## 📬 Email alerts on new signups
+
+Every waitlist submission is stored in Supabase **and** emailed to the owner (`shahilverma91383@gmail.com`) via [Web3Forms](https://web3forms.com) — a free relay that works from a static site with no backend. The email notes whether the person is a **new** signup or **already on the list**, plus where on the site they joined. If the Supabase write ever fails, the email still goes out so no lead is lost.
+
+**Activate it (one step):**
+1. Go to [web3forms.com](https://web3forms.com), enter `shahilverma91383@gmail.com`, and copy the **access key** they email you.
+2. Set `VITE_WEB3FORMS_KEY` in `.env` (local) and in **Render → Environment**, then redeploy.
+
+The access key is safe to expose in the client (it only ever sends to your address). Until it's set, signups still work and are stored in Supabase — you just won't get the email.
 
 ## 📈 Google Analytics / Tag
 

@@ -1,4 +1,5 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import { notifyOwner } from './notify';
 
 /**
  * Waitlist persistence via Supabase.
@@ -32,15 +33,30 @@ export async function joinWaitlist(email: string, source = 'website'): Promise<W
     localStorage.setItem('nimo_waitlist', JSON.stringify(list));
   } catch { /* ignore */ }
 
-  if (!client) return { ok: true }; // not configured yet — succeed gracefully
-
-  const { error } = await client.from(TABLE).insert({ email, source });
-  if (error) {
-    const code = (error as { code?: string }).code;
-    if (code === '23505' || /duplicate|unique/i.test(error.message)) {
-      return { ok: true, already: true }; // already subscribed
+  // Save in Supabase (primary store).
+  let dbOk = !client;              // if unconfigured, treat as ok (local-only)
+  let already = false;
+  let dbError: string | undefined;
+  if (client) {
+    const { error } = await client.from(TABLE).insert({ email, source });
+    if (!error) {
+      dbOk = true;
+    } else {
+      const code = (error as { code?: string }).code;
+      if (code === '23505' || /duplicate|unique/i.test(error.message)) {
+        dbOk = true; already = true;          // already subscribed
+      } else {
+        dbError = error.message;
+        console.error('[Nimo] Supabase insert failed:', error.message);
+      }
     }
-    return { ok: false, error: error.message };
   }
-  return { ok: true };
+
+  // Email the owner about every submission (also a capture fallback if the DB write failed).
+  const status: 'new' | 'already' | 'unsaved' = already ? 'already' : dbOk ? 'new' : 'unsaved';
+  const emailed = await notifyOwner(email, { status, location: source });
+
+  if (dbOk) return { ok: true, already };
+  if (emailed) return { ok: true };           // DB failed but owner was emailed — no lead lost
+  return { ok: false, error: dbError || 'Could not submit' };
 }
