@@ -15,7 +15,7 @@ services:
       - key: VITE_WAITLIST_TABLE
         value: waitlist
       - key: VITE_WEB3FORMS_KEY
-        sync: false          # free key at web3forms.com for shahilverma91383@gmail.com
+        value: d32dbfbf-0b8f-4a74-900f-99c9ba753ef9
     routes:
       - type: rewrite
         source: /sitemap

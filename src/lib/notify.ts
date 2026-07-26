@@ -2,7 +2,7 @@
 // which works from a fully static site (no backend). Create a free access key
 // at https://web3forms.com using the address you want alerts sent to
 // (shahilverma91383@gmail.com), then set VITE_WEB3FORMS_KEY.
-const KEY = import.meta.env.VITE_WEB3FORMS_KEY as string | undefined;
+const KEY = (import.meta.env.VITE_WEB3FORMS_KEY as string) || 'd32dbfbf-0b8f-4a74-900f-99c9ba753ef9';
 
 type NotifyStatus = 'new' | 'already' | 'unsaved';
 
