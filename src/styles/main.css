@@ -52,7 +52,10 @@ button{font-family:inherit;cursor:pointer}
 /* cursor spotlight (desktop) */
 .spotlight{position:fixed;width:520px;height:520px;left:0;top:0;margin:-260px 0 0 -260px;border-radius:50%;
   background:radial-gradient(circle,rgba(53,224,255,.09),transparent 60%);pointer-events:none;z-index:1;transition:opacity .4s;opacity:0}
-.cursor-dot{position:fixed;width:8px;height:8px;border-radius:50%;background:var(--cyan);left:0;top:0;margin:-4px 0 0 -4px;pointer-events:none;z-index:9999;box-shadow:0 0 12px var(--cyan);transition:transform .18s var(--ease),opacity .3s;mix-blend-mode:screen}
+/* Position and scale are kept in separate custom properties so the hover
+   scale can never be appended onto the translate (which used to compound
+   on every hover and blow the dot up to full-screen). */
+.cursor-dot{position:fixed;width:8px;height:8px;border-radius:50%;background:var(--cyan);left:0;top:0;margin:-4px 0 0 -4px;pointer-events:none;z-index:9999;box-shadow:0 0 12px var(--cyan);transform:translate(var(--cursor-x,-100px),var(--cursor-y,-100px)) scale(var(--cursor-scale,1));transition:transform .18s var(--ease),opacity .3s;mix-blend-mode:screen}
 
 /* ============ layout ============ */
 .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,40px)}

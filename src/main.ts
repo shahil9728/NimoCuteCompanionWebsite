@@ -154,16 +154,21 @@ import { joinWaitlist } from './lib/supabase';
   if(!TOUCH && !REDUCE){
     var spot=document.getElementById('spotlight'), dot=document.getElementById('cursorDot');
     var mx=window.innerWidth/2,my=window.innerHeight/2,sx=mx,sy=my;
-    window.addEventListener('mousemove',function(e){ mx=e.clientX; my=e.clientY; dot.style.transform='translate('+mx+'px,'+my+'px)'; });
-    document.addEventListener('mouseenter',function(){spot.style.opacity='1';});
+    window.addEventListener('mousemove',function(e){ mx=e.clientX; my=e.clientY;
+      dot.style.setProperty('--cursor-x', mx+'px'); dot.style.setProperty('--cursor-y', my+'px'); });
+    // Hide the dot when the pointer leaves the window, so it can't sit stranded on screen.
+    document.addEventListener('mouseleave',function(){ dot.style.opacity='0'; spot.style.opacity='0'; });
+    document.addEventListener('mouseenter',function(){spot.style.opacity='1'; dot.style.opacity='1';});
     (function loop(){ sx+=(mx-sx)*.12; sy+=(my-sy)*.12; spot.style.transform='translate('+sx+'px,'+sy+'px)'; requestAnimationFrame(loop); })();
     document.querySelectorAll('.magnetic').forEach(function(el){
       el.addEventListener('mousemove',function(e){ var r=el.getBoundingClientRect(); var x=e.clientX-r.left-r.width/2, y=e.clientY-r.top-r.height/2; el.style.transform='translate('+x*.3+'px,'+y*.4+'px)'; });
       el.addEventListener('mouseleave',function(){ el.style.transform=''; });
     });
+    // Set the scale, never append it — appending compounded on every hover
+    // (2.4x, 5.8x, 13.8x ...) and eventually covered the whole viewport.
     document.querySelectorAll('a,button,input,summary,.emo-chip,.cw-chip').forEach(function(el){
-      el.addEventListener('mouseenter',function(){ dot.style.transform+=' scale(2.4)'; dot.style.opacity='.5'; });
-      el.addEventListener('mouseleave',function(){ dot.style.opacity='1'; });
+      el.addEventListener('mouseenter',function(){ dot.style.setProperty('--cursor-scale','2.4'); dot.style.opacity='.5'; });
+      el.addEventListener('mouseleave',function(){ dot.style.setProperty('--cursor-scale','1'); dot.style.opacity='1'; });
     });
   }
 
