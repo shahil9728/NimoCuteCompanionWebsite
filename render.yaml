@@ -26,16 +26,16 @@ services:
       - type: rewrite
         source: /robots
         destination: /robots.txt
-      # NOTE: this service does not sync `routes` from render.yaml - only
-      # `headers`. /privacy and /terms therefore work by being real
-      # (extensionless) files in public/, which Render serves before any
-      # rewrite rule applies. Their Content-Type is set under headers below.
-      - type: redirect
-        source: /privacy-policy
-        destination: /privacy
-      - type: redirect
-        source: /terms-of-service
-        destination: /terms
+      # IMPORTANT: this service currently syncs `headers` from render.yaml but
+      # NOT `routes` - the live routing is whatever is saved in the Render
+      # dashboard, which still contains a `/* -> /index.html` catch-all.
+      # Consequences, until that dashboard rule is deleted:
+      #   - every unknown URL returns the homepage with HTTP 200 (soft 404)
+      #     instead of 404.html
+      #   - the /robots alias below has no effect
+      # /privacy and /terms deliberately do NOT rely on routing: they are real
+      # extensionless files in public/, and Render matches real files before
+      # applying any rewrite. Their Content-Type is set under headers below.
       # NOTE: deliberately NO catch-all `/* -> /index.html` rewrite.
       # That returned the homepage with HTTP 200 for every unknown URL
       # (a "soft 404"), which Google treats as a crawl-quality problem.

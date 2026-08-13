@@ -31,7 +31,9 @@ The three product photos were embedded as base64 data-URIs inside `src/styles/ma
 The photos were CSS backgrounds on empty `<div>`s — invisible to Google Images. They're now real `<picture>`/`<img>` elements with descriptive alt text and keyword-bearing filenames, plus an image sitemap.
 
 ### Soft 404 fixed
-`render.yaml` had a catch-all `/* → /index.html` rewrite, so **every** wrong URL returned the homepage with HTTP 200. Google flags that as a soft 404 and it wastes crawl budget. The rewrite is gone; a branded `404.html` is served with a real 404 status.
+`render.yaml` had a catch-all `/* → /index.html` rewrite, so **every** wrong URL returned the homepage with HTTP 200. Google flags that as a soft 404 and it wastes crawl budget. The rewrite is gone from `render.yaml` and a branded `404.html` now ships with the build.
+
+> ⚠️ **Still outstanding:** the same rule also exists in the Render dashboard, and this service does not sync `routes` from `render.yaml` — so the catch-all is still live and unknown URLs still return the homepage. Fix: Render → the service → **Redirects/Rewrites** → delete the `/*  →  /index.html` row. Takes effect immediately, no redeploy. Until then `/privacy/` (with a trailing slash) and `/privacy-policy` also land on the homepage; the canonical `/privacy` and `/terms` are unaffected because they are real files.
 
 ### Real pages instead of dead links
 The footer's Privacy, Terms, Cookies, About, Careers and Contact links all pointed at `#top` — dead links that hurt trust signals and give crawlers nothing. Now:
@@ -39,6 +41,8 @@ The footer's Privacy, Terms, Cookies, About, Careers and Contact links all point
 - `/privacy` — a genuine privacy policy covering the waitlist, feedback box, Google Analytics, Supabase, Web3Forms, retention, and GDPR/India DPDP rights
 - `/terms` — waitlist terms, pre-production disclaimers, IP, liability
 - Contact is a real `mailto:`, and the remaining links go to real sections
+
+These two pages ship as **extensionless files** (`public/privacy`, `public/terms`) rather than as `privacy/index.html`. That is deliberate: this Render service syncs `headers` from `render.yaml` but not `routes`, so the dashboard's `/* -> /index.html` catch-all swallows any path that is not a real file — which made `/privacy` serve the homepage. Real files are matched before any rewrite, so the extensionless form works regardless. `render.yaml` sets their `Content-Type`, since Render cannot infer it without a file extension. `/privacy.html` and `/terms.html` are emitted alongside as aliases.
 
 Both new pages are in the sitemap, canonicalised, and have their own JSON-LD.
 
