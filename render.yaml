@@ -77,6 +77,11 @@ services:
         name: Cache-Control
         value: public, max-age=604800
 
+      # Probe: can we set a content type on an extensionless file?
+      - path: /ctprobe
+        name: Content-Type
+        value: text/html; charset=utf-8
+
       # --- Correct MIME type: Render serves .webmanifest as octet-stream ---
       - path: /site.webmanifest
         name: Content-Type
