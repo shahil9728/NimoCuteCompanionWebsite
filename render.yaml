@@ -26,18 +26,21 @@ services:
       - type: rewrite
         source: /robots
         destination: /robots.txt
-      - type: rewrite
+      # Canonical legal URLs carry a trailing slash (/privacy/), because that
+      # form resolves to the directory index on its own and cannot be captured
+      # by a catch-all rewrite. Everything else redirects to it.
+      - type: redirect
         source: /privacy
-        destination: /privacy/index.html
-      - type: rewrite
+        destination: /privacy/
+      - type: redirect
         source: /privacy-policy
-        destination: /privacy/index.html
-      - type: rewrite
+        destination: /privacy/
+      - type: redirect
         source: /terms
-        destination: /terms/index.html
-      - type: rewrite
+        destination: /terms/
+      - type: redirect
         source: /terms-of-service
-        destination: /terms/index.html
+        destination: /terms/
       # NOTE: deliberately NO catch-all `/* -> /index.html` rewrite.
       # That returned the homepage with HTTP 200 for every unknown URL
       # (a "soft 404"), which Google treats as a crawl-quality problem.
