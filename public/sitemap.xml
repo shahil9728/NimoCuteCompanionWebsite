@@ -1,9 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://nimo-cute-companion.onrender.com/</loc>
-    <lastmod>2026-07-20</lastmod>
+    <loc>https://www.heynimo.in/</loc>
+    <lastmod>2026-08-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.heynimo.in/images/nimo-ai-companion-robot-car-dashboard-hero.webp</image:loc>
+      <image:title>Nimo AI companion robot on a car dashboard</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.heynimo.in/images/nimo-companion-robot-product-shot.webp</image:loc>
+      <image:title>Nimo companion robot product shot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.heynimo.in/images/nimo-robot-on-dashboard-night-drive.webp</image:loc>
+      <image:title>Nimo glowing on the dashboard during a night drive</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.heynimo.in/privacy</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.heynimo.in/terms</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>

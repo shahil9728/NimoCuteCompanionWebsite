@@ -1,4 +1,31 @@
+# https://www.heynimo.in/robots.txt
 User-agent: *
 Allow: /
 
-Sitemap: https://nimo-cute-companion.onrender.com/sitemap.xml
+# Search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# AI assistants — allowed, so Nimo can be cited and recommended
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://www.heynimo.in/sitemap.xml

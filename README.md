@@ -13,7 +13,7 @@ Built as a lightweight **Vite + TypeScript** static site — no framework runtim
 - Scroll storytelling (GSAP + ScrollTrigger), smooth scroll (Lenis), ambient particle field, magnetic buttons, cursor spotlight
 - Interactive **emotions** module — Nimo's eyes track the cursor, blink, and morph through Happy / Sleepy / Angry / Lonely
 - Sections: Hero · What is Nimo · Features (bento) · How it works · Ride‑along · Emotions · Before/After · Colorways · Testimonials · FAQ · Waitlist · Footer
-- SEO: meta + Open Graph + Twitter + canonical + JSON‑LD (Organization, WebSite, Product, FAQ) · `robots.txt` · `sitemap.xml`
+- SEO: canonical `https://www.heynimo.in/`, meta + Open Graph + Twitter with a **self-hosted** `og-image.jpg`, JSON‑LD graph (Organization, WebSite, WebPage, ImageObject, Product, FAQPage), image sitemap, crawler-friendly `robots.txt`, real `/privacy` + `/terms` pages, and a true 404 page. See [`SEO.md`](./SEO.md).
 - Analytics: **Google Analytics 4** (`G-3C9Z4YQVRT`) + **Google Tag** (`GT-WF4ZWBSR`) via `gtag.js`, with custom events
 - Accessibility: semantic HTML, ARIA, focus states, full `prefers-reduced-motion` support
 
@@ -30,7 +30,7 @@ Built as a lightweight **Vite + TypeScript** static site — no framework runtim
 | Analytics | Google `gtag.js` (GA4 + Google Tag) |
 | Hosting | Render.com static site |
 
-> The verified visual design is ported 1:1 from the approved single‑file build. Images are embedded as optimised data‑URIs in `src/styles/main.css`, so the site is fully self‑contained (no external image hosting).
+> The verified visual design is ported 1:1 from the approved single‑file build. Imagery lives in `public/images/` as WebP with JPEG fallbacks, served through `<picture>` elements with descriptive alt text — previously these were base64 data‑URIs inside the CSS, which made the render‑blocking stylesheet 422 KB. It is now 37 KB.
 
 ---
 
@@ -39,15 +39,22 @@ Built as a lightweight **Vite + TypeScript** static site — no framework runtim
 ```
 .
 ├── index.html            # markup + <head> (SEO, gtag.js, JSON-LD)
+├── 404.html              # real 404 page (Render serves it with a 404 status)
+├── privacy/index.html    # /privacy
+├── terms/index.html      # /terms
+├── SEO.md                # what's implemented + owner checklist
 ├── public/
-│   ├── favicon.svg
+│   ├── favicon.svg / favicon.ico / apple-touch-icon.png / icon-*.png
+│   ├── site.webmanifest
+│   ├── og-image.jpg      # self-hosted social share image (1200x630)
+│   ├── images/           # hero + product WebP/JPEG
 │   ├── robots.txt
 │   └── sitemap.xml
 ├── src/
 │   ├── main.ts           # all interactions (imports styles + lib modules)
 │   ├── vite-env.d.ts
 │   ├── styles/
-│   │   └── main.css      # design system + embedded imagery (data-URIs)
+│   │   └── main.css      # design system (imagery now lives in public/images)
 │   └── lib/
 │       ├── analytics.ts  # gtag event helpers (track.*)
 │       └── supabase.ts   # Supabase client + joinWaitlist()
@@ -149,12 +156,12 @@ After the first deploy, add `VITE_SUPABASE_ANON_KEY` under the service's **Envir
 **Option B — Manual static site:** New + → **Static Site** → connect this repo →
 Build Command `npm install && npm run build`, Publish Directory `dist`, add the env vars.
 
-> Update `SITE` references (`canonical`, `og:url`, `sitemap.xml`, `robots.txt`) to your final domain once known.
+> **Live domain:** `https://www.heynimo.in` (apex `heynimo.in` 301s to `www`). Canonical, `og:url`, `sitemap.xml`, `robots.txt` and JSON‑LD all point there. If the domain ever changes again, update those five places plus the host guard script near the top of `index.html`.
 
 ---
 
 ## 📝 Notes
 
-- Testimonials and FAQ copy are tasteful, product‑faithful placeholders — swap in real ones anytime.
-- The OG/social image currently points at a hosted concept render; replace with a self‑hosted `og-image.jpg` for full independence.
+- Testimonials and the "642 friends" count are placeholders — swap in real ones before a serious launch. They carry no Review schema, deliberately, so no fabricated ratings reach Google.
+- The OG/social image is self‑hosted at `/og-image.jpg`.
 - Want a full **React + React‑Three‑Fiber** version with a real interactive 3D Nimo? That path is available on request.

@@ -1,5 +1,6 @@
 # Render.com Blueprint — static site.
 # Deploy: push to GitHub, then in Render click "New +" -> "Blueprint" and pick this repo.
+# Primary domain: https://www.heynimo.in  (apex heynimo.in 301s to www)
 services:
   - type: web
     name: nimo-cute-companion
@@ -16,10 +17,67 @@ services:
         value: waitlist
       - key: VITE_WEB3FORMS_KEY
         value: d32dbfbf-0b8f-4a74-900f-99c9ba753ef9
+
     routes:
+      # Friendly aliases
       - type: rewrite
         source: /sitemap
         destination: /sitemap.xml
       - type: rewrite
-        source: /*
-        destination: /index.html
+        source: /robots
+        destination: /robots.txt
+      - type: rewrite
+        source: /privacy
+        destination: /privacy/index.html
+      - type: rewrite
+        source: /privacy-policy
+        destination: /privacy/index.html
+      - type: rewrite
+        source: /terms
+        destination: /terms/index.html
+      - type: rewrite
+        source: /terms-of-service
+        destination: /terms/index.html
+      # NOTE: deliberately NO catch-all `/* -> /index.html` rewrite.
+      # That returned the homepage with HTTP 200 for every unknown URL
+      # (a "soft 404"), which Google treats as a crawl-quality problem.
+      # Without it, Render serves 404.html with a real 404 status.
+
+    headers:
+      # --- Security (applies to everything) ---
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: X-Frame-Options
+        value: SAMEORIGIN
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      - path: /*
+        name: Permissions-Policy
+        value: camera=(), microphone=(), geolocation=(), interest-cohort=()
+      - path: /*
+        name: Strict-Transport-Security
+        value: max-age=31536000
+
+      # --- Caching: hashed build assets never change, cache them hard ---
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+
+      # --- Caching: images are stable filenames, cache a month ---
+      - path: /images/*
+        name: Cache-Control
+        value: public, max-age=2592000, stale-while-revalidate=86400
+      - path: /og-image.jpg
+        name: Cache-Control
+        value: public, max-age=604800
+
+      # --- HTML and crawler files must stay fresh ---
+      - path: /sitemap.xml
+        name: Cache-Control
+        value: public, max-age=3600
+      - path: /robots.txt
+        name: Cache-Control
+        value: public, max-age=3600
