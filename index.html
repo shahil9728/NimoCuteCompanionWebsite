@@ -44,12 +44,13 @@
 <meta name="application-name" content="Nimo" />
 
 <!-- Fonts & performance hints -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://www.googletagmanager.com" />
 <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
 <link rel="preload" as="image" href="/images/nimo-ai-companion-robot-car-dashboard-hero.webp" fetchpriority="high" />
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<!-- Fonts are self-hosted (see @font-face in main.css), so no fonts.googleapis.com
+     or fonts.gstatic.com round-trips on the critical path. -->
+<link rel="preload" as="font" type="font/woff2" href="/fonts/inter-tight-latin-var.woff2" crossorigin />
+<link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-var.woff2" crossorigin />
 
 <!-- Structured data -->
 <script type="application/ld+json">
@@ -70,16 +71,23 @@
         "height": 512,
         "caption": "Nimo Robotics Inc."
       },
-      "image": { "@id": "https://www.heynimo.in/#logo" },
+      "image": {
+        "@id": "https://www.heynimo.in/#logo"
+      },
       "description": "Nimo Robotics builds Nimo, an emotionally intelligent AI companion robot designed to live on your car dashboard.",
       "email": "nimo.cutu@gmail.com",
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "customer support",
         "email": "nimo.cutu@gmail.com",
-        "availableLanguage": ["English"]
+        "availableLanguage": [
+          "English"
+        ]
       },
-      "sameAs": ["https://twitter.com/nimo", "https://instagram.com/nimo"]
+      "sameAs": [
+        "https://twitter.com/nimo",
+        "https://instagram.com/nimo"
+      ]
     },
     {
       "@type": "WebSite",
@@ -87,7 +95,9 @@
       "name": "Nimo",
       "url": "https://www.heynimo.in/",
       "description": "An emotionally intelligent AI companion robot for your car dashboard.",
-      "publisher": { "@id": "https://www.heynimo.in/#organization" },
+      "publisher": {
+        "@id": "https://www.heynimo.in/#organization"
+      },
       "inLanguage": "en"
     },
     {
@@ -96,9 +106,15 @@
       "url": "https://www.heynimo.in/",
       "name": "Nimo — AI Companion Robot for Your Car Dashboard",
       "description": "Nimo is an emotionally intelligent AI companion robot that lives on your car dashboard. Join the free waitlist.",
-      "isPartOf": { "@id": "https://www.heynimo.in/#website" },
-      "about": { "@id": "https://www.heynimo.in/#product" },
-      "primaryImageOfPage": { "@id": "https://www.heynimo.in/#heroimage" },
+      "isPartOf": {
+        "@id": "https://www.heynimo.in/#website"
+      },
+      "about": {
+        "@id": "https://www.heynimo.in/#nimo"
+      },
+      "primaryImageOfPage": {
+        "@id": "https://www.heynimo.in/#heroimage"
+      },
       "inLanguage": "en"
     },
     {
@@ -111,35 +127,71 @@
       "caption": "Nimo, a white cat-eared AI companion robot with glowing cyan eyes, on a car dashboard at night"
     },
     {
-      "@type": "Product",
-      "@id": "https://www.heynimo.in/#product",
+      "@type": "Thing",
+      "@id": "https://www.heynimo.in/#nimo",
       "name": "Nimo",
-      "category": "AI companion robot",
+      "alternateName": "Nimo companion robot",
       "description": "Nimo is an emotionally intelligent AI companion robot for your car dashboard. He reads your day and mirrors it back with hundreds of expressions, connects over WiFi for weather, traffic and messages, responds to touch, and uses his glowing eyes as a glanceable, hands-free visual assistant.",
-      "brand": { "@type": "Brand", "name": "Nimo" },
-      "manufacturer": { "@id": "https://www.heynimo.in/#organization" },
       "url": "https://www.heynimo.in/",
-      "image": { "@id": "https://www.heynimo.in/#heroimage" },
-      "color": ["Glacier", "Cloud", "Ember"],
-      "releaseDate": "2026",
-      "additionalProperty": [
-        { "@type": "PropertyValue", "name": "Emotional AI", "value": "A personality that grows from how you interact with him" },
-        { "@type": "PropertyValue", "name": "Connectivity", "value": "WiFi and phone pairing for weather, traffic, messages and smart home" },
-        { "@type": "PropertyValue", "name": "Touch sensitive", "value": "Touch points on the head and cheeks" },
-        { "@type": "PropertyValue", "name": "Visual assistant", "value": "Glanceable expressive eyes for turns, calls and break reminders" }
-      ]
+      "image": {
+        "@id": "https://www.heynimo.in/#heroimage"
+      }
     },
     {
       "@type": "FAQPage",
       "@id": "https://www.heynimo.in/#faq",
-      "isPartOf": { "@id": "https://www.heynimo.in/#webpage" },
+      "isPartOf": {
+        "@id": "https://www.heynimo.in/#webpage"
+      },
       "mainEntity": [
-        {"@type":"Question","name":"What exactly is Nimo?","acceptedAnswer":{"@type":"Answer","text":"Nimo is an AI-powered companion robot with an expressive face. He learns your routines, reacts to your day, and keeps you company — especially on the road, right from your dashboard."}},
-        {"@type":"Question","name":"Does Nimo need WiFi?","acceptedAnswer":{"@type":"Answer","text":"Nimo connects over WiFi or your phone to fetch weather, traffic, and messages and to sync his personality. Many of his expressions and interactions work offline too."}},
-        {"@type":"Question","name":"Is it safe to use while driving?","acceptedAnswer":{"@type":"Answer","text":"Yes. Nimo is designed to be glanceable and hands-free — his expressive eyes and gentle voice keep your attention on the road, not on a screen."}},
-        {"@type":"Question","name":"How do I interact with him?","acceptedAnswer":{"@type":"Answer","text":"Talk to him, tap the touch-sensitive spots on his head and cheeks, or use the app. The more you interact, the more his personality grows."}},
-        {"@type":"Question","name":"When does Nimo ship?","acceptedAnswer":{"@type":"Answer","text":"We're releasing Nimo in limited batches. Join the waitlist to be first in line the moment pre-orders open."}},
-        {"@type":"Question","name":"Will I be charged to join the waitlist?","acceptedAnswer":{"@type":"Answer","text":"No. Joining is free with no commitment — you'll simply be the first to know when pre-orders open. No spam, we promise."}}
+        {
+          "@type": "Question",
+          "name": "What exactly is Nimo?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nimo is an AI-powered companion robot with an expressive face. He learns your routines, reacts to your day, and keeps you company — especially on the road, right from your dashboard."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Nimo need WiFi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nimo connects over WiFi or your phone to fetch weather, traffic, and messages and to sync his personality. Many of his expressions and interactions work offline too."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is it safe to use while driving?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Nimo is designed to be glanceable and hands-free — his expressive eyes and gentle voice keep your attention on the road, not on a screen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I interact with him?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Talk to him, tap the touch-sensitive spots on his head and cheeks, or use the app. The more you interact, the more his personality grows."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When does Nimo ship?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We're releasing Nimo in limited batches. Join the waitlist to be first in line the moment pre-orders open."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will I be charged to join the waitlist?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Joining is free with no commitment — you'll simply be the first to know when pre-orders open. No spam, we promise."
+          }
+        }
       ]
     }
   ]

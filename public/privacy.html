@@ -20,13 +20,19 @@
 <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="48x48" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="preload" as="font" type="font/woff2" href="/fonts/inter-tight-latin-var.woff2" crossorigin />
+<link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-var.woff2" crossorigin />
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebPage","name":"Privacy Policy","url":"https://www.heynimo.in/privacy","description":"How Nimo Robotics collects, uses and protects the personal information you share with heynimo.in.","inLanguage":"en","isPartOf":{"@type":"WebSite","name":"Nimo","url":"https://www.heynimo.in/"},"publisher":{"@type":"Organization","name":"Nimo Robotics Inc.","url":"https://www.heynimo.in/"},"dateModified":"2026-08-13"}
 </script>
 <style>
+/* ---- self-hosted variable fonts (latin) ----
+   Previously loaded from fonts.googleapis.com + fonts.gstatic.com, which put
+   two extra third-party origins on the critical rendering path. Same files,
+   served from our own domain. */
+@font-face{font-family:'Inter';font-style:normal;font-weight:400 600;font-display:swap;src:url('/fonts/inter-latin-var.woff2') format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Inter Tight';font-style:normal;font-weight:400 800;font-display:swap;src:url('/fonts/inter-tight-latin-var.woff2') format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 500;font-display:swap;src:url('/fonts/jetbrains-mono-latin-var.woff2') format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
 *{box-sizing:border-box}
 :root{--bg:#05070a;--panel:#0b0f16;--ink:#eef4f8;--muted:#93a3b2;--cyan:#35e0ff;--stroke:rgba(255,255,255,.09)}
 html{scroll-behavior:smooth}
