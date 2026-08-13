@@ -6,3 +6,13 @@ dist
 *.log
 .DS_Store
 .vite
+
+# Binary site assets — generated from assets-src/binary-assets.json
+# by scripts/unpack-assets.mjs (runs automatically on dev/build).
+public/images/
+public/og-image.jpg
+public/favicon.ico
+public/apple-touch-icon.png
+public/icon-192.png
+public/icon-512.png
+public/icon-maskable-512.png
