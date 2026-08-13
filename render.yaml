@@ -74,6 +74,11 @@ services:
         name: Cache-Control
         value: public, max-age=604800
 
+      # --- Correct MIME type: Render serves .webmanifest as octet-stream ---
+      - path: /site.webmanifest
+        name: Content-Type
+        value: application/manifest+json
+
       # --- HTML and crawler files must stay fresh ---
       - path: /sitemap.xml
         name: Cache-Control
