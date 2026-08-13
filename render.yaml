@@ -26,21 +26,16 @@ services:
       - type: rewrite
         source: /robots
         destination: /robots.txt
-      # Canonical legal URLs carry a trailing slash (/privacy/), because that
-      # form resolves to the directory index on its own and cannot be captured
-      # by a catch-all rewrite. Everything else redirects to it.
-      - type: redirect
-        source: /privacy
-        destination: /privacy/
+      # NOTE: this service does not sync `routes` from render.yaml - only
+      # `headers`. /privacy and /terms therefore work by being real
+      # (extensionless) files in public/, which Render serves before any
+      # rewrite rule applies. Their Content-Type is set under headers below.
       - type: redirect
         source: /privacy-policy
-        destination: /privacy/
-      - type: redirect
-        source: /terms
-        destination: /terms/
+        destination: /privacy
       - type: redirect
         source: /terms-of-service
-        destination: /terms/
+        destination: /terms
       # NOTE: deliberately NO catch-all `/* -> /index.html` rewrite.
       # That returned the homepage with HTTP 200 for every unknown URL
       # (a "soft 404"), which Google treats as a crawl-quality problem.
@@ -77,8 +72,12 @@ services:
         name: Cache-Control
         value: public, max-age=604800
 
-      # Probe: can we set a content type on an extensionless file?
-      - path: /ctprobe
+      # /privacy and /terms are extensionless files, so Render cannot infer a
+      # MIME type. Without this they download instead of rendering.
+      - path: /privacy
+        name: Content-Type
+        value: text/html; charset=utf-8
+      - path: /terms
         name: Content-Type
         value: text/html; charset=utf-8
 

@@ -12,10 +12,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
-        privacy: resolve(__dirname, 'privacy/index.html'),
-        terms: resolve(__dirname, 'terms/index.html'),
-        privacyFlat: resolve(__dirname, 'privacy.html'),
-        termsFlat: resolve(__dirname, 'terms.html'),
+        // /privacy and /terms ship verbatim from public/ (see scripts + render.yaml)
         notfound: resolve(__dirname, '404.html'),
       },
     },
