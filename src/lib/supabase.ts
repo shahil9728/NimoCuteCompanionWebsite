@@ -1,5 +1,6 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { notifyOwner } from './notify';
+import { sendWelcomeEmail } from './welcome';
 
 /**
  * Waitlist persistence via Supabase.
@@ -55,6 +56,13 @@ export async function joinWaitlist(email: string, source = 'website'): Promise<W
   // Email the owner about every submission (also a capture fallback if the DB write failed).
   const status: 'new' | 'already' | 'unsaved' = already ? 'already' : dbOk ? 'new' : 'unsaved';
   const emailed = await notifyOwner(email, { status, location: source });
+
+  // Thank the person who just signed up. Only for genuinely new addresses —
+  // re-submitting an address already on the list must not trigger a second
+  // welcome. Never let a mail failure break the signup.
+  if (status !== 'already') {
+    void sendWelcomeEmail(email).catch(() => false);
+  }
 
   if (dbOk) return { ok: true, already };
   if (emailed) return { ok: true };           // DB failed but owner was emailed — no lead lost

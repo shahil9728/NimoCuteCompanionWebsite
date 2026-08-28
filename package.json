@@ -10,7 +10,8 @@
     "dev": "vite",
     "prebuild": "npm run assets",
     "build": "vite build",
-    "preview": "vite preview --host"
+    "preview": "vite preview --host",
+    "email:script": "node scripts/build-apps-script.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.74.0"
