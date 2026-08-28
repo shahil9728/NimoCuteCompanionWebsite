@@ -29,3 +29,6 @@ User-agent: Google-Extended
 Allow: /
 
 Sitemap: https://www.heynimo.in/sitemap.xml
+
+# Curated summary of this site for AI assistants (llmstxt.org)
+# https://www.heynimo.in/llms.txt

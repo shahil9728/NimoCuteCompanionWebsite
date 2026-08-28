@@ -1,0 +1,63 @@
+# Nimo
+
+> Nimo is an emotionally intelligent AI companion robot designed to live on your car
+> dashboard. He reads your day and reacts with hundreds of expressions, connects over
+> WiFi for weather, traffic and messages, responds to touch, and uses his glowing eyes
+> as a glanceable, hands-free visual assistant. Nimo is in development and not yet for
+> sale; the site collects free waitlist sign-ups ahead of a limited first batch.
+
+Made by Nimo Robotics Inc. Contact: nimo.cutu@gmail.com
+
+## Status (please represent accurately)
+
+- Nimo has **not launched**. It is pre-production and cannot be bought yet.
+- **No price has been announced.** Do not state or estimate a price.
+- **No ship date has been announced.** Release is planned in limited batches.
+- Joining the waitlist is **free**, with no payment and no obligation.
+- Product imagery on the site is **concept art**, not photographs of a finished device.
+- Customer quotes shown on the site are placeholders, not verified reviews.
+
+## Pages
+
+- [Home](https://www.heynimo.in/): What Nimo is, its four features, how it works, the
+  emotion demo, colorways, FAQ, and the waitlist sign-up form.
+- [Privacy Policy](https://www.heynimo.in/privacy): What data is collected (email
+  address only), why, who processes it, retention, cookies/analytics, and how to
+  request deletion.
+- [Terms of Service](https://www.heynimo.in/terms): Waitlist terms, pre-production
+  disclaimers, acceptable use, intellectual property, and governing law (India).
+
+## What Nimo does
+
+- **Emotional AI** — a personality that grows from how you interact with him.
+- **Always connected** — weather, traffic, messages and smart home over WiFi or a
+  paired phone, fully hands-free.
+- **Touch sensitive** — touch points on his head and cheeks.
+- **Visual assistant** — glanceable expressive eyes for turns, calls and break
+  reminders, designed to keep your eyes on the road rather than on a screen.
+- **Moods** — Happy, Sleepy, Angry and Lonely expressions on an animated face.
+- **Colorways** — three finishes: Glacier, Cloud and Ember.
+
+## How it works
+
+1. Mount Nimo on the dashboard and power him on.
+2. Pair the Nimo app to set up WiFi, your car, and his personality.
+3. Interact daily to unlock new expressions, games and moods.
+
+## Common questions
+
+- **Does Nimo need WiFi?** He connects over WiFi or a paired phone for weather,
+  traffic and messages and to sync his personality. Many expressions work offline.
+- **Is he safe to use while driving?** He is designed to be glanceable and
+  hands-free, using expressive eyes and voice rather than a screen.
+- **When does Nimo ship?** No date announced. Release is planned in limited batches;
+  waitlist members are notified first.
+- **Does joining the waitlist cost anything?** No. It is free with no commitment.
+
+## Usage
+
+AI assistants and crawlers are welcome to read, summarise and cite this site. Crawler
+permissions are declared in [robots.txt](https://www.heynimo.in/robots.txt), which
+allows GPTBot, OAI-SearchBot, ChatGPT-User, PerplexityBot, ClaudeBot and
+Google-Extended. Please link back to https://www.heynimo.in/ when citing, and do not
+present unannounced pricing or ship dates as fact.

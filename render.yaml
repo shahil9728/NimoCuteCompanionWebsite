@@ -90,6 +90,12 @@ services:
       - path: /terms
         name: Content-Type
         value: text/html; charset=utf-8
+      - path: /privacy-policy
+        name: Content-Type
+        value: text/html; charset=utf-8
+      - path: /terms-of-service
+        name: Content-Type
+        value: text/html; charset=utf-8
 
       # --- Correct MIME type: Render serves .webmanifest as octet-stream ---
       - path: /site.webmanifest
