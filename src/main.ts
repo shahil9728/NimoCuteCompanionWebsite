@@ -2,6 +2,8 @@ import './styles/main.css';
 import { track } from './lib/analytics';
 import { joinWaitlist } from './lib/supabase';
 import { initWaitlistCount, bumpWaitlistCount } from './lib/count';
+import { initSurvey } from './lib/survey';
+import { initExitPrompt } from './lib/exitPrompt';
 
 (window as any).nimoTrack = track;
 
@@ -24,6 +26,8 @@ import { initWaitlistCount, bumpWaitlistCount } from './lib/count';
     if (hasGSAP){ gsap.ticker.add(function(t){ lenis.raf(t*1000); }); gsap.ticker.lagSmoothing(0); }
     else { var raf=function(t){ lenis.raf(t); requestAnimationFrame(raf); }; requestAnimationFrame(raf); }
   }
+  function lockScroll(){ document.body.style.overflow='hidden'; if(lenis){try{lenis.stop();}catch(_){}} }
+  function unlockScroll(){ document.body.style.overflow=''; if(lenis){try{lenis.start();}catch(_){}} }
   // anchor smooth-scroll (works with or without Lenis)
   function scrollToEl(el){
     if(!el) return;
@@ -88,6 +92,9 @@ import { initWaitlistCount, bumpWaitlistCount } from './lib/count';
       if(res && res.ok){
         track.formSubmit(loc);
         if(!res.already) bumpWaitlistCount();
+        try{ localStorage.setItem('nimo_joined','1'); }catch(_){}
+        // survey + exit prompt listen for this
+        document.dispatchEvent(new CustomEvent('nimo:joined',{detail:{email:val, loc:loc, already:!!res.already}}));
         if(success){
           success.innerHTML = res.already
             ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#59e6a0" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span>You're already on the list — see you on the road!</span>`
@@ -111,6 +118,9 @@ import { initWaitlistCount, bumpWaitlistCount } from './lib/count';
     var go=function(){ setTimeout(initWaitlistCount, 2500); };
     if(document.readyState==='complete') go(); else window.addEventListener('load', go, {once:true});
   })();
+
+  initSurvey({ lock: lockScroll, unlock: unlockScroll });
+  initExitPrompt({ touch: TOUCH, lock: lockScroll, unlock: unlockScroll });
 
 /* ---------- Join buttons -> focus nearest waitlist ---------- */
   document.querySelectorAll('[data-join]').forEach(function(b){

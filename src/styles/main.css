@@ -422,6 +422,37 @@ footer{border-top:1px solid var(--stroke);padding:70px 0 40px;position:relative}
 .fb-form .btn{width:100%;justify-content:center;margin-top:2px}
 .fb-note{font-size:13px;color:var(--faint);min-height:18px;text-align:center;margin-top:2px}
 .fb-note.ok{color:#8fe6b6}
+
+/* ============ dialogs: mini Nimo, exit prompt, survey ============ */
+.mf-wrap{width:124px;height:124px;margin:-10px auto 8px}
+.mf-wrap.mf-small{width:86px;height:86px;margin:-12px auto 6px}
+.mf{width:100%;height:100%;display:block;overflow:visible}
+.mf-head{transform-box:view-box;transform-origin:100px 186px;animation:mfTilt 3.4s ease-in-out infinite}
+.mf-ball,.mf-arc,.mf-lid,.mf-tear,.mf-m{transition:opacity .3s}
+.mf-ball{transform-box:fill-box;transform-origin:center;animation:mfBlink 4.2s infinite}
+.mf-happy .mf-ball,.mf-happy .mf-lid,.mf-happy .mf-tear,.mf-happy .mf-sadm{opacity:0}
+.mf-sad .mf-arc,.mf-sad .mf-happym{opacity:0}
+.mf-sad .mf-tear{animation:mfTear 1.9s ease-in infinite}
+.mf-sad .mf-eyes{animation:mfQuiver .45s ease-in-out infinite alternate}
+.mf-happy .mf-head{animation:mfHop .55s var(--ease) 2,mfTilt 3.4s ease-in-out 1.1s infinite}
+@keyframes mfTilt{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+@keyframes mfBlink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+@keyframes mfTear{0%{transform:translateY(0);opacity:0}15%{opacity:1}100%{transform:translateY(26px);opacity:0}}
+@keyframes mfQuiver{from{transform:translateY(-.6px)}to{transform:translateY(.6px)}}
+@keyframes mfHop{0%,100%{transform:translateY(0)}40%{transform:translateY(-12px)}}
+.xp-modal .waitlist-form{margin:0 auto;max-width:none}
+.xp-modal .form-success{margin:0 auto;text-align:left}
+.xp-later{display:block;margin:12px auto 0;background:none;border:0;color:var(--faint);font-size:14px;padding:6px 10px;text-decoration:underline;text-underline-offset:3px}
+.xp-later:hover{color:var(--muted)}
+.modal p.sv-sub{margin:-4px 0 16px;font-size:14px}
+.sv-progress{height:4px;border-radius:4px;background:var(--panel-2);overflow:hidden;margin:2px 0 18px}
+.sv-progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--blue));transition:width .35s var(--ease)}
+.sv-options{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:18px}
+.sv-opt{padding:10px 15px;border-radius:100px;background:var(--panel);border:1px solid var(--stroke-strong);color:var(--text);font-size:14.5px;line-height:1.3;transition:border-color .2s,background .2s}
+.sv-opt:hover{border-color:rgba(53,224,255,.45)}
+.sv-opt[aria-pressed=true]{background:rgba(53,224,255,.14);border-color:rgba(53,224,255,.6);color:#fff}
+.sv-modal .btn[disabled]{opacity:.45;cursor:default}
+.sv-modal [hidden],.xp-modal [hidden]{display:none!important}
 @media(max-width:620px){.fab-feedback span{display:none}.fab-feedback{padding:14px;border-radius:50%}}
 
 

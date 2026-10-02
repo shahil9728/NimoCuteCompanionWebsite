@@ -69,6 +69,18 @@ export async function joinWaitlist(email: string, source = 'website'): Promise<W
   return { ok: false, error: dbError || 'Could not submit' };
 }
 
+// Post-signup survey answers (supabase/waitlist_survey.sql). Insert-only; failures are ignored.
+export async function saveSurvey(email: string, answers: Record<string, unknown>, location: string): Promise<boolean> {
+  if (!client) return false;
+  try {
+    const { error } = await client.from('waitlist_survey').insert({ email, answers, location });
+    if (error) console.warn('[Nimo] survey save failed:', error.message);
+    return !error;
+  } catch {
+    return false;
+  }
+}
+
 // Real signup count via the `waitlist_count()` RPC (supabase/waitlist_count.sql).
 // RLS blocks reading rows, so this function is the only way to count them. null = unavailable.
 export async function fetchWaitlistCount(): Promise<number | null> {

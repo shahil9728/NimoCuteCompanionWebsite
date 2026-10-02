@@ -17,6 +17,10 @@ export const track = {
   scrollDepth:   (percent: number)  => send('scroll_depth', { percent }),
   nimoPlay:      (gesture: string)  => send('nimo_play', { gesture }),
   nimoMilestone: (name: string)     => send('nimo_milestone', { name }),
+  surveyAnswer:  (question: string, answer: string) => send('survey_answer', { question, answer }),
+  surveyDone:    (answered: number) => send('survey_complete', { answered }),
+  exitPrompt:    (action: string, trigger: string) => send('exit_prompt', { action, trigger }),
+  share:         (method: string)   => send('share', { method, content_type: 'waitlist' }),
 };
 
 export type Track = typeof track;
