@@ -68,3 +68,17 @@ export async function joinWaitlist(email: string, source = 'website'): Promise<W
   if (emailed) return { ok: true };           // DB failed but owner was emailed — no lead lost
   return { ok: false, error: dbError || 'Could not submit' };
 }
+
+// Real signup count via the `waitlist_count()` RPC (supabase/waitlist_count.sql).
+// RLS blocks reading rows, so this function is the only way to count them. null = unavailable.
+export async function fetchWaitlistCount(): Promise<number | null> {
+  if (!client) return null;
+  try {
+    const { data, error } = await client.rpc('waitlist_count');
+    if (error || data == null) return null;
+    const n = Number(data);
+    return Number.isFinite(n) ? n : null;
+  } catch {
+    return null;
+  }
+}

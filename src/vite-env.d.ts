@@ -4,6 +4,7 @@ interface ImportMetaEnv {
   readonly VITE_SUPABASE_ANON_KEY?: string;
   readonly VITE_WAITLIST_TABLE?: string;
   readonly VITE_WEB3FORMS_KEY?: string;
+  readonly VITE_WAITLIST_COUNT_OFFSET?: string;
 }
 interface ImportMeta { readonly env: ImportMetaEnv }
 

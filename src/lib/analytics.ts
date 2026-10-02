@@ -15,6 +15,8 @@ export const track = {
   buttonClick:   (label: string)    => send('button_click', { label }),
   formSubmit:    (location: string) => send('form_submit', { form: 'waitlist', location }),
   scrollDepth:   (percent: number)  => send('scroll_depth', { percent }),
+  nimoPlay:      (gesture: string)  => send('nimo_play', { gesture }),
+  nimoMilestone: (name: string)     => send('nimo_milestone', { name }),
 };
 
 export type Track = typeof track;

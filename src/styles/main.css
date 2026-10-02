@@ -236,46 +236,52 @@ h2{font-size:clamp(30px,4.6vw,54px)}
 .emotions-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:center}
 .face-stage{position:relative;display:grid;place-items:center;aspect-ratio:1/1;max-width:440px;margin:0 auto;width:100%}
 .face-glow{position:absolute;width:70%;height:70%;border-radius:50%;background:radial-gradient(circle,rgba(53,224,255,.4),transparent 65%);filter:blur(28px);transition:background .6s}
-.nimo-face{position:relative;width:74%;aspect-ratio:1/1;border-radius:50%;
-  background:radial-gradient(circle at 42% 34%,#20262e,#0a0d12 70%);
-  border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 30px 70px -20px rgba(0,0,0,.8),0 0 0 10px rgba(255,255,255,.02),inset 0 6px 20px rgba(255,255,255,.06)}
-.nimo-face .ear{position:absolute;top:-11%;width:26%;height:30%;background:radial-gradient(circle at 50% 60%,#20262e,#0a0d12);border:1px solid rgba(255,255,255,.1);border-radius:50% 50% 46% 46%}
-.nimo-face .ear.l{left:8%;transform:rotate(-16deg)}
-.nimo-face .ear.r{right:8%;transform:rotate(16deg)}
-.screen{position:absolute;inset:11%;border-radius:50%;background:radial-gradient(circle at 50% 40%,#0b0f14,#05070a);border:1px solid rgba(255,255,255,.06);overflow:hidden;box-shadow:inset 0 0 40px rgba(0,0,0,.7)}
-.screen::before{content:"";position:absolute;top:8%;left:14%;width:44%;height:26%;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.12),transparent 70%)}
-.eyes{position:absolute;left:0;right:0;top:44%;display:flex;justify-content:center;gap:16%;transform:translateY(-50%);transition:transform .18s ease-out}
-.eye{width:21%;padding-bottom:21%;position:relative;transition:transform .3s var(--ease)}
-.eye .ball{position:absolute;inset:0;border-radius:50%;background:var(--nimo);transform-origin:center;transform:scaleY(var(--sy,1));box-shadow:0 0 22px var(--nimo),0 0 46px rgba(53,224,255,.45);transition:transform .18s var(--ease),border-radius .3s,background .5s}
-.eye::before{content:"";position:absolute;left:6%;right:6%;top:-26%;height:14%;border-radius:6px;background:var(--nimo);box-shadow:0 0 10px var(--nimo);opacity:0;transition:opacity .3s var(--ease),transform .3s var(--ease)}
-.mouth{position:absolute;left:50%;top:70%;width:19%;height:9%;transform:translateX(-50%);background:var(--nimo);border-radius:14% 14% 88% 88% / 20% 20% 100% 100%;box-shadow:0 0 14px var(--nimo);opacity:.95;transition:.35s}
-.tear{position:absolute;left:34%;top:56%;width:7%;padding-bottom:10%;background:linear-gradient(180deg,#7be7ff,#35e0ff);border-radius:50% 50% 50% 50%/60% 60% 40% 40%;opacity:0;transition:opacity .4s;box-shadow:0 0 12px rgba(53,224,255,.7)}
-.nimo-face{--sy:1}
-.nimo-face.blink{--sy:.08}
-.emo-happy{--sy:.66}
-.emo-happy .eye .ball{border-radius:60% 60% 46% 46%}
-.emo-happy .mouth{width:22%;height:11%}
-.emo-sleepy{--sy:.24;--nimo:#7fd8ea}
-.emo-sleepy .mouth{width:11%;height:5%;opacity:.6}
-.emo-angry{--sy:.72;--nimo:#ff8a5c}
-.emo-angry .eye.left{transform:rotate(10deg)}
-.emo-angry .eye.right{transform:rotate(-10deg)}
-.emo-angry .eye.left::before{opacity:.95;transform:rotate(15deg)}
-.emo-angry .eye.right::before{opacity:.95;transform:rotate(-15deg)}
-.emo-angry .mouth{width:13%;height:7%;top:75%;border-radius:88% 88% 14% 14% / 100% 100% 20% 20%}
-.emo-lonely{--sy:.9;--nimo:#6cc8ff}
-.emo-lonely .mouth{width:11%;height:6%;top:73%;border-radius:88% 88% 14% 14% / 100% 100% 20% 20%;opacity:.75}
-.emo-lonely .tear{opacity:1}
-
 .emotion-panel{max-width:460px}
-.emo-chips{display:flex;flex-wrap:wrap;gap:12px;margin:26px 0 22px}
+.emo-chips{display:flex;flex-wrap:wrap;gap:12px;margin:10px 0 0}
 .emo-chip{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:100px;background:var(--panel);border:1px solid var(--stroke);color:var(--muted);font-size:15px;transition:.3s;font-family:var(--font-body)}
 .emo-chip .em{font-size:18px}
 .emo-chip[aria-pressed=true]{border-color:rgba(53,224,255,.5);color:#fff;background:rgba(53,224,255,.08);box-shadow:0 0 26px -8px rgba(53,224,255,.6)}
-.emo-desc{min-height:56px}
+.emo-desc{min-height:56px;margin-top:22px}
 .emo-desc h3{font-size:22px;font-weight:600;margin-bottom:4px}
 .emo-desc p{color:var(--muted);margin:0}
+
+/* ============ playground Nimo (src/nimo) ============ */
+.np-stage{touch-action:pan-y;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;cursor:grab;outline:none;border-radius:50%}
+.np-stage:active{cursor:grabbing}
+.np-stage:focus-visible{box-shadow:0 0 0 2px rgba(53,224,255,.55)}
+.np-svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible;pointer-events:none}
+.np-bodySvg{will-change:transform}
+.np-stage .face-glow{filter:none;width:96%;height:96%}
+.np-seam{fill:none;stroke:rgba(53,224,255,.55);stroke-width:1.4}
+.np-dot{fill:#9ff3ff}
+.np-base{fill:rgba(53,224,255,.1);stroke:rgba(150,240,255,.5);stroke-width:1.5}
+.np-star{fill:#ffe27a}
+.np-fx{position:absolute;inset:0;pointer-events:none;z-index:2}
+.np-p{position:absolute;left:0;top:0;width:22px;height:22px;margin:-11px 0 0 -11px;display:block;will-change:transform,opacity;contain:strict}
+.np-p svg{width:100%;height:100%;display:block;overflow:visible}
+.np-p.np-heart{color:#ff7dba}
+.np-p.np-spark{width:16px;height:16px;margin:-8px 0 0 -8px;color:#c9f8ff}
+.np-p.np-hot{color:#fff3b0}
+.np-p.np-anger{width:28px;height:28px;margin:-14px 0 0 -14px;color:#ff4d4d}
+.np-p.np-z{width:24px;height:24px;margin:0;font:800 22px/1 var(--font-display);color:#a8ecff}
+.np-p.np-ring{width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;border:3px solid rgba(255,255,255,.9)}
+.np-bubble{position:absolute;left:60%;top:3%;z-index:3;width:max-content;max-width:min(220px,46vw);padding:9px 14px;border-radius:16px 16px 16px 4px;background:rgba(12,18,26,.94);border:1px solid rgba(53,224,255,.38);color:#eaf6ff;font:600 14px/1.35 var(--font-body);box-shadow:0 12px 30px -12px rgba(0,0,0,.8),0 0 24px -10px rgba(53,224,255,.6);opacity:0;transform-origin:0 100%;pointer-events:none;will-change:transform,opacity}
+.np-tricks{list-style:none;padding:0;margin:22px 0 10px;display:flex;flex-wrap:wrap;gap:8px}
+.np-trick{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:100px;border:1px dashed var(--stroke-strong);color:var(--faint);font-size:13.5px;line-height:1.3;transition:border-color .35s,background .35s,color .35s}
+.np-trick b{color:var(--muted);font-weight:600}
+.np-trick .ic{font-size:15px;filter:grayscale(1);opacity:.55;transition:.35s}
+.np-trick.found{border-style:solid;border-color:rgba(53,224,255,.45);background:rgba(53,224,255,.07);color:var(--muted)}
+.np-trick.found b{color:#fff}
+.np-trick.found .ic{filter:none;opacity:1}
+.np-progress{font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:0 0 20px}
+.np-progress b{color:var(--cyan);font-weight:500}
+.np-moods-label{font-size:13px;color:var(--faint);margin:0}
+.np-cta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-top:22px;padding:16px 18px;border-radius:18px;border:1px solid rgba(53,224,255,.35);background:linear-gradient(135deg,rgba(53,224,255,.1),rgba(155,123,255,.08))}
+.np-cta[hidden]{display:none}
+.np-cta p{margin:0;color:var(--muted);font-size:15px}
+.np-cta p b{color:#fff}
+[data-waitlist-count].bump{animation:npBump .9s var(--ease)}
+@keyframes npBump{0%{color:inherit}25%{color:#fff;text-shadow:0 0 14px var(--cyan)}100%{text-shadow:none}}
 
 /* ============ benefits before/after ============ */
 .ba-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;position:relative}
@@ -447,4 +453,5 @@ footer{border-top:1px solid var(--stroke);padding:70px 0 40px;position:relative}
   .marquee-track,.tmtrack{animation:none;transform:none}
   #particles,.grain{display:none}
   .spotlight,.cursor-dot{display:none!important}
+  .np-fx{display:none}
 }

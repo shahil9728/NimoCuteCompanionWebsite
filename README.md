@@ -11,7 +11,7 @@ Built as a lightweight **Vite + TypeScript** static site — no framework runtim
 - Full‑bleed cinematic hero (car‑dashboard shot) with an **inline, above‑the‑fold waitlist form**
 - Frictionless waitlist everywhere: hero form, sticky nav CTA, slide‑in bar, and a climax section — all email‑only with inline success
 - Scroll storytelling (GSAP + ScrollTrigger), smooth scroll (Lenis), ambient particle field, magnetic buttons, cursor spotlight
-- Interactive **emotions** module — Nimo's eyes track the cursor, blink, and morph through Happy / Sleepy / Angry / Lonely
+- Interactive **playground Nimo** (`src/nimo/`) — an SVG Nimo you can pet, boop, flick, hug and tickle (mouse or touch). He has a mood that changes over time, falls asleep when ignored, remembers past visits, and has 5 tricks to find that unlock an "Adopt Nimo" button
 - Sections: Hero · What is Nimo · Features (bento) · How it works · Ride‑along · Emotions · Before/After · Colorways · Testimonials · FAQ · Waitlist · Footer
 - SEO: canonical `https://www.heynimo.in/`, meta + Open Graph + Twitter with a **self-hosted** `og-image.jpg`, JSON‑LD graph (Organization, WebSite, WebPage, ImageObject, Product, FAQPage), image sitemap, crawler-friendly `robots.txt`, real `/privacy` + `/terms` pages, and a true 404 page. See [`SEO.md`](./SEO.md).
 - Analytics: **Google Analytics 4** (`G-3C9Z4YQVRT`) + **Google Tag** (`GT-WF4ZWBSR`) via `gtag.js`, with custom events
@@ -87,6 +87,7 @@ npm run preview            # serve the production build
 | `VITE_SUPABASE_ANON_KEY` | **yes** (to persist) | — | Supabase → Project Settings → API → **anon public** |
 | `VITE_WAITLIST_TABLE` | no | `waitlist` | Destination table name |
 | `VITE_WEB3FORMS_KEY` | no | — | Emails you on each signup. Free key at [web3forms.com](https://web3forms.com) |
+| `VITE_WAITLIST_COUNT_OFFSET` | no | `696` | Added to the real signup count shown on the page. Set to `0` once the real list is big enough |
 
 Until the anon key is set, the form still works — emails are cached in `localStorage` and the success state shows. Once the key is present, submissions are written to Supabase.
 
@@ -123,6 +124,10 @@ That's all the client needs — RLS lets anonymous users insert only, so nobody 
 
 ---
 
+## 🔢 Live waitlist count
+
+The "N friends" numbers on the page (`[data-waitlist-count]`) show `VITE_WAITLIST_COUNT_OFFSET` + the real number of rows in `waitlist`, and go up by one when someone joins. RLS blocks reading rows, so the count comes from a small function: run [`supabase/waitlist_count.sql`](./supabase/waitlist_count.sql) once in the Supabase SQL Editor. Until then the page shows the offset alone.
+
 ## 📬 Email alerts on new signups
 
 Every waitlist submission is stored in Supabase **and** emailed to the owner (`shahilverma91383@gmail.com`) via [Web3Forms](https://web3forms.com) — a free relay that works from a static site with no backend. The email notes whether the person is a **new** signup or **already on the list**, plus where on the site they joined. If the Supabase write ever fails, the email still goes out so no lead is lost.
@@ -140,7 +145,7 @@ The access key is safe to expose in the client (it only ever sends to your addre
 - `G-3C9Z4YQVRT` — GA4 Measurement ID
 - `GT-WF4ZWBSR` — Google Tag
 
-Custom events (in `src/lib/analytics.ts`, fired throughout the UI): `waitlist_click`, `form_submit`, `cta_click`, `button_click`, `scroll_depth`. To change IDs, edit the two `gtag('config', …)` lines in `index.html`.
+Custom events (in `src/lib/analytics.ts`, fired throughout the UI): `waitlist_click`, `form_submit`, `cta_click`, `button_click`, `scroll_depth`, `nimo_play` (first use of each playground gesture per page view) and `nimo_milestone` (`love`, `furious`, `all_tricks`, `cta_shown`). To change IDs, edit the two `gtag('config', …)` lines in `index.html`.
 
 ---
 

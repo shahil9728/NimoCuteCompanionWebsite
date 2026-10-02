@@ -1,6 +1,7 @@
 import './styles/main.css';
 import { track } from './lib/analytics';
 import { joinWaitlist } from './lib/supabase';
+import { initWaitlistCount, bumpWaitlistCount } from './lib/count';
 
 (window as any).nimoTrack = track;
 
@@ -89,6 +90,7 @@ import { joinWaitlist } from './lib/supabase';
       if(sib && sib.hasAttribute('data-success')) success=sib;
       if(res && res.ok){
         track.formSubmit(loc);
+        if(!res.already) bumpWaitlistCount();
         if(success){
           success.innerHTML = res.already
             ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#59e6a0" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span>You're already on the list — see you on the road!</span>`
@@ -106,6 +108,12 @@ import { joinWaitlist } from './lib/supabase';
       }
     });
   });
+
+  // Count fetch waits until after load so its new connection never competes with the first paint.
+  (function(){
+    var go=function(){ setTimeout(initWaitlistCount, 2500); };
+    if(document.readyState==='complete') go(); else window.addEventListener('load', go, {once:true});
+  })();
 
 /* ---------- Join buttons -> focus nearest waitlist ---------- */
   document.querySelectorAll('[data-join]').forEach(function(b){
@@ -213,49 +221,16 @@ import { joinWaitlist } from './lib/supabase';
     setInterval(function(){ signals.forEach(function(s){s.classList.remove('lit');}); signals[si].classList.add('lit'); si=(si+1)%signals.length; }, 1100);
   } else { signals.forEach(function(s){s.classList.add('lit');}); }
 
-  /* ---------- Emotions: interactive face ---------- */
-  var face=document.getElementById('nimoFace'), eyes=document.getElementById('eyes'), glow=document.getElementById('faceGlow'), stage=document.getElementById('faceStage');
-  var emoTitle=document.getElementById('emoTitle'), emoText=document.getElementById('emoText');
-  var EMO={
-    happy:{cls:'emo-happy',title:'Happy',text:'When you pet him or finish a task.',glow:'rgba(53,224,255,.45)'},
-    sleepy:{cls:'emo-sleepy',title:'Sleepy',text:'At night or when his battery is low.',glow:'rgba(111,214,234,.32)'},
-    angry:{cls:'emo-angry',title:'Grumpy',text:'If you brake too hard or shake him!',glow:'rgba(255,138,92,.4)'},
-    lonely:{cls:'emo-lonely',title:'Lonely',text:'When you\'ve been away too long.',glow:'rgba(108,200,255,.4)'}
-  };
-  var chips=[].slice.call(document.querySelectorAll('.emo-chip')), order=['happy','sleepy','angry','lonely'], cur=0, autoTimer=null;
-  function setEmo(key){
-    var e=EMO[key]; if(!e||!face) return;
-    face.className='nimo-face '+e.cls;
-    if(glow) glow.style.background='radial-gradient(circle,'+e.glow+',transparent 65%)';
-    if(emoTitle) emoTitle.textContent=e.title; if(emoText) emoText.textContent=e.text;
-    chips.forEach(function(c){ c.setAttribute('aria-pressed', c.getAttribute('data-emo')===key?'true':'false'); });
-    cur=order.indexOf(key);
-  }
-  chips.forEach(function(c){
-    c.addEventListener('click',function(){ setEmo(c.getAttribute('data-emo')); stopAuto(); });
-    c.addEventListener('mouseenter',function(){ setEmo(c.getAttribute('data-emo')); });
-  });
-  function startAuto(){ if(REDUCE) return; stopAuto(); autoTimer=setInterval(function(){ cur=(cur+1)%order.length; setEmo(order[cur]); },3400); }
-  function stopAuto(){ if(autoTimer){clearInterval(autoTimer); autoTimer=null;} }
-  // eyes track cursor
-  if(eyes && !TOUCH && !REDUCE){
-    window.addEventListener('mousemove',function(e){
-      var r=stage.getBoundingClientRect(); var cx=r.left+r.width/2, cy=r.top+r.height/2;
-      var dx=Math.max(-1,Math.min(1,(e.clientX-cx)/(r.width/2))), dy=Math.max(-1,Math.min(1,(e.clientY-cy)/(r.height/2)));
-      eyes.style.transform='translateY(-50%) translate('+(dx*7)+'%,'+(dy*7)+'%)';
-    });
-  }
-  // idle blink
-  if(face && !REDUCE){
-    setInterval(function(){ face.classList.add('blink'); setTimeout(function(){face.classList.remove('blink');},150); }, 4200);
-  }
-  // auto-cycle only while section in view
-  if(stage && 'IntersectionObserver' in window){
-    new IntersectionObserver(function(en){ en.forEach(function(x){ x.isIntersecting?startAuto():stopAuto(); }); },{threshold:.35}).observe(stage);
-    var esec=document.getElementById('emotions');
-    esec.addEventListener('mouseenter',stopAuto); esec.addEventListener('mouseleave',startAuto);
-  }
-  setEmo('happy');
+  /* ---------- Emotions: playground Nimo (src/nimo), fetched only when the section gets close ---------- */
+  (function(){
+    var sec=document.getElementById('emotions'); if(!sec) return;
+    var load=function(){ import('./nimo/playground').then(function(m){ m.mountPlayground({ reduce: REDUCE, touch: TOUCH }); }); };
+    if(!('IntersectionObserver' in window)){ load(); return; }
+    var io=new IntersectionObserver(function(en){
+      if(en.some(function(x){ return x.isIntersecting; })){ io.disconnect(); load(); }
+    },{rootMargin:'600px 0px'});
+    io.observe(sec);
+  })();
 
   /* ---------- Colorways ---------- */
   var cwBody=document.getElementById('cwBody'), cwBase=document.getElementById('cwBase');
