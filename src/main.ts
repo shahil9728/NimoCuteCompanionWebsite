@@ -17,17 +17,12 @@ import { initWaitlistCount, bumpWaitlistCount } from './lib/count';
 
   /* analytics + waitlist come from ES modules (src/lib) */
 
-  /* ---------- Lenis smooth scroll + GSAP sync ---------- */
+  /* ---------- Lenis smooth scroll (mouse/trackpad only; phones keep native scroll) ---------- */
   var lenis=null;
-  if (window.Lenis && !REDUCE){
+  if (window.Lenis && !REDUCE && !TOUCH){
     lenis = new Lenis({ duration:1.1, smoothWheel:true, lerp:0.09 });
-    function raf(t){ lenis.raf(t); requestAnimationFrame(raf); }
-    requestAnimationFrame(raf);
-    if (hasGSAP && window.ScrollTrigger){
-      lenis.on('scroll', ScrollTrigger.update);
-      gsap.ticker.add(function(t){ lenis.raf(t*1000); });
-      gsap.ticker.lagSmoothing(0);
-    }
+    if (hasGSAP){ gsap.ticker.add(function(t){ lenis.raf(t*1000); }); gsap.ticker.lagSmoothing(0); }
+    else { var raf=function(t){ lenis.raf(t); requestAnimationFrame(raf); }; requestAnimationFrame(raf); }
   }
   // anchor smooth-scroll (works with or without Lenis)
   function scrollToEl(el){
@@ -52,18 +47,20 @@ import { initWaitlistCount, bumpWaitlistCount } from './lib/count';
     var open=menu.classList.toggle('open'); burger.setAttribute('aria-expanded', open?'true':'false');
   });}
 
-  /* ---------- Reveal on scroll ---------- */
-  var revealEls=[].slice.call(document.querySelectorAll('[data-anim]'));
-  if (hasGSAP && window.ScrollTrigger && !REDUCE){
-    gsap.registerPlugin(ScrollTrigger);
-    revealEls.forEach(function(el){
-      gsap.fromTo(el,{y:26,opacity:0},{y:0,opacity:1,duration:.9,ease:'power3.out',
-        scrollTrigger:{trigger:el, start:'top 88%', once:true}});
-    });
-    // hero load-in stagger
-    var heroAnim=[].slice.call(document.querySelectorAll('.hero-copy [data-anim], .hero-visual'));
-    gsap.set(heroAnim,{opacity:0,y:30});
-    gsap.to(heroAnim,{opacity:1,y:0,duration:1,ease:'power3.out',stagger:.1,delay:.15});
+  /* ---------- Reveal on scroll ----------
+     IntersectionObserver + Web Animations instead of ScrollTrigger: no layout reads per element.
+     The hero animates in pure CSS (main.css), so the headline never waits for JS. */
+  var revealEls=[].slice.call(document.querySelectorAll('[data-anim]')).filter(function(el){ return !el.closest('.hero'); });
+  if (!REDUCE && 'IntersectionObserver' in window && Element.prototype.animate){
+    var rio=new IntersectionObserver(function(en){
+      en.forEach(function(x){
+        if(!x.isIntersecting) return;
+        rio.unobserve(x.target);
+        x.target.classList.remove('reveal-wait');
+        x.target.animate([{opacity:0,translate:'0 26px'},{opacity:1,translate:'0 0'}],{duration:900,easing:'cubic-bezier(.22,.61,.36,1)'});
+      });
+    },{rootMargin:'0px 0px -12% 0px'});
+    revealEls.forEach(function(el){ el.classList.add('reveal-wait'); rio.observe(el); });
   } // else: everything already visible (CSS default)
 
     /* ---------- Waitlist forms (frictionless, Supabase-backed) ---------- */
@@ -247,7 +244,7 @@ import { initWaitlistCount, bumpWaitlistCount } from './lib/count';
 
   /* ---------- Ambient particle canvas ---------- */
   (function(){
-    if(REDUCE) return;
+    if(REDUCE || TOUCH) return; // phones: skip the full-screen canvas redraw every frame
     var cv=document.getElementById('particles'); if(!cv) return;
     var ctx=cv.getContext('2d'), W,H,DPR=Math.min(window.devicePixelRatio||1,2), pts=[], N=0, mouse={x:-999,y:-999};
     function resize(){ W=cv.width=innerWidth*DPR; H=cv.height=innerHeight*DPR; cv.style.width=innerWidth+'px'; cv.style.height=innerHeight+'px';

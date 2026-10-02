@@ -9,13 +9,18 @@ let shown = OFFSET;
 let target = OFFSET;
 let tween: { kill(): void } | null = null;
 
+// Rewrite the text only when the number changes: new text nodes count as fresh paint (LCP).
+let painted = OFFSET.toLocaleString('en-US'); // matches the number already in the HTML
 function paint(n: number) {
   const s = Math.round(n).toLocaleString('en-US');
+  if (s === painted) return;
+  painted = s;
   document.querySelectorAll('[data-waitlist-count]').forEach((el) => { el.textContent = s; });
 }
 
 function animateTo(n: number, pop = false) {
   target = n;
+  if (n === shown && !pop) return;
   const els = document.querySelectorAll('[data-waitlist-count]');
   if (pop) els.forEach((el) => { el.classList.remove('bump'); void (el as HTMLElement).offsetWidth; el.classList.add('bump'); });
   const g = window.gsap;
