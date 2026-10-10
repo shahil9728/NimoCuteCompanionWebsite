@@ -69,6 +69,18 @@ export async function joinWaitlist(email: string, source = 'website'): Promise<W
   return { ok: false, error: dbError || 'Could not submit' };
 }
 
+// Feedback button messages (supabase/feedback.sql). Insert-only backup of the email.
+export async function saveFeedback(message: string, email: string, page: string): Promise<boolean> {
+  if (!client) return false;
+  try {
+    const { error } = await client.from('feedback').insert({ message, email: email || null, page });
+    if (error) console.warn('[Nimo] feedback save failed:', error.message);
+    return !error;
+  } catch {
+    return false;
+  }
+}
+
 // Post-signup survey answers (supabase/waitlist_survey.sql). Insert-only; failures are ignored.
 export async function saveSurvey(email: string, answers: Record<string, unknown>, location: string): Promise<boolean> {
   if (!client) return false;

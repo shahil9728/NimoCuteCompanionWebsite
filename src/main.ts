@@ -4,6 +4,7 @@ import { joinWaitlist } from './lib/supabase';
 import { initWaitlistCount, bumpWaitlistCount } from './lib/count';
 import { initSurvey } from './lib/survey';
 import { initExitPrompt } from './lib/exitPrompt';
+import { sendFeedback } from './lib/feedback';
 
 (window as any).nimoTrack = track;
 
@@ -321,9 +322,8 @@ import { initExitPrompt } from './lib/exitPrompt';
   })();
 
 
-  /* ---------- Feedback -> email (mailto: nimo.cutu@gmail.com) ---------- */
+  /* ---------- Feedback -> sent directly (Web3Forms email + Supabase backup, src/lib/feedback.ts) ---------- */
   (function(){
-    var TO='nimo.cutu@gmail.com';
     var openBtn=document.getElementById('fbOpen'), modal=document.getElementById('fbModal'), closeBtn=document.getElementById('fbClose');
     if(!openBtn || !modal) return;
     var sendBtn=document.getElementById('fbSend'), msg=document.getElementById('fbMessage'), em=document.getElementById('fbEmail'), note=document.getElementById('fbNote');
@@ -334,16 +334,29 @@ import { initExitPrompt } from './lib/exitPrompt';
     if(closeBtn) closeBtn.addEventListener('click', closeFb);
     modal.addEventListener('click', function(e){ if(e.target===modal) closeFb(); });
     document.addEventListener('keydown', function(e){ if(e.key==='Escape' && modal.classList.contains('open')) closeFb(); });
-    if(sendBtn) sendBtn.addEventListener('click', function(){
+    var sending=false;
+    function setNote(text, cls){ if(note){ note.textContent=text; note.className='fb-note'+(cls?' '+cls:''); } }
+    if(sendBtn) sendBtn.addEventListener('click', async function(){
+      if(sending) return;
       var m=((msg&&msg.value)||'').trim();
-      if(!m){ if(note){ note.textContent='Please write a short message first.'; note.className='fb-note'; } if(msg) msg.focus(); return; }
-      try{ track.buttonClick('feedback-send'); }catch(_){}
+      if(!m){ setNote('Please write a short message first.'); if(msg) msg.focus(); return; }
       var mail=((em&&em.value)||'').trim();
-      var subject='Nimo — feedback from the website';
-      var body=m+'\n\n—\n'+(mail?('Reply to: '+mail+'\n'):'')+'Sent from the Nimo website';
-      window.location.href='mailto:'+TO+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
-      if(note){ note.textContent='Opening your email app… thank you! 💜'; note.className='fb-note ok'; }
-      setTimeout(closeFb, 2200);
+      if(mail && !EMAIL.test(mail)){ setNote('That email looks off. Fix it or leave it empty.', 'err'); if(em) em.focus(); return; }
+      sending=true; sendBtn.disabled=true; sendBtn.style.opacity='.75';
+      var lbl=sendBtn.querySelector('.lbl'), original=lbl?lbl.textContent:'';
+      if(lbl) lbl.textContent='Sending…';
+      setNote('');
+      var ok=false;
+      try{ ok=await sendFeedback(m.slice(0,5000), mail); }catch(_){ ok=false; }
+      sending=false; sendBtn.disabled=false; sendBtn.style.opacity=''; if(lbl) lbl.textContent=original;
+      try{ track.buttonClick(ok?'feedback-sent':'feedback-failed'); }catch(_){}
+      if(ok){
+        setNote('Sent! Nimo got your message. Thank you 💜', 'ok');
+        if(msg) msg.value='';
+        setTimeout(function(){ closeFb(); setNote(''); }, 1800);
+      } else {
+        setNote("Couldn't send right now. Please try again in a moment.", 'err');
+      }
     });
   })();
 

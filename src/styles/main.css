@@ -422,6 +422,7 @@ footer{border-top:1px solid var(--stroke);padding:70px 0 40px;position:relative}
 .fb-form .btn{width:100%;justify-content:center;margin-top:2px}
 .fb-note{font-size:13px;color:var(--faint);min-height:18px;text-align:center;margin-top:2px}
 .fb-note.ok{color:#8fe6b6}
+.fb-note.err{color:#ffb4b4}
 
 /* ============ dialogs: mini Nimo, exit prompt, survey ============ */
 .mf-wrap{width:124px;height:124px;margin:-10px auto 8px}

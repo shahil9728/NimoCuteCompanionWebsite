@@ -138,6 +138,10 @@ Every waitlist submission is stored in Supabase **and** emailed to the owner (`s
 
 The access key is safe to expose in the client (it only ever sends to your address). Until it's set, signups still work and are stored in Supabase — you just won't get the email.
 
+## 💬 Feedback button
+
+The floating **Feedback** button sends the message straight to the owner's inbox through the same Web3Forms key as the signup alerts, and stores a backup row in the Supabase `feedback` table (run [`supabase/feedback.sql`](./supabase/feedback.sql) once). The visitor never leaves the page or opens an email app.
+
 ## 📈 Google Analytics / Tag
 
 `gtag.js` is bootstrapped in `index.html` and configured for both IDs:
