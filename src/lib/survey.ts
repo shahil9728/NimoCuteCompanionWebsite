@@ -23,7 +23,7 @@ const QUESTIONS: Question[] = [
   },
   {
     id: 'price', title: 'What price feels fair for me?',
-    options: [['under_2k', 'Under ₹2,000'], ['2k_3.5k', '₹2,000–3,500'], ['3.5k_5k', '₹3,500–5,000'], ['5k_8k', '₹5,000–8,000'], ['8k_plus', '₹8,000+']],
+    options: [['usd_50_75', '$50–75'], ['usd_75_100', '$75–100'], ['usd_100_150', '$100–150'], ['usd_150_200', '$150–200'], ['usd_200_plus', '$200+']],
   },
 ];
 
