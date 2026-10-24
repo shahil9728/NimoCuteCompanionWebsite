@@ -1,7 +1,9 @@
 import './styles/main.css';
 import { track } from './lib/analytics';
-import { joinWaitlist } from './lib/supabase';
-import { initWaitlistCount, bumpWaitlistCount } from './lib/count';
+import { initWaitlistForms, EMAIL } from './lib/waitlistForms';
+import { initWaitlistCount } from './lib/count';
+import { initExploreMenu } from './lib/navMenu';
+import { initInsights } from './lib/insights';
 import { initSurvey } from './lib/survey';
 import { initExitPrompt } from './lib/exitPrompt';
 import { sendFeedback } from './lib/feedback';
@@ -35,12 +37,22 @@ import { sendFeedback } from './lib/feedback';
     if(lenis){ lenis.scrollTo(el, {offset:-70}); }
     else { el.scrollIntoView({behavior:REDUCE?'auto':'smooth', block:'start'}); }
   }
-  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  // The shared nav/footer link to "/#about" etc. so they work from every page; here on the
+  // home page those scroll in place instead of reloading. "/" (the logo) scrolls to the top.
+  document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach(function(a){
     a.addEventListener('click', function(e){
-      var id=a.getAttribute('href'); if(id.length<2) return;
+      var id=a.getAttribute('href').replace(/^\//,''); if(id.length<2) return;
       var el=document.querySelector(id); if(el){ e.preventDefault(); scrollToEl(el); closeMenu(); }
     });
   });
+  document.querySelectorAll('a[href="/"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault(); closeMenu();
+      if(lenis){ lenis.scrollTo(0); } else { window.scrollTo({top:0, behavior:REDUCE?'auto':'smooth'}); }
+    });
+  });
+  initExploreMenu();
+  initInsights(); // GA4: section views, link clicks, menu opens
 
   /* ---------- Nav scrolled state + mobile menu ---------- */
   var nav=document.getElementById('nav');
@@ -68,51 +80,8 @@ import { sendFeedback } from './lib/feedback';
     revealEls.forEach(function(el){ el.classList.add('reveal-wait'); rio.observe(el); });
   } // else: everything already visible (CSS default)
 
-    /* ---------- Waitlist forms (frictionless, Supabase-backed) ---------- */
-  var EMAIL=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  document.querySelectorAll('.waitlist-form').forEach(function(form){
-    var loc=form.getAttribute('data-loc')||'unknown';
-    var input=form.querySelector('input[type=email]');
-    var btn=form.querySelector('button[type=submit]');
-    var lblEl=btn?btn.querySelector('.lbl'):null;
-    form.addEventListener('submit', async function(e){
-      e.preventDefault();
-      var val=(input.value||'').trim();
-      track.waitlistClick(loc);
-      if(!EMAIL.test(val)){
-        input.style.borderColor='rgba(255,120,120,.7)'; input.focus();
-        input.addEventListener('input',function(){input.style.borderColor='';},{once:true});
-        return;
-      }
-      var original = lblEl?lblEl.innerHTML:(btn?btn.innerHTML:'');
-      if(btn){ btn.disabled=true; btn.style.opacity='.75'; if(lblEl){lblEl.textContent='Joining…';} else {btn.textContent='Joining…';} }
-      var res;
-      try { res = await joinWaitlist(val, loc); } catch(err){ res={ok:false,error:String(err)}; }
-      var success=null, sib=form.nextElementSibling;
-      if(sib && sib.hasAttribute('data-success')) success=sib;
-      if(res && res.ok){
-        track.formSubmit(loc);
-        if(!res.already) bumpWaitlistCount();
-        try{ localStorage.setItem('nimo_joined','1'); }catch(_){}
-        // survey + exit prompt listen for this
-        document.dispatchEvent(new CustomEvent('nimo:joined',{detail:{email:val, loc:loc, already:!!res.already}}));
-        if(success){
-          success.innerHTML = res.already
-            ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#59e6a0" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span>You're already on the list — see you on the road!</span>`
-            : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#59e6a0" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span>You're on the list! We'll email <b style="color:#fff">${val.replace(/</g,'&lt;')}</b> the moment pre-orders open.</span>`;
-          success.classList.add('show'); form.style.display='none';
-        } else {
-          form.innerHTML = `<div class="form-success show" style="display:flex">🎉 You're on the list! We'll be in touch soon.</div>`;
-        }
-        if(loc==='sticky'){ setTimeout(hideSticky,1600); }
-      } else {
-        if(btn){ btn.disabled=false; btn.style.opacity=''; if(lblEl){lblEl.innerHTML=original;} else {btn.innerHTML=original;} }
-        input.style.borderColor='rgba(255,120,120,.7)';
-        if(success){ success.style.background='rgba(255,90,90,.1)'; success.style.borderColor='rgba(255,90,90,.35)'; success.style.color='#ffd7d7'; success.textContent='Hmm, that did not go through. Please try again.'; success.classList.add('show'); }
-        console.error('[Nimo] waitlist error:', res && res.error);
-      }
-    });
-  });
+    /* ---------- Waitlist forms (frictionless, Supabase-backed, src/lib/waitlistForms.ts) ---------- */
+  initWaitlistForms(function(loc){ if(loc==='sticky'){ setTimeout(hideSticky,1600); } });
 
   // Count fetch waits until after load so its new connection never competes with the first paint.
   (function(){
@@ -141,10 +110,11 @@ import { sendFeedback } from './lib/feedback';
   var sticky=document.getElementById('stickybar');
   var dismissed=false;
   try{ dismissed=sessionStorage.getItem('nimo_sticky_closed')==='1'; }catch(_){}
-  function showSticky(){ if(!dismissed) sticky.classList.add('show'); var _fb=document.getElementById('fbOpen'); if(_fb) _fb.classList.add('raised'); }
+  var stickyTracked=false;
+  function showSticky(){ if(!dismissed){ sticky.classList.add('show'); if(!stickyTracked){ stickyTracked=true; track.stickyBar('shown'); } } var _fb=document.getElementById('fbOpen'); if(_fb) _fb.classList.add('raised'); }
   function hideSticky(){ sticky.classList.remove('show'); var _fb=document.getElementById('fbOpen'); if(_fb) _fb.classList.remove('raised'); }
   document.getElementById('stickyClose').addEventListener('click', function(){
-    dismissed=true; hideSticky(); try{sessionStorage.setItem('nimo_sticky_closed','1');}catch(_){}
+    dismissed=true; hideSticky(); track.stickyBar('dismiss'); try{sessionStorage.setItem('nimo_sticky_closed','1');}catch(_){}
   });
   var hero=document.querySelector('.hero'), climax=document.getElementById('waitlist');
   if('IntersectionObserver' in window){
@@ -249,7 +219,7 @@ import { sendFeedback } from './lib/feedback';
       c.setAttribute('aria-pressed','true');
       if(cwBody) cwBody.style.setProperty('--nimo',col);
       if(cwBase) cwBase.style.background=col;
-      track.buttonClick('colorway:'+c.textContent.trim());
+      track.colorwaySelect(c.textContent.trim());
     });
   });
 
@@ -286,7 +256,8 @@ import { sendFeedback } from './lib/feedback';
 
   /* ---------- FAQ: single-open + track ---------- */
   var qas=[].slice.call(document.querySelectorAll('.faq details'));
-  qas.forEach(function(d){ d.addEventListener('toggle',function(){ if(d.open){ qas.forEach(function(o){ if(o!==d) o.open=false; }); track.buttonClick('faq:'+d.querySelector('summary').textContent.trim().slice(0,40)); } }); });
+  // The first FAQ starts open and may fire one toggle on load; only count opens a visitor caused.
+  qas.forEach(function(d){ var skip=d.open; d.addEventListener('toggle',function(){ if(d.open){ qas.forEach(function(o){ if(o!==d) o.open=false; }); if(!skip) track.faqOpen(d.querySelector('summary').textContent); } skip=false; }); });
 
 
   /* ---------- Header logo eyes follow the cursor (keep blinking) ---------- */
@@ -314,7 +285,12 @@ import { sendFeedback } from './lib/feedback';
     var closeBtn=document.getElementById('demoClose'); var lastFocus=null;
     function openModal(){ lastFocus=document.activeElement; modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; if(lenis){try{lenis.stop();}catch(_){}} setTimeout(function(){ if(closeBtn) closeBtn.focus(); },60); }
     function closeModal(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; if(lenis){try{lenis.start();}catch(_){}} if(lastFocus && lastFocus.focus) lastFocus.focus(); }
-    document.querySelectorAll('[data-cta="watch-film"]').forEach(function(b){ b.addEventListener('click', function(e){ e.preventDefault(); openModal(); }); });
+    document.querySelectorAll('[data-cta="watch-film"]').forEach(function(b){ b.addEventListener('click', function(e){
+      e.preventDefault();
+      var where=b.closest('.hero')?'hero':(b.closest('section[id]')||{id:'page'}).id;
+      track.watchFilmClick(where);
+      openModal();
+    }); });
     if(closeBtn) closeBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', function(e){ if(e.target===modal) closeModal(); });
     document.addEventListener('keydown', function(e){ if(e.key==='Escape' && modal.classList.contains('open')) closeModal(); });

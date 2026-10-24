@@ -1,0 +1,33 @@
+<!-- Icons & PWA -->
+<link rel="icon" href="/favicon.ico" sizes="48x48" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" sizes="any" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+<link rel="icon" type="image/png" sizes="144x144" href="/favicon-144x144.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="apple-mobile-web-app-title" content="Nimo" />
+<meta name="application-name" content="Nimo" />
+
+<!-- Fonts are self-hosted (see @font-face in main.css) -->
+<link rel="preconnect" href="https://www.googletagmanager.com" />
+<link rel="preload" as="font" type="font/woff2" href="/fonts/inter-tight-latin-var.woff2" crossorigin />
+<link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-var.woff2" crossorigin />
+
+<!-- Canonical host guard: the Render subdomain stays reachable, so send it to the real domain -->
+<script>
+  (function () {
+    if (location.hostname === 'nimo-cute-companion.onrender.com') {
+      location.replace('https://www.heynimo.in' + location.pathname + location.search + location.hash);
+    }
+  })();
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-WF4ZWBSR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "GT-WF4ZWBSR");
+  gtag("config", "G-3C9Z4YQVRT");
+</script>

@@ -1,0 +1,128 @@
+/* ============================================================
+   Content pages (guides + comparisons) — loaded after main.css.
+   Text first: no hero photo behind the headline, no canvas,
+   no scroll libraries. Everything here is plain CSS.
+   ============================================================ */
+.mobile-menu.open a[aria-current=page]{color:var(--cyan)}
+
+/* ============ hero ============ */
+.page-hero{padding:clamp(108px,13vw,148px) 0 clamp(36px,5vw,64px)}
+.page-hero-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:56px;align-items:center}
+.page-hero h1{font-size:clamp(36px,5.2vw,62px);font-weight:800;line-height:1.05}
+.page-hero h1 .g{background:linear-gradient(100deg,var(--cyan),var(--blue) 55%,var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent}
+.page-hero .lede{color:var(--muted);font-size:clamp(16px,1.6vw,19px);max-width:56ch;margin:22px 0 28px}
+.page-hero .product-shot{max-width:400px;margin-left:auto;width:100%}
+
+/* ============ article text ============ */
+.page-body{padding:0 0 clamp(40px,6vw,80px)}
+.prose{max-width:760px;margin:0 auto}
+.prose>h2{font-size:clamp(27px,3.4vw,38px);margin:76px 0 16px;scroll-margin-top:96px}
+.prose>h2:first-child{margin-top:24px}
+.prose h3{font-size:21px;font-weight:600;line-height:1.25;margin:34px 0 10px}
+.prose p,.prose li{color:#c3cfd9}
+.prose p{margin:0 0 18px}
+.prose ul,.prose ol{padding-left:22px;margin:0 0 22px}
+.prose li{margin:9px 0}
+.prose li::marker{color:var(--cyan)}
+.prose a{color:var(--cyan);text-decoration:underline;text-decoration-color:rgba(53,224,255,.35);text-underline-offset:3px;transition:text-decoration-color .25s}
+.prose a:hover{text-decoration-color:var(--cyan)}
+.prose strong{color:var(--text);font-weight:600}
+.prose .wide{margin-left:calc(50% - min(50vw - 20px, 520px));margin-right:calc(50% - min(50vw - 20px, 520px))}
+.fineprint{font-size:13px!important;color:var(--faint)!important;margin-top:28px!important}
+
+/* ============ day timeline ============ */
+/* .prose ol/li padding and margins would shift the faces off the line, hence .prose in front */
+.prose .timeline{list-style:none;padding:0;margin:36px 0 10px;position:relative}
+.timeline::before{content:"";position:absolute;left:31px;top:20px;bottom:20px;width:2px;border-radius:2px;background:linear-gradient(180deg,var(--cyan),var(--purple));opacity:.3}
+.prose .moment{position:relative;display:grid;grid-template-columns:64px minmax(0,1fr);gap:20px;margin:0 0 20px}
+.moment .card{padding:22px 24px 20px}
+.moment time{display:block;font-family:var(--font-mono);font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan)}
+.moment h3{font-size:22px;margin:6px 0 8px}
+.moment p{color:var(--muted);margin:0 0 12px;font-size:16px}
+.mood{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:100px;background:rgba(255,255,255,.03);border:1px solid var(--stroke);color:var(--faint);font-size:13px}
+.mood b{color:var(--muted);font-weight:600}
+
+/* mini Nimo: a CSS-only face whose eyes change with the mood */
+.mini-nimo{position:relative;z-index:1;width:64px;height:64px;border-radius:50%;margin-top:6px;
+  background:radial-gradient(circle at 42% 34%,#20262e,#0a0d12 70%);border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 0 28px -6px rgba(53,224,255,.55),inset 0 3px 10px rgba(255,255,255,.05)}
+.mini-nimo::before,.mini-nimo::after{content:"";position:absolute;top:38%;width:18%;height:24%;border-radius:45%;background:var(--cyan);box-shadow:0 0 10px var(--cyan)}
+.mini-nimo::before{left:27%}.mini-nimo::after{right:27%}
+.mini-nimo.happy::before,.mini-nimo.happy::after{top:42%;height:12%;background:none;box-shadow:none;border:3px solid var(--cyan);border-bottom:0;border-radius:50% 50% 0 0/100% 100% 0 0;filter:drop-shadow(0 0 4px var(--cyan))}
+.mini-nimo.sleepy::before,.mini-nimo.sleepy::after{top:48%;height:5%;border-radius:3px}
+.mini-nimo.excited::before,.mini-nimo.excited::after{top:33%;width:22%;height:30%}
+.mini-nimo.night{box-shadow:0 0 20px -8px rgba(155,123,255,.5),inset 0 3px 10px rgba(255,255,255,.04)}
+.mini-nimo.night::before,.mini-nimo.night::after{background:#7d8fd8;box-shadow:0 0 6px #7d8fd8;opacity:.75}
+.mini-nimo.focus::before,.mini-nimo.focus::after{top:40%;height:18%;border-radius:40%}
+@media(prefers-reduced-motion:no-preference){
+  .mini-nimo::before,.mini-nimo::after{animation:mblink 4.4s infinite}
+  .moment:nth-child(2n) .mini-nimo::before,.moment:nth-child(2n) .mini-nimo::after{animation-delay:1.3s}
+  .mini-nimo.happy::before,.mini-nimo.happy::after{animation:none}
+}
+
+/* ============ comparison tables ============ */
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--radius);border:1px solid var(--stroke);background:rgba(255,255,255,.02);margin:30px 0 12px}
+.cmp{width:100%;border-collapse:collapse;min-width:740px;font-size:15px;line-height:1.5}
+.cmp caption{text-align:left;padding:16px 18px 0;color:var(--faint);font-size:13px}
+.cmp th,.cmp td{padding:14px 16px;text-align:left;vertical-align:top;border-bottom:1px solid var(--stroke)}
+.cmp tr:last-child>*{border-bottom:0}
+.cmp thead th{font-family:var(--font-display);font-size:16px;font-weight:600;color:var(--text);white-space:nowrap}
+.cmp tbody th,.cmp thead th:first-child{position:sticky;left:0;z-index:1;background:#0a0d12}
+.cmp tbody th{color:var(--muted);font-weight:500;min-width:150px}
+.cmp td{color:#c3cfd9}
+.cmp .is-nimo{background:rgba(53,224,255,.07);color:var(--text)}
+.cmp thead .is-nimo{color:var(--cyan)}
+.cmp .y::before,.cmp .n::before,.cmp .m::before{display:inline-block;width:18px;font-weight:700}
+.cmp .y::before{content:"✓";color:#59e6a0}
+.cmp .n::before{content:"✕";color:#ff8a8a}
+.cmp .m::before{content:"~";color:#ffc861}
+.table-hint{display:none;font-size:13px;color:var(--faint);margin:0}
+.cmp.two{min-width:500px}
+.cmp.two td{width:42%}
+.card-grid .feat ul{margin:4px 0 0;padding-left:20px}
+.card-grid .feat li{font-size:15px;margin:7px 0}
+
+/* ============ cards in the article ============ */
+.card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:26px 0}
+.card-grid .feat{padding:26px 24px}
+.card-grid .feat h3{margin-top:0;font-size:20px}
+.card-grid .feat p{font-size:15px;margin:0 0 10px}
+.card-grid .feat p:last-child{margin:0}
+.card-grid .feat .when{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px}
+.checklist{list-style:none!important;padding:0!important;display:flex;flex-direction:column;gap:12px}
+.checklist li{display:flex;gap:14px;align-items:flex-start;margin:0!important;padding:18px 20px;border-radius:18px;background:var(--panel);border:1px solid var(--stroke)}
+.checklist li::before{content:"✓";flex:0 0 auto;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;background:rgba(57,217,138,.16);color:#59e6a0;margin-top:1px}
+.checklist.never li::before{content:"✕";background:rgba(255,120,120,.12);color:#ff8a8a}
+.checklist b{color:var(--text)}
+.prose .ba-grid{margin:30px 0}
+.prose .ba-card .lead{font-size:18px}
+
+/* ============ mid-page waitlist band ============ */
+.cta-band{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px 28px;padding:26px 28px;margin:60px 0;border-radius:var(--radius-lg);
+  border:1px solid rgba(53,224,255,.35);background:linear-gradient(135deg,rgba(53,224,255,.11),rgba(155,123,255,.08));box-shadow:0 34px 80px -46px rgba(53,224,255,.7)}
+.cta-band .txt{flex:1 1 240px;min-width:0}
+.cta-band .txt b{display:block;font-family:var(--font-display);font-size:22px;font-weight:700;letter-spacing:-.01em;color:var(--text);line-height:1.2}
+.cta-band .txt span{display:block;color:var(--muted);font-size:15px;margin-top:6px}
+.cta-band .form-slot{flex:1 1 320px;max-width:440px}
+.cta-band .waitlist-form{max-width:none}
+
+/* ============ keep reading + closing ============ */
+.keep-reading{padding:clamp(40px,6vw,80px) 0 0}
+.keep-reading .sec-head{margin-bottom:34px}
+.keep-reading h2{font-size:clamp(28px,3.6vw,40px)}
+
+@media(max-width:960px){
+  .page-hero-grid{grid-template-columns:1fr;gap:34px}
+  .page-hero .product-shot{display:none}
+}
+@media(max-width:720px){
+  .card-grid{grid-template-columns:1fr}
+  .table-hint{display:block}
+  .cmp tbody th{min-width:118px}
+  .cmp th,.cmp td{padding:12px 13px}
+  .prose .moment{grid-template-columns:44px minmax(0,1fr);gap:14px}
+  .mini-nimo{width:44px;height:44px}
+  .timeline::before{left:21px}
+  .moment .card{padding:18px 18px 16px}
+  .cta-band{padding:22px 20px}
+}

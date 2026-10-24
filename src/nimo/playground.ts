@@ -301,7 +301,7 @@ export function mountPlayground(opts: { reduce: boolean; touch: boolean }) {
       touched(now);
       brain.set(m, 4, now);
       if (m === 'angry') fx.anger();
-      track.buttonClick('emotion:' + c.getAttribute('data-emo'));
+      track.emotionSelect(c.getAttribute('data-emo') || '');
     });
   });
 

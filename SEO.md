@@ -76,5 +76,43 @@ Both new pages are in the sitemap, canonicalised, and have their own JSON-LD.
 2. **The "642 friends waiting" figure is static text**, not a live count. Make it real or soften the claim.
 3. **Verify the FAQ answers** match reality on shipping, WiFi and driving safety before launch.
 4. **Swap in real product photography** when the device exists — the current imagery is concept art.
-5. **Add content depth.** A single landing page ranks for very little. Two or three genuinely useful articles (for example "are dashboard robots safe to drive with?", "AI companion robots compared") would give the domain something to rank for beyond its own brand name.
+5. ~~**Add content depth.**~~ Done in October 2026, see section 3.
 6. **Build a few real backlinks** — Product Hunt, BetaList, relevant subreddits, robotics newsletters. For a brand-new domain this matters more than anything on this page.
+
+---
+
+## 3. Content pages (October 2026)
+
+Ten light pages so the domain can rank for more than its own name. They load `main.css` + `page.css` and `src/page.ts` only: no GSAP, Lenis, particle canvas or playground. Copy presents Nimo as a companion for both the desk and the car.
+
+| URL | Searches it targets |
+|---|---|
+| `/a-day-with-nimo` | AI companion robot for car, what a dashboard robot does |
+| `/nimo-desktop-companion` | desktop companion robot, AI desk pet, cute desk robot |
+| `/who-is-nimo-for` | gadgets for commuters / remote workers / students / gamers, gift ideas |
+| `/dashboard-robot-safety` | is a dashboard robot safe, what you can put on a dashboard |
+| `/ai-companion-robots-compared` | best AI companion robot, companion robots compared (hub for the four below) |
+| `/nimo-vs-emo` | EMO robot alternative, EMO vs ... |
+| `/nimo-vs-eilik` | Eilik alternative, cute desk robot |
+| `/nimo-vs-vector` | Vector robot alternative |
+| `/nimo-vs-loona` | Loona alternative, pet robot |
+| `/nimo-vs-voice-assistants` | companion vs Siri / Alexa / Google, CarPlay and smart speakers |
+
+**How they're built**
+- Each page is `<slug>.html` at the repo root and a Vite entry (list in `scripts/content-pages.mjs`). Shared head tags, nav, footer, guide cards and dialogs live in `partials/` and are pulled in with `<!--#include partials/x.html-->` by a small plugin in `vite.config.ts` (partials can include partials).
+- The nav and footer partials are used by the home page too, so the menu is the same everywhere. The nav has an "Explore" dropdown (Guides + Compare); on the home page `main.ts` turns its `/#section` links into smooth scrolls.
+- `npm run build` runs `scripts/clean-urls.mjs` afterwards, copying `dist/<slug>.html` to the extensionless `dist/<slug>` (same reason as `/privacy`: the dashboard catch-all). `render.yaml` gives those paths `Content-Type: text/html`. The `.html` copies also resolve; the canonical tag points at the extensionless URL.
+- Waitlist everywhere: nav button, hero form, a mid-page band, the closing form and the sticky bar, plus the exit prompt and post-signup survey. Signups are tagged with the page (`source` like `nimo-vs-emo-mid`), so Supabase and the owner email show which page converts.
+- Every page has its own title, description, canonical, Open Graph, and an `Article` + `FAQPage` graph whose FAQ text matches the visible FAQ. No visible breadcrumbs (owner's call), so no `BreadcrumbList` either. All pages are in `sitemap.xml` and `llms.txt`, and linked from the nav dropdown, the footer, the home page "Go deeper" cards and each other.
+- Claims about other products stick to stable, public facts (no prices or specs) and end with a one-line trademark note. Nimo's features are described as "designed to", matching the pre-launch status in `llms.txt`; the pages carry no separate "in development" notices, summary boxes or concept-art figures (owner's call).
+- The safety page is deliberately low-key: not in the nav or the guide cards, only a small footer link and in-text links from other pages.
+
+**Adding a page:** create `<slug>.html` (copy an existing one), add the slug to `scripts/content-pages.mjs`, `public/sitemap.xml`, `public/llms.txt`, `partials/guides.html`, the nav/footer partials if it should be there, and a Content-Type header in `render.yaml`.
+
+## 4. Getting impressions (off-page, after deploy)
+
+1. **Google Search Console:** resubmit `sitemap.xml`, then URL Inspection → Request indexing for each new page. Do the same in **Bing Webmaster Tools** (it also feeds ChatGPT search and Copilot).
+2. **Delete the Render dashboard catch-all** (section 1). Until then, typos return the homepage with a 200.
+3. **Real footage beats everything.** Short clips of the working prototype's eyes (Reels, Shorts, X) that link to `/a-day-with-nimo` give Google and people a reason to visit.
+4. **Backlinks:** Product Hunt "coming soon", BetaList, a Hackaday.io build log, Show HN, r/gadgets, r/robotics, r/esp32. A build log is the most natural place for a link.
+5. **Keep publishing:** one new page every 2 to 4 weeks (a build log entry, "best car gadgets for road trips", "gift ideas for drivers"). Check Search Console's Queries report monthly and write for the questions people already search.

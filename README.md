@@ -40,6 +40,8 @@ Built as a lightweight **Vite + TypeScript** static site — no framework runtim
 .
 ├── index.html            # markup + <head> (SEO, gtag.js, JSON-LD)
 ├── 404.html              # real 404 page (Render serves it with a 404 status)
+├── <slug>.html           # 5 SEO content pages, e.g. a-day-with-nimo.html (see SEO.md §3)
+├── partials/             # nav, footer, guide cards, dialogs shared by the content pages
 ├── privacy/index.html    # /privacy
 ├── terms/index.html      # /terms
 ├── SEO.md                # what's implemented + owner checklist
@@ -52,6 +54,7 @@ Built as a lightweight **Vite + TypeScript** static site — no framework runtim
 │   └── sitemap.xml
 ├── src/
 │   ├── main.ts           # all interactions (imports styles + lib modules)
+│   ├── page.ts           # content pages: nav, waitlist, sticky bar, dialogs (no GSAP/Lenis)
 │   ├── vite-env.d.ts
 │   ├── styles/
 │   │   └── main.css      # design system (imagery now lives in public/images)
@@ -144,12 +147,46 @@ The floating **Feedback** button sends the message straight to the owner's inbox
 
 ## 📈 Google Analytics / Tag
 
-`gtag.js` is bootstrapped in `index.html` and configured for both IDs:
+`gtag.js` is bootstrapped in `index.html` (and in `partials/page-head.html` for the content pages) and configured for both IDs:
 
 - `G-3C9Z4YQVRT` — GA4 Measurement ID
 - `GT-WF4ZWBSR` — Google Tag
 
-Custom events (in `src/lib/analytics.ts`, fired throughout the UI): `waitlist_click`, `form_submit`, `cta_click`, `button_click`, `scroll_depth`, `nimo_play` (first use of each playground gesture per page view) and `nimo_milestone` (`love`, `furious`, `all_tricks`, `cta_shown`). To change IDs, edit the two `gtag('config', …)` lines in `index.html`.
+To change IDs, edit the two `gtag('config', …)` lines in both files. All helpers live in `src/lib/analytics.ts`; page-wide listeners (sections, link clicks, menus) in `src/lib/insights.ts`.
+
+| Event | Parameters | Fires when |
+|---|---|---|
+| `watch_the_film_cta_click` | `location` (`hero`) | "Watch the film" is clicked (also still sends `cta_click`) |
+| `waitlist_form_start` | `location` | first focus on a waitlist email box |
+| `waitlist_click` | `location` | a Join button or a waitlist submit is pressed |
+| `waitlist_form_error` | `location`, `reason` (`empty`, `invalid_email`, `submit_failed`) | a join attempt fails |
+| `form_submit` | `form`, `location` | a join succeeds (new or already on the list) |
+| `generate_lead` | `lead_source` | a **new** address joins — GA4's recommended lead event |
+| `section_view` | `section` (section id/label, or `h2: <heading>` on content pages) | a section's top passes 60% of the screen, once per page view |
+| `scroll_depth` | `percent` (25/50/75/100) | scroll milestones |
+| `faq_open` | `question` | a visitor opens an FAQ |
+| `colorway_select` | `colorway` (Glacier, Cloud, Ember) | a colorway is picked |
+| `emotion_select` | `emotion` | a mood chip is picked in the playground |
+| `nimo_play` | `gesture` | first use of each playground gesture per page view |
+| `nimo_milestone` | `name` (`love`, `furious`, `all_tricks`, `cta_shown`) | playground milestones |
+| `nav_menu_open` | `menu` (Guides, Compare) | a nav dropdown opens |
+| `nav_click` | `area` (nav, nav_menu, mobile_menu, footer), `label`, `destination` | an internal link in the nav or footer |
+| `content_click` | `area` (guide_card, article, page), `destination` | an internal link in the page body |
+| `social_click` | `network` (x, instagram), `area` | a social icon/link |
+| `sticky_bar` | `action` (`shown` once per page, `dismiss`) | the bottom waitlist bar |
+| `exit_prompt` | `action`, `trigger` | the "leaving already?" dialog |
+| `survey_answer` / `survey_complete` | `question`, `answer` / `answered` | the post-signup survey |
+| `share` | `method` | WhatsApp / copy link after joining |
+| `cta_click` / `button_click` | `cta` / `label` | other buttons (feedback sent/failed, playground adopt, modal join) |
+
+User property: `waitlist_member = yes` once this browser has joined (set on join and on every later visit).
+
+**One-time setup in GA4 (Admin):**
+1. *Custom definitions* → create event-scoped dimensions for `location`, `section`, `question`, `colorway`, `emotion`, `area`, `destination`, `network`, `menu`, `reason`, `lead_source`, and a user-scoped one for `waitlist_member`. Without these the parameters are collected but not shown in reports.
+2. *Events* → mark `generate_lead` (and `watch_the_film_cta_click` if you want it) as **key events**.
+3. Google Ads → *Goals → Conversions → Import → Google Analytics 4* → pick `generate_lead`, so ads optimise for real sign-ups.
+
+Renamed in October 2026: `button_click` labels `faq:…`, `colorway:…`, `emotion:…` and `guide:…` became `faq_open`, `colorway_select`, `emotion_select` and `content_click`.
 
 ---
 

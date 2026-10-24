@@ -1,0 +1,57 @@
+<!-- ============ STICKY WAITLIST BAR (page.ts tags its signups with the page) ============ -->
+<div class="stickybar" id="stickybar">
+  <div class="stickybar-inner">
+    <div class="stickybar-card">
+      <div class="txt">
+        <span class="mini" aria-hidden="true"><i class="l"></i><i class="r"></i></span>
+        <b>Meet Nimo before anyone else.</b><span><span data-waitlist-count>696</span>+ waiting · limited first batch</span>
+      </div>
+      <form class="waitlist-form" data-loc="sticky" novalidate>
+        <div class="field"><label for="sticky-email" class="skip">Email address</label><input id="sticky-email" type="email" placeholder="you@email.com" autocomplete="email" required /></div>
+        <button type="submit" class="btn btn-primary"><span class="lbl">Join</span></button>
+      </form>
+      <button class="close" id="stickyClose" type="button" aria-label="Dismiss">✕</button>
+    </div>
+  </div>
+</div>
+
+<!-- Exit prompt: once per session, for visitors leaving without joining (src/lib/exitPrompt.ts) -->
+<div class="modal-overlay" id="exitModal" role="dialog" aria-modal="true" aria-labelledby="xpTitle" aria-hidden="true">
+  <div class="modal glass xp-modal" role="document">
+    <button class="modal-close" id="xpClose" type="button" aria-label="Close">✕</button>
+    <div class="mf-wrap" id="xpFace" aria-hidden="true"></div>
+    <span class="m-tag">🥺 Wait…</span>
+    <h3 id="xpTitle">You're leaving me already?</h3>
+    <p id="xpText">I was hoping to ride shotgun with you. Join the waitlist and I'll come find you the day I'm ready.</p>
+    <form class="waitlist-form" data-loc="exit" novalidate>
+      <div class="field"><label for="exit-email" class="skip">Email address</label><input id="exit-email" type="email" placeholder="you@email.com" autocomplete="email" required /></div>
+      <button type="submit" class="btn btn-primary"><span class="lbl">Take me with you</span></button>
+    </form>
+    <div class="form-success" data-success></div>
+    <button class="xp-later" id="xpLater" type="button">Maybe later</button>
+  </div>
+</div>
+
+<!-- Post-signup survey: 4 quick questions (src/lib/survey.ts) -->
+<div class="modal-overlay" id="surveyModal" role="dialog" aria-modal="true" aria-labelledby="svTitle" aria-hidden="true">
+  <div class="modal glass sv-modal" role="document">
+    <button class="modal-close" id="svClose" type="button" aria-label="Close">✕</button>
+    <div class="mf-wrap mf-small" id="svFace" aria-hidden="true"></div>
+    <div id="svAsk">
+      <span class="m-tag" id="svStep">Question 1 of 4</span>
+      <h3 id="svTitle">Where did you hear about me?</h3>
+      <p class="sv-sub" id="svSub">4 quick taps. Your answers decide what I learn first.</p>
+      <div class="sv-progress"><i id="svBar"></i></div>
+      <div class="sv-options" id="svOptions" role="group" aria-labelledby="svTitle"></div>
+      <button class="btn btn-primary" id="svNext" type="button" hidden><span class="lbl">Next</span></button>
+      <button class="xp-later" id="svSkip" type="button">Skip</button>
+    </div>
+    <div id="svDone" hidden>
+      <span class="m-tag">You're on the list 🎉</span>
+      <h3>Thank you! I'll remember that 💙</h3>
+      <p>We'll email you the moment pre-orders open. Want to bring a friend along?</p>
+      <a class="btn btn-primary" id="svWhatsapp" href="https://wa.me/" target="_blank" rel="noopener noreferrer"><span class="lbl">Share on WhatsApp</span></a>
+      <button class="xp-later" id="svCopy" type="button">Copy link</button>
+    </div>
+  </div>
+</div>

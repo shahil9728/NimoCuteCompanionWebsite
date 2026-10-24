@@ -1,7 +1,7 @@
 # Nimo
 
 > Nimo is an emotionally intelligent AI companion robot designed to live on your car
-> dashboard. He reads your day and reacts with hundreds of expressions, connects over
+> dashboard and on your desk. He reads your day and reacts with hundreds of expressions, connects over
 > WiFi for weather, traffic and messages, responds to touch, and uses his glowing eyes
 > as a glanceable, hands-free visual assistant. Nimo is in development and not yet for
 > sale; the site collects free waitlist sign-ups ahead of a limited first batch.
@@ -21,6 +21,26 @@ Made by Nimo Robotics Inc. Contact: nimo.cutu@gmail.com
 
 - [Home](https://www.heynimo.in/): What Nimo is, its four features, how it works, the
   emotion demo, colorways, FAQ, and the waitlist sign-up form.
+- [A day with Nimo](https://www.heynimo.in/a-day-with-nimo): One ordinary day with
+  Nimo on the dashboard, hour by hour, from the morning hello to the late drive home.
+- [Nimo on your desk](https://www.heynimo.in/nimo-desktop-companion): Nimo as a
+  desktop companion through a workday: greetings, quiet company, break reminders,
+  games and music.
+- [Who Nimo is for](https://www.heynimo.in/who-is-nimo-for): Commuters, road-trippers,
+  new drivers, parents, rideshare drivers, night drivers, remote workers, students,
+  gamers and gift-givers.
+- [Dashboard robot safety](https://www.heynimo.in/dashboard-robot-safety): How Nimo is
+  designed around visual, manual and cognitive distraction, plus a general checklist
+  for putting anything on a car dashboard.
+- [AI companion robots compared](https://www.heynimo.in/ai-companion-robots-compared):
+  Nimo, EMO, Eilik, Vector and Loona side by side.
+- One-to-one comparisons: [Nimo vs EMO](https://www.heynimo.in/nimo-vs-emo),
+  [Nimo vs Eilik](https://www.heynimo.in/nimo-vs-eilik),
+  [Nimo vs Vector](https://www.heynimo.in/nimo-vs-vector),
+  [Nimo vs Loona](https://www.heynimo.in/nimo-vs-loona).
+- [Nimo vs voice assistants](https://www.heynimo.in/nimo-vs-voice-assistants): How a
+  companion differs from Siri, Alexa and Google on phones, smart speakers and car
+  screens. Nimo works alongside them, not instead.
 - [Privacy Policy](https://www.heynimo.in/privacy): What data is collected (email
   address only), why, who processes it, retention, cookies/analytics, and how to
   request deletion.

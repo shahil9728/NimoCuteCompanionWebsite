@@ -97,6 +97,40 @@ services:
         name: Content-Type
         value: text/html; charset=utf-8
 
+      # SEO content pages: extensionless copies made by scripts/clean-urls.mjs
+      # (postbuild), same reason as /privacy. Keep in sync with
+      # scripts/content-pages.mjs.
+      - path: /a-day-with-nimo
+        name: Content-Type
+        value: text/html; charset=utf-8
+      - path: /nimo-desktop-companion
+        name: Content-Type
+        value: text/html; charset=utf-8
+      - path: /who-is-nimo-for
+        name: Content-Type
+        value: text/html; charset=utf-8
+      - path: /dashboard-robot-safety
+        name: Content-Type
+        value: text/html; charset=utf-8
+      - path: /ai-companion-robots-compared
+        name: Content-Type
+        value: text/html; charset=utf-8
+      - path: /nimo-vs-emo
+        name: Content-Type
+        value: text/html; charset=utf-8
+      - path: /nimo-vs-eilik
+        name: Content-Type
+        value: text/html; charset=utf-8
+      - path: /nimo-vs-vector
+        name: Content-Type
+        value: text/html; charset=utf-8
+      - path: /nimo-vs-loona
+        name: Content-Type
+        value: text/html; charset=utf-8
+      - path: /nimo-vs-voice-assistants
+        name: Content-Type
+        value: text/html; charset=utf-8
+
       # --- Correct MIME type: Render serves .webmanifest as octet-stream ---
       - path: /site.webmanifest
         name: Content-Type
