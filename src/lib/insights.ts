@@ -1,11 +1,12 @@
 import { track } from './analytics';
+import { hasJoined } from './joined';
 
 // Extra GA4 signals for "how do people see Nimo", shared by the home page and the content
 // pages: which sections people actually reach, where they click next (nav, footer, guide
 // cards, links in the text, social icons), which menus they open, and whether this
 // browser already joined the waitlist (user property, so GA4 can split joined vs not).
 export function initInsights() {
-  try { if (localStorage.getItem('nimo_joined') === '1') track.markJoined(); } catch (_) { /* private mode */ }
+  if (hasJoined()) track.markJoined();
 
   // Sections and article headings: one section_view each, when its top passes 60% of the
   // screen. A scroll check rather than IntersectionObserver, because a fast flick can carry a

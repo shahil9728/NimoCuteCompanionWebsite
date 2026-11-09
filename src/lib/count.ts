@@ -1,4 +1,5 @@
 import { fetchWaitlistCount } from './supabase';
+import { hasJoined } from './joined';
 
 // Shown number = OFFSET + real signups, so it grows by one with every real join.
 // Set VITE_WAITLIST_COUNT_OFFSET=0 once the real list is big enough to show on its own.
@@ -32,8 +33,7 @@ function animateTo(n: number, pop = false) {
 }
 
 export async function initWaitlistCount() {
-  let joined = false;
-  try { joined = localStorage.getItem(JOINED_KEY) === '1'; } catch (_) { /* private mode */ }
+  const joined = hasJoined();
   const real = await fetchWaitlistCount();
   animateTo(real !== null ? OFFSET + real : OFFSET + (joined ? 1 : 0));
 }

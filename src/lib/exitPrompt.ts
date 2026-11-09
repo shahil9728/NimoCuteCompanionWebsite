@@ -1,16 +1,18 @@
 import { track } from './analytics';
 import { miniFace } from '../nimo/miniFace';
+import { hasJoined } from './joined';
 
 // "You're leaving me?" dialog for visitors who haven't joined. Shown at most once per
 // session and once every 3 days. Desktop: pointer leaves through the top of the window.
 // Phones: a fast flick back up the page after reading, or 45 s on the page.
+// Visitors who already joined never get it: nothing is set up for them at all.
 const SEEN_KEY = 'nimo_exit_at';
 const COOLDOWN_MS = 3 * 24 * 3600 * 1000;
 const MIN_ON_PAGE_MS = 8000;
 
 export function initExitPrompt(opts: { touch: boolean; lock: () => void; unlock: () => void }) {
   const modal = document.getElementById('exitModal');
-  if (!modal) return;
+  if (!modal || hasJoined()) return;
   const face = document.getElementById('xpFace') as HTMLElement;
   const titleEl = document.getElementById('xpTitle') as HTMLElement;
   const textEl = document.getElementById('xpText') as HTMLElement;
@@ -22,7 +24,7 @@ export function initExitPrompt(opts: { touch: boolean; lock: () => void; unlock:
   let lastFocus: Element | null = null, shown = false;
 
   function canShow() {
-    if (shown || store(localStorage, 'nimo_joined') === '1' || store(sessionStorage, SEEN_KEY)) return false;
+    if (shown || hasJoined() || store(sessionStorage, SEEN_KEY)) return false;
     if (Date.now() - Number(store(localStorage, SEEN_KEY) || 0) < COOLDOWN_MS) return false;
     if (performance.now() < MIN_ON_PAGE_MS || document.hidden) return false;
     if (document.querySelector('.modal-overlay.open')) return false;
