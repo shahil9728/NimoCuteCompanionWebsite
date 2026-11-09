@@ -38,8 +38,10 @@ export function initInsights() {
       : a.closest('footer') ? 'footer'
       : a.closest('.guides') ? 'guide_card'
       : a.closest('article') ? 'article'
+      : a.closest('#surveyModal') ? 'survey'
       : 'page';
-    const social = /x\.com|twitter\.com/.test(href) ? 'x' : /instagram\.com/.test(href) ? 'instagram' : '';
+    const social = /x\.com|twitter\.com/.test(href) ? 'x' : /instagram\.com/.test(href) ? 'instagram'
+      : /tiktok\.com/.test(href) ? 'tiktok' : '';
     if (social) { track.socialClick(social, area); return; }
     if (!href.startsWith('/')) return;
     if (area === 'nav' || area === 'nav_menu' || area === 'mobile_menu' || area === 'footer') {
