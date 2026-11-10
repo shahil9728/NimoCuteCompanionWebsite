@@ -479,8 +479,8 @@ body:has(#stickybar .form-error:not([hidden])) .fab-feedback.raised{bottom:134px
 @keyframes mfTear{0%{transform:translateY(0);opacity:0}15%{opacity:1}100%{transform:translateY(26px);opacity:0}}
 @keyframes mfQuiver{from{transform:translateY(-.6px)}to{transform:translateY(.6px)}}
 @keyframes mfHop{0%,100%{transform:translateY(0)}40%{transform:translateY(-12px)}}
-.xp-modal .waitlist-form{margin:0 auto;max-width:none}
-.xp-modal .form-success{margin:0 auto;text-align:left}
+.modal .waitlist-form{margin:0 auto;max-width:none}
+.modal .form-success{margin:0 auto;text-align:left}
 .xp-later{display:block;margin:12px auto 0;background:none;border:0;color:var(--faint);font-size:14px;padding:6px 10px;text-decoration:underline;text-underline-offset:3px}
 .xp-later:hover{color:var(--muted)}
 .modal p.sv-sub{margin:-4px 0 16px;font-size:14px}

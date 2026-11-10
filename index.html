@@ -589,7 +589,11 @@
     <span class="m-tag">🎬 Now filming</span>
     <h3 id="demoTitle">Nimo's big reveal is still in the garage</h3>
     <p>We're putting the finishing touches on his cinematic debut — and we want it to be worth the wait. Join the waitlist and you'll be first in line to watch it.</p>
-    <button class="btn btn-primary" data-join data-cta="modal-join"><span class="lbl">Join the waitlist</span></button>
+    <form class="waitlist-form" data-loc="film" novalidate>
+      <div class="field"><label for="film-email" class="skip">Email address</label><input id="film-email" type="email" placeholder="Enter your email" autocomplete="email" required /></div>
+      <button type="submit" class="btn btn-primary"><span class="lbl">Join the waitlist</span></button>
+    </form>
+    <div class="form-success" data-success></div>
   </div>
 </div>
 

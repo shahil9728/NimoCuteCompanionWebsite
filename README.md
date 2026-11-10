@@ -179,7 +179,7 @@ To change IDs, edit the two `gtag('config', …)` lines in each of those files. 
 | `exit_prompt` | `action`, `trigger` | the "leaving already?" dialog |
 | `survey_answer` / `survey_complete` | `question`, `answer` / `answered` | the post-signup survey |
 | `share` | `method` | WhatsApp / copy link after joining |
-| `cta_click` / `button_click` | `cta` / `label` | other buttons (feedback sent/failed, playground adopt, modal join) |
+| `cta_click` / `button_click` | `cta` / `label` | other buttons (feedback sent/failed, playground adopt). The "Watch the film" dialog has its own waitlist form, so its joins arrive as the waitlist events with `location` `film` |
 
 User property: `waitlist_member = yes` once this browser has joined (set on join and on every later visit).
 

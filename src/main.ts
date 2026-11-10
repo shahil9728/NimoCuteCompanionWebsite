@@ -6,6 +6,7 @@ import { initExploreMenu } from './lib/navMenu';
 import { initInsights } from './lib/insights';
 import { initSurvey } from './lib/survey';
 import { initExitPrompt } from './lib/exitPrompt';
+import { hasJoined } from './lib/joined';
 import { sendFeedback } from './lib/feedback';
 
 (window as any).nimoTrack = track;
@@ -279,11 +280,25 @@ import { sendFeedback } from './lib/feedback';
     setInterval(function(){ blink=.12; setTimeout(function(){ blink=1; },130); }, 4600);
   })();
 
-  /* ---------- "Watch the film" modal ---------- */
+  /* ---------- "Watch the film" modal: the film isn't out yet, so it takes the email right there ---------- */
   (function(){
     var modal=document.getElementById('demoModal'); if(!modal) return;
     var closeBtn=document.getElementById('demoClose'); var lastFocus=null;
-    function openModal(){ lastFocus=document.activeElement; modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; if(lenis){try{lenis.stop();}catch(_){}} setTimeout(function(){ if(closeBtn) closeBtn.focus(); },60); }
+    var form=modal.querySelector('.waitlist-form') as HTMLFormElement|null;
+    var input=modal.querySelector('input[type=email]') as HTMLInputElement|null;
+    var note=modal.querySelector('[data-success]') as HTMLElement|null;
+    function openModal(){
+      lastFocus=document.activeElement;
+      // Already on the list: say so instead of asking for the email again.
+      if(form && note && form.style.display!=='none' && hasJoined()){
+        form.style.display='none';
+        note.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#59e6a0" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span>You\'re already on the list, so you\'ll be among the first to see it.</span>';
+        note.classList.add('show');
+      }
+      modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; if(lenis){try{lenis.stop();}catch(_){}}
+      // Desktop: cursor straight into the email box. Phones: don't pop the keyboard up uninvited.
+      setTimeout(function(){ var t=(!TOUCH && input && form && form.style.display!=='none') ? input : closeBtn; if(t) t.focus(); },60);
+    }
     function closeModal(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; if(lenis){try{lenis.start();}catch(_){}} if(lastFocus && lastFocus.focus) lastFocus.focus(); }
     document.querySelectorAll('[data-cta="watch-film"]').forEach(function(b){ b.addEventListener('click', function(e){
       e.preventDefault();
@@ -294,7 +309,11 @@ import { sendFeedback } from './lib/feedback';
     if(closeBtn) closeBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', function(e){ if(e.target===modal) closeModal(); });
     document.addEventListener('keydown', function(e){ if(e.key==='Escape' && modal.classList.contains('open')) closeModal(); });
-    modal.querySelectorAll('[data-join]').forEach(function(b){ b.addEventListener('click', function(){ closeModal(); }); });
+    // Joined from here: show the thank-you for a moment, then close (survey.ts opens after).
+    document.addEventListener('nimo:joined', function(ev){
+      var d=(ev as CustomEvent).detail||{};
+      if(d.loc==='film') setTimeout(closeModal, d.already ? 2200 : 1200);
+    });
   })();
 
 

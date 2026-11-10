@@ -137,6 +137,7 @@ export function initSurvey(opts: { lock: () => void; unlock: () => void }) {
   document.addEventListener('nimo:joined', (ev) => {
     const d = (ev as CustomEvent).detail || {};
     if (d.already) return;
-    window.setTimeout(() => open(d.email || '', d.loc || ''), d.loc === 'exit' ? 1500 : 1100);
+    // The exit and film dialogs close themselves at 1.2 s; open after that, not on top.
+    window.setTimeout(() => open(d.email || '', d.loc || ''), d.loc === 'exit' || d.loc === 'film' ? 1500 : 1100);
   });
 }
