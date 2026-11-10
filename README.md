@@ -152,12 +152,14 @@ The floating **Feedback** button sends the message straight to the owner's inbox
 - `G-3C9Z4YQVRT` — GA4 Measurement ID
 - `GT-WF4ZWBSR` — Google Tag
 
-To change IDs, edit the two `gtag('config', …)` lines in both files. All helpers live in `src/lib/analytics.ts`; page-wide listeners (sections, link clicks, menus) in `src/lib/insights.ts`.
+It stays off on `localhost`, `127.x`, `[::1]`, `*.local` and private LAN addresses (`192.168.x`, `10.x`, `172.16–31.x`), so nothing reaches GA while you work on the site; `window.gtag` is then undefined and every helper is a no-op. The same snippet sits in `404.html` and `public/privacy`, `public/terms` (plus their `.html` copies).
+
+To change IDs, edit the two `gtag('config', …)` lines in each of those files. All helpers live in `src/lib/analytics.ts`; page-wide listeners (sections, link clicks, menus) in `src/lib/insights.ts`.
 
 | Event | Parameters | Fires when |
 |---|---|---|
 | `watch_the_film_cta_click` | `location` (`hero`) | "Watch the film" is clicked (also still sends `cta_click`) |
-| `waitlist_form_start` | `location` | first focus on a waitlist email box |
+| `waitlist_form_start` | `location` | first keystroke or autofill in a waitlist email box (focus and taps don't count; the exit prompt and Join buttons focus the box by code) |
 | `waitlist_click` | `location` | a Join button or a waitlist submit is pressed |
 | `waitlist_form_error` | `location`, `reason` (`empty`, `invalid_email`, `submit_failed`) | a join attempt fails |
 | `form_submit` | `form`, `location` | a join succeeds (new or already on the list) |

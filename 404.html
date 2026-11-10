@@ -50,11 +50,18 @@ footer.site a{color:var(--muted)}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=GT-WF4ZWBSR"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag("js", new Date());
-  gtag("config", "GT-WF4ZWBSR");
-  gtag("config", "G-3C9Z4YQVRT");
+  // Off on localhost and LAN addresses, so visits while working on the site never reach GA.
+  // Without window.gtag, src/lib/analytics.ts sends no events either.
+  (function () {
+    var h = location.hostname;
+    if (!h || h === 'localhost' || h === '[::1]' || /\.local(host)?$/.test(h) ||
+        /^(127|10|192\.168|172\.(1[6-9]|2\d|3[01]))\./.test(h)) return;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { dataLayer.push(arguments); };
+    gtag("js", new Date());
+    gtag("config", "GT-WF4ZWBSR");
+    gtag("config", "G-3C9Z4YQVRT");
+  })();
 </script>
 </head>
 <body>

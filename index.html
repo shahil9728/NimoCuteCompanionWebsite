@@ -214,11 +214,18 @@
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=GT-WF4ZWBSR"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag("js", new Date());
-  gtag("config", "GT-WF4ZWBSR");
-  gtag("config", "G-3C9Z4YQVRT");
+  // Off on localhost and LAN addresses, so visits while working on the site never reach GA.
+  // Without window.gtag, src/lib/analytics.ts sends no events either.
+  (function () {
+    var h = location.hostname;
+    if (!h || h === 'localhost' || h === '[::1]' || /\.local(host)?$/.test(h) ||
+        /^(127|10|192\.168|172\.(1[6-9]|2\d|3[01]))\./.test(h)) return;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { dataLayer.push(arguments); };
+    gtag("js", new Date());
+    gtag("config", "GT-WF4ZWBSR");
+    gtag("config", "G-3C9Z4YQVRT");
+  })();
 </script>
 </head>
 <body>
@@ -254,7 +261,7 @@
         <form class="waitlist-form reveal" data-anim data-loc="hero" novalidate>
           <div class="field">
             <label for="hero-email" class="skip">Email address</label>
-            <input id="hero-email" type="email" name="email" placeholder="you@email.com" autocomplete="email" required />
+            <input id="hero-email" type="email" name="email" placeholder="Enter your email" autocomplete="email" required />
           </div>
           <button type="submit" class="btn btn-primary"><span class="lbl">Join the waitlist <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
         </form>
@@ -541,7 +548,7 @@
     <form class="waitlist-form reveal" data-anim data-loc="climax" novalidate>
       <div class="field">
         <label for="climax-email" class="skip">Email address</label>
-        <input id="climax-email" type="email" name="email" placeholder="you@email.com" autocomplete="email" required />
+        <input id="climax-email" type="email" name="email" placeholder="Enter your email" autocomplete="email" required />
       </div>
       <button type="submit" class="btn btn-primary"><span class="lbl">Join the waitlist <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
     </form>
@@ -563,7 +570,7 @@
         <b>Meet Nimo before anyone else.</b><span><span data-waitlist-count>696</span>+ waiting · limited first batch</span>
       </div>
       <form class="waitlist-form" data-loc="sticky" novalidate>
-        <div class="field"><label for="sticky-email" class="skip">Email address</label><input id="sticky-email" type="email" placeholder="you@email.com" autocomplete="email" required /></div>
+        <div class="field"><label for="sticky-email" class="skip">Email address</label><input id="sticky-email" type="email" placeholder="Enter your email" autocomplete="email" required /></div>
         <button type="submit" class="btn btn-primary"><span class="lbl">Join</span></button>
       </form>
       <button class="close" id="stickyClose" aria-label="Dismiss">✕</button>
@@ -595,7 +602,7 @@
     <h3 id="xpTitle">You're leaving me already?</h3>
     <p id="xpText">I was hoping to ride shotgun with you. Join the waitlist and I'll come find you the day I'm ready.</p>
     <form class="waitlist-form" data-loc="exit" novalidate>
-      <div class="field"><label for="exit-email" class="skip">Email address</label><input id="exit-email" type="email" placeholder="you@email.com" autocomplete="email" required /></div>
+      <div class="field"><label for="exit-email" class="skip">Email address</label><input id="exit-email" type="email" placeholder="Enter your email" autocomplete="email" required /></div>
       <button type="submit" class="btn btn-primary"><span class="lbl">Take me with you</span></button>
     </form>
     <div class="form-success" data-success></div>

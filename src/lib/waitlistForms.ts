@@ -13,21 +13,43 @@ export function initWaitlistForms(onJoined?: (loc: string) => void) {
     var input=form.querySelector('input[type=email]') as HTMLInputElement;
     var btn=form.querySelector('button[type=submit]') as HTMLButtonElement;
     var lblEl=btn?btn.querySelector('.lbl'):null;
-    // First tap, focus or keystroke in the email box = someone started to join (funnel step
-    // before submit). Several triggers because focus alone is skipped by some autofill paths.
+    // First keystroke or autofill in the email box = someone started to join (funnel step
+    // before submit). Focus and taps don't count: the exit prompt and the Join buttons focus
+    // the box by code, and on phones a swipe that starts on the box fires pointerdown.
+    // 'change' covers autofill paths that skip 'input'.
     var started=false;
     var start=function(){ if(started) return; started=true; track.formStart(loc); };
-    ['pointerdown','focus','input'].forEach(function(t){ input.addEventListener(t, start); });
+    ['input','change'].forEach(function(t){ input.addEventListener(t, start); });
+
+    // A line under the box that says what went wrong; a red border alone left people guessing.
+    var note:HTMLElement|null=null;
+    var showError=function(text:string){
+      if(!note){
+        note=document.createElement('p');
+        note.className='form-error';
+        note.setAttribute('role','alert');
+        if(input.id){ note.id=input.id+'-error'; input.setAttribute('aria-describedby', note.id); }
+        form.appendChild(note);
+      }
+      note.textContent=text; note.hidden=false;
+      input.classList.add('invalid'); input.setAttribute('aria-invalid','true');
+    };
+    var clearError=function(){
+      if(note) note.hidden=true;
+      input.classList.remove('invalid'); input.removeAttribute('aria-invalid');
+    };
+    input.addEventListener('input', clearError);
     form.addEventListener('submit', async function(e){
       e.preventDefault();
       var val=(input.value||'').trim();
       track.waitlistClick(loc);
       if(!EMAIL.test(val)){
         track.formError(loc, val ? 'invalid_email' : 'empty');
-        input.style.borderColor='rgba(255,120,120,.7)'; input.focus();
-        input.addEventListener('input',function(){input.style.borderColor='';},{once:true});
+        showError(val ? "That email doesn't look right. Please check it." : 'Please add your email first.');
+        input.focus();
         return;
       }
+      clearError();
       var original = lblEl?lblEl.innerHTML:(btn?btn.innerHTML:'');
       if(btn){ btn.disabled=true; btn.style.opacity='.75'; if(lblEl){lblEl.textContent='Joining…';} else {btn.textContent='Joining…';} }
       var res;
@@ -52,8 +74,8 @@ export function initWaitlistForms(onJoined?: (loc: string) => void) {
         if(onJoined) onJoined(loc);
       } else {
         if(btn){ btn.disabled=false; btn.style.opacity=''; if(lblEl){lblEl.innerHTML=original;} else {btn.innerHTML=original;} }
-        input.style.borderColor='rgba(255,120,120,.7)';
-        if(success){ success.style.background='rgba(255,90,90,.1)'; success.style.borderColor='rgba(255,90,90,.35)'; success.style.color='#ffd7d7'; success.textContent='Hmm, that did not go through. Please try again.'; success.classList.add('show'); }
+        // Shown on the form, not in the success box, so a later successful retry isn't painted red.
+        showError('Hmm, that did not go through. Please try again.');
         track.formError(loc, 'submit_failed');
         console.error('[Nimo] waitlist error:', res && res.error);
       }
