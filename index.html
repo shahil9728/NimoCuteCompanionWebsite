@@ -202,15 +202,6 @@
 }
 </script>
 
-<!-- Canonical host guard: the Render subdomain stays reachable, so send it to the real domain -->
-<script>
-  (function () {
-    if (location.hostname === 'nimo-cute-companion.onrender.com') {
-      location.replace('https://www.heynimo.in' + location.pathname + location.search + location.hash);
-    }
-  })();
-</script>
-
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=GT-WF4ZWBSR"></script>
 <script>

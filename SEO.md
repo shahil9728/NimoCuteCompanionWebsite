@@ -7,15 +7,13 @@
 ## 1. What changed in this pass
 
 ### Domain migration
-Every hardcoded reference to `nimo-cute-companion.onrender.com` was pointing search engines at the old Render subdomain. All of it now points at `https://www.heynimo.in`:
+Every hardcoded URL points at `https://www.heynimo.in`:
 
 - `<link rel="canonical">`
 - `og:url`, `og:image`, `twitter:image`
 - the whole JSON-LD graph
 - `public/sitemap.xml`
 - `public/robots.txt`
-
-The Render subdomain stays publicly reachable and served an identical copy of the site — classic duplicate content. A small host-guard script at the top of `index.html` now redirects `nimo-cute-companion.onrender.com` to the real domain, and the canonical tag backs it up.
 
 ### Performance (Core Web Vitals)
 The three product photos were embedded as base64 data-URIs inside `src/styles/main.css`. CSS is render-blocking, so the browser had to download **422 KB of stylesheet before it could paint anything**, and those bytes could never be cached separately or served in a modern format.

@@ -204,7 +204,7 @@ After the first deploy, add `VITE_SUPABASE_ANON_KEY` under the service's **Envir
 **Option B — Manual static site:** New + → **Static Site** → connect this repo →
 Build Command `npm install && npm run build`, Publish Directory `dist`, add the env vars.
 
-> **Live domain:** `https://www.heynimo.in` (apex `heynimo.in` 301s to `www`). Canonical, `og:url`, `sitemap.xml`, `robots.txt` and JSON‑LD all point there. If the domain ever changes again, update those five places plus the host guard script near the top of `index.html`.
+> **Live domain:** `https://www.heynimo.in` (apex `heynimo.in` 301s to `www`). Canonical, `og:url`, `sitemap.xml`, `robots.txt` and JSON‑LD all point there. If the domain ever changes again, update those five places.
 
 ---
 
