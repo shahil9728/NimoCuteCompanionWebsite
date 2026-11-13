@@ -20,9 +20,6 @@
 <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="48x48" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
 *{box-sizing:border-box}
 :root{--bg:#05070a;--panel:#0b0f16;--ink:#eef4f8;--muted:#93a3b2;--cyan:#35e0ff;--stroke:rgba(255,255,255,.09)}
@@ -48,6 +45,9 @@ ul{padding-left:20px}li{margin:7px 0}
 footer.site{border-top:1px solid var(--stroke);margin-top:60px;padding:26px 0;color:var(--muted);font-size:14px;display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between}
 footer.site a{color:var(--muted)}
 </style>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-var.woff2" crossorigin />
+<link rel="preload" as="font" type="font/woff2" href="/fonts/inter-tight-latin-var.woff2" crossorigin />
+<link rel="stylesheet" href="/legal-pages.css" />
 <script async src="https://www.googletagmanager.com/gtag/js?id=GT-WF4ZWBSR"></script>
 <script>
   // Off on localhost and LAN addresses, so visits while working on the site never reach GA.

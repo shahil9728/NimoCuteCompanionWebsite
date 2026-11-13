@@ -19,6 +19,19 @@ import { initInsights } from './lib/insights';
   var TOUCH  = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
   var PAGE = document.body.getAttribute('data-page') || 'page';
 
+  /* Lightweight GSAP reveals on guides and comparisons. */
+  if(!REDUCE && window.gsap){
+    var gs=window.gsap;
+    var intro=document.querySelectorAll('.page-hero .eyebrow,.page-hero h1,.page-hero .lede,.page-hero .waitlist-form,.page-hero .product-shot');
+    gs.fromTo(intro,{autoAlpha:0,y:22},{autoAlpha:1,y:0,duration:.85,stagger:.1,ease:'power3.out',clearProps:'all',delay:.08});
+    if(window.ScrollTrigger){
+      gs.registerPlugin(window.ScrollTrigger);
+      gs.utils.toArray('.prose > h2,.prose > p,.prose > ul,.prose > ol,.prose > .table-scroll,.prose > .card-grid,.prose > .cta-band,.moment .card,.keep-reading .feat').forEach(function(el){
+        gs.fromTo(el,{autoAlpha:0,y:18},{autoAlpha:1,y:0,duration:.65,ease:'power2.out',clearProps:'transform',scrollTrigger:{trigger:el,start:'top 91%',once:true}});
+      });
+    }
+  }
+
   function lockScroll(){ document.body.style.overflow='hidden'; }
   function unlockScroll(){ document.body.style.overflow=''; }
   function scrollToEl(el){ if(el) el.scrollIntoView({behavior:REDUCE?'auto':'smooth', block:'start'}); }

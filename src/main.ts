@@ -65,21 +65,32 @@ import { sendFeedback } from './lib/feedback';
     var open=menu.classList.toggle('open'); burger.setAttribute('aria-expanded', open?'true':'false');
   });}
 
-  /* ---------- Reveal on scroll ----------
-     IntersectionObserver + Web Animations instead of ScrollTrigger: no layout reads per element.
-     The hero animates in pure CSS (main.css), so the headline never waits for JS. */
+  /* ---------- GSAP motion system ----------
+     Content stays visible without JS. GSAP enhances the page with a short
+     editorial intro and section reveals, while reduced-motion stays still. */
   var revealEls=[].slice.call(document.querySelectorAll('[data-anim]')).filter(function(el){ return !el.closest('.hero'); });
-  if (!REDUCE && 'IntersectionObserver' in window && Element.prototype.animate){
-    var rio=new IntersectionObserver(function(en){
-      en.forEach(function(x){
-        if(!x.isIntersecting) return;
-        rio.unobserve(x.target);
-        x.target.classList.remove('reveal-wait');
-        x.target.animate([{opacity:0,translate:'0 26px'},{opacity:1,translate:'0 0'}],{duration:900,easing:'cubic-bezier(.22,.61,.36,1)'});
+  if (!REDUCE && hasGSAP){
+    var gs=window.gsap;
+    document.body.classList.add('gsap-running');
+    if(window.ScrollTrigger){ gs.registerPlugin(window.ScrollTrigger); }
+    gs.set(revealEls,{autoAlpha:0,y:24});
+    var heroItems=document.querySelectorAll('.hero-copy>.eyebrow,.hero-copy>h1,.hero-copy>.sub,.hero-copy>.waitlist-form,.hero-copy>.secondary-line,.hero-copy>.form-note,.hero-copy>.scroll-hint');
+    gs.fromTo(heroItems,{autoAlpha:0,y:26},{autoAlpha:1,y:0,duration:1,stagger:.11,ease:'power3.out',clearProps:'all',delay:.15});
+    if(window.ScrollTrigger){
+      revealEls.forEach(function(el){
+        gs.to(el,{autoAlpha:1,y:0,duration:.85,ease:'power3.out',clearProps:'transform',scrollTrigger:{trigger:el,start:'top 88%',once:true}});
       });
-    },{rootMargin:'0px 0px -12% 0px'});
+      gs.to('.hero-bg>.media-img',{yPercent:8,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:.6}});
+    }else{
+      var revealObserver=new IntersectionObserver(function(entries){ entries.forEach(function(entry){ if(entry.isIntersecting){ gs.to(entry.target,{autoAlpha:1,y:0,duration:.8,ease:'power3.out',clearProps:'transform'}); revealObserver.unobserve(entry.target); } }); },{rootMargin:'0px 0px -12% 0px'});
+      revealEls.forEach(function(el){ revealObserver.observe(el); });
+    }
+    gs.to('.badge-float.b1',{y:-10,duration:2.8,repeat:-1,yoyo:true,ease:'sine.inOut'});
+    gs.to('.badge-float.b2',{y:9,duration:3.4,repeat:-1,yoyo:true,ease:'sine.inOut',delay:.35});
+  }else if (!REDUCE && 'IntersectionObserver' in window && Element.prototype.animate){
+    var rio=new IntersectionObserver(function(en){ en.forEach(function(x){ if(!x.isIntersecting)return; rio.unobserve(x.target); x.target.classList.remove('reveal-wait'); x.target.animate([{opacity:0,translate:'0 26px'},{opacity:1,translate:'0 0'}],{duration:850,easing:'cubic-bezier(.22,.61,.36,1)'}); }); },{rootMargin:'0px 0px -12% 0px'});
     revealEls.forEach(function(el){ el.classList.add('reveal-wait'); rio.observe(el); });
-  } // else: everything already visible (CSS default)
+  }
 
     /* ---------- Waitlist forms (frictionless, Supabase-backed, src/lib/waitlistForms.ts) ---------- */
   initWaitlistForms(function(loc){ if(loc==='sticky'){ setTimeout(hideSticky,1600); } });
