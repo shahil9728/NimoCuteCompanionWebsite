@@ -105,10 +105,8 @@ h2{font-size:clamp(30px,4.6vw,54px)}
 .nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent}
 .nav.scrolled{background:rgba(6,9,13,.72);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);border-bottom:1px solid var(--stroke)}
 .nav-inner{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:70px}
-.brand{display:flex;align-items:center;gap:11px;font-family:var(--font-display);font-weight:700;font-size:21px;letter-spacing:-.02em}
-.brand .mark{width:34px;height:34px;border-radius:11px;background:radial-gradient(circle at 50% 62%,#0c1016,#05080c);border:1px solid var(--stroke-strong);position:relative;box-shadow:0 0 22px -6px rgba(53,224,255,.6)}
-.brand .mark i{position:absolute;top:56%;width:6px;height:8px;border-radius:4px;background:var(--cyan);box-shadow:0 0 8px var(--cyan);animation:navblink 5s infinite}
-.brand .mark i.l{left:9px}.brand .mark i.r{right:9px}
+.brand{display:flex;align-items:center;color:var(--ink)}
+.brand .logo{display:block;height:34px;width:auto}
 @keyframes navblink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.15)}}
 /* links sit in one quiet pill, centred between the logo and the CTA */
 .nav-links{display:flex;align-items:center;gap:2px;padding:4px;border-radius:999px;background:rgba(255,255,255,.035);border:1px solid var(--stroke);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
@@ -389,7 +387,7 @@ h2{font-size:clamp(30px,4.6vw,54px)}
 /* ============ footer ============ */
 footer{border-top:1px solid var(--stroke);padding:70px 0 40px;position:relative}
 .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1.15fr 1.25fr 1fr;gap:32px}
-.foot-brand .brand{font-size:24px;margin-bottom:16px}
+.foot-brand .brand{margin-bottom:16px}.foot-brand .brand .logo{height:40px}
 .foot-brand p{color:var(--muted);font-size:15px;max-width:34ch;margin:0 0 20px}
 .foot-social{display:flex;gap:12px}
 .foot-social a{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;border:1px solid var(--stroke);color:var(--muted);transition:.3s}
@@ -527,7 +525,7 @@ h2{font-size:clamp(34px,5vw,66px);line-height:1.02;font-weight:620}
 .nav-inner{height:66px;padding-inline:22px}
 .nav.scrolled{background:rgba(7,10,14,.82);border-color:rgba(218,232,242,.12)}
 .nav-inner{border:1px solid rgba(218,232,242,.1);border-radius:999px;background:rgba(9,13,18,.46);backdrop-filter:blur(20px)}
-.brand{font-size:20px}.brand .mark{border-radius:50%;width:31px;height:31px}
+.brand .logo{height:30px}
 .nav-links{background:transparent;border-color:transparent;backdrop-filter:none;gap:4px}
 .nav-links>a,.nav-drop-btn{font-size:13px;color:#bdc8cd}
 .nav-cta .btn{padding:11px 18px;font-size:13px}
@@ -675,8 +673,7 @@ body::before{background:radial-gradient(ellipse at 86% 5%,rgba(185,242,75,.16),t
 .nav{padding-top:14px}
 .nav-inner{border-color:rgba(19,27,29,.1);background:rgba(248,247,242,.78);box-shadow:0 12px 38px -28px rgba(20,28,31,.3)}
 .nav.scrolled{background:rgba(248,247,242,.92);border-color:rgba(19,27,29,.12)}
-.brand{color:#111719}.brand .mark{background:#111719;border-color:#111719;box-shadow:0 5px 16px rgba(17,23,25,.17)}
-.brand .mark i{background:#b9f24b;box-shadow:0 0 8px rgba(185,242,75,.65)}
+.brand{color:#111719}
 .nav-links{background:transparent}.nav-links>a,.nav-drop-btn{color:#4e5a5e}
 .nav-links>a:hover,.nav-drop-btn:hover,.nav-drop.open .nav-drop-btn,.nav-drop-btn.current,.nav-links>a[aria-current=page]{color:#111719;background:rgba(17,23,25,.055)}
 .nav-drop-panel{background:#fbfaf6;border-color:rgba(19,27,29,.12);box-shadow:0 24px 60px -22px rgba(20,28,31,.25)}
@@ -825,7 +822,6 @@ body::before{background:radial-gradient(ellipse at 86% 5%,rgba(185,242,75,.16),t
 }
 footer{background:#17211e;color:#f4f4ed;border-top:0}
 footer .brand{color:#f4f4ed}
-footer .brand .mark{background:#101719;border-color:rgba(255,255,255,.18)}
 footer .foot-brand p{color:#b1bcb4}
 footer .foot-col h4{color:#c7ef8a}
 footer .foot-col a,footer .foot-social a{color:#b1bcb4}
@@ -910,7 +906,6 @@ body::before{background:radial-gradient(ellipse at 90% 6%,rgba(84,201,218,.13),t
 .nav-inner{border-color:rgba(25,42,48,.12);background:rgba(250,252,251,.9)}
 .nav.scrolled{background:rgba(250,252,251,.97);border-color:rgba(25,42,48,.12)}
 .nav-links>a,.nav-drop-btn{color:#46575d}
-.brand .mark i{background:#54c9da;box-shadow:0 0 8px rgba(84,201,218,.52)}
 .btn-primary{background:#176f80;color:#fff;box-shadow:0 9px 24px -12px rgba(23,111,128,.52),0 0 0 1px rgba(255,255,255,.4) inset}
 .btn-primary:hover{background:#125f70;box-shadow:0 13px 32px -10px rgba(23,111,128,.5),0 0 0 1px rgba(255,255,255,.6) inset}
 .btn-ghost{color:#21343a;background:rgba(255,255,255,.8);border-color:rgba(25,42,48,.16)}
@@ -953,7 +948,6 @@ body::before{background:radial-gradient(ellipse at 90% 6%,rgba(84,201,218,.13),t
 footer{background:#1d2d36;color:#f5f8f7}
 footer .foot-col h4{color:#a8dfe3}
 footer .foot-col a:hover,footer .foot-social a:hover{color:#81d8df}
-footer .brand .mark i{background:#54c9da}
 .footer{background:#1d2d36}
 .stickybar-card{background:rgba(250,252,251,.98);border-color:rgba(25,42,48,.14)}
 .fab-feedback svg{color:#176f80}

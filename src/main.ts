@@ -272,25 +272,6 @@ import { sendFeedback } from './lib/feedback';
   qas.forEach(function(d){ var skip=d.open; d.addEventListener('toggle',function(){ if(d.open){ qas.forEach(function(o){ if(o!==d) o.open=false; }); if(!skip) track.faqOpen(d.querySelector('summary').textContent); } skip=false; }); });
 
 
-  /* ---------- Header logo eyes follow the cursor (keep blinking) ---------- */
-  (function(){
-    var eyes=[].slice.call(document.querySelectorAll('#nav .brand .mark i'));
-    var mark=document.querySelector('#nav .brand .mark');
-    if(!eyes.length || !mark || TOUCH || REDUCE) return;
-    eyes.forEach(function(el){ el.style.animation='none'; });
-    var tx=0,ty=0,cx=0,cy=0,blink=1;
-    window.addEventListener('mousemove',function(ev){
-      var r=mark.getBoundingClientRect(); var mx=r.left+r.width/2, my=r.top+r.height/2;
-      var dx=ev.clientX-mx, dy=ev.clientY-my, mag=Math.max(1,Math.sqrt(dx*dx+dy*dy));
-      tx=dx/mag*2.3; ty=dy/mag*1.8;
-    });
-    (function loop(){ cx+=(tx-cx)*.15; cy+=(ty-cy)*.15;
-      for(var i=0;i<eyes.length;i++){ eyes[i].style.transform='translate('+cx.toFixed(2)+'px,'+cy.toFixed(2)+'px) scaleY('+blink+')'; }
-      requestAnimationFrame(loop);
-    })();
-    setInterval(function(){ blink=.12; setTimeout(function(){ blink=1; },130); }, 4600);
-  })();
-
   /* ---------- "Watch the film" modal: the film isn't out yet, so it takes the email right there ---------- */
   (function(){
     var modal=document.getElementById('demoModal'); if(!modal) return;
