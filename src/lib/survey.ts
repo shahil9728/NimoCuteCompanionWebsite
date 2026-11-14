@@ -28,7 +28,7 @@ const QUESTIONS: Question[] = [
 ];
 
 const SHARE_URL = 'https://www.heynimo.in/?utm_source=whatsapp&utm_medium=share';
-const SHARE_TEXT = "I just joined the waitlist for Nimo, a cute AI robot that rides on your car dashboard 🥺 Join me: ";
+const SHARE_TEXT = "I just joined the waitlist for Nimo, a cute AI robot for your desk and your car dashboard 🥺 Join me: ";
 
 export function initSurvey(opts: { lock: () => void; unlock: () => void }) {
   const modal = document.getElementById('surveyModal');

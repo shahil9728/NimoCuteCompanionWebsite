@@ -65,7 +65,7 @@ export function expr(m: Mood): Expr {
 }
 
 export const MOOD_COPY: Record<Mood, { title: string; text: string }> = {
-  calm: { title: 'Chilling', text: 'Riding along, keeping an eye on you.' },
+  calm: { title: 'Chilling', text: 'Hanging out, keeping an eye on you.' },
   happy: { title: 'Happy', text: 'When you pet him or finish a task.' },
   love: { title: 'In love', text: "Keep petting. He's melting." },
   excited: { title: 'Boop!', text: 'Right on the nose. He loves that.' },
