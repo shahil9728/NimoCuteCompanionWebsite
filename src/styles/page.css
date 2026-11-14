@@ -54,11 +54,6 @@
 .mini-nimo.night{box-shadow:0 0 20px -8px rgba(155,123,255,.5),inset 0 3px 10px rgba(255,255,255,.04)}
 .mini-nimo.night::before,.mini-nimo.night::after{background:#7d8fd8;box-shadow:0 0 6px #7d8fd8;opacity:.75}
 .mini-nimo.focus::before,.mini-nimo.focus::after{top:40%;height:18%;border-radius:40%}
-@media(prefers-reduced-motion:no-preference){
-  .mini-nimo::before,.mini-nimo::after{animation:mblink 4.4s infinite}
-  .moment:nth-child(2n) .mini-nimo::before,.moment:nth-child(2n) .mini-nimo::after{animation-delay:1.3s}
-  .mini-nimo.happy::before,.mini-nimo.happy::after{animation:none}
-}
 
 /* ============ comparison tables ============ */
 .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--radius);border:1px solid var(--stroke);background:rgba(255,255,255,.02);margin:30px 0 12px}

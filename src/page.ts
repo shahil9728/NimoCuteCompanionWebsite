@@ -7,11 +7,12 @@ import { initSurvey } from './lib/survey';
 import { initExitPrompt } from './lib/exitPrompt';
 import { initExploreMenu } from './lib/navMenu';
 import { initInsights } from './lib/insights';
+import { initReveal } from './lib/reveal';
 
 /* =========================================================
    Content pages (guides + comparisons). Deliberately light:
-   no GSAP, Lenis, particles or playground — just the nav,
-   the waitlist forms, the sticky bar and the dialogs.
+   no GSAP or playground — just the nav, the waitlist forms,
+   the sticky bar and the dialogs.
    ========================================================= */
 (function(){
   "use strict";
@@ -19,18 +20,8 @@ import { initInsights } from './lib/insights';
   var TOUCH  = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
   var PAGE = document.body.getAttribute('data-page') || 'page';
 
-  /* Lightweight GSAP reveals on guides and comparisons. */
-  if(!REDUCE && window.gsap){
-    var gs=window.gsap;
-    var intro=document.querySelectorAll('.page-hero .eyebrow,.page-hero h1,.page-hero .lede,.page-hero .waitlist-form,.page-hero .product-shot');
-    gs.fromTo(intro,{autoAlpha:0,y:22},{autoAlpha:1,y:0,duration:.85,stagger:.1,ease:'power3.out',clearProps:'all',delay:.08});
-    if(window.ScrollTrigger){
-      gs.registerPlugin(window.ScrollTrigger);
-      gs.utils.toArray('.prose > h2,.prose > p,.prose > ul,.prose > ol,.prose > .table-scroll,.prose > .card-grid,.prose > .cta-band,.moment .card,.keep-reading .feat').forEach(function(el){
-        gs.fromTo(el,{autoAlpha:0,y:18},{autoAlpha:1,y:0,duration:.65,ease:'power2.out',clearProps:'transform',scrollTrigger:{trigger:el,start:'top 91%',once:true}});
-      });
-    }
-  }
+  /* The same single fade-in as the home page, for blocks below the fold. */
+  initReveal('.prose > h2,.prose > .table-scroll,.prose > .card-grid,.prose > .cta-band,.moment .card,.keep-reading .feat');
 
   function lockScroll(){ document.body.style.overflow='hidden'; }
   function unlockScroll(){ document.body.style.overflow=''; }

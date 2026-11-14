@@ -8,6 +8,8 @@ import { initSurvey } from './lib/survey';
 import { initExitPrompt } from './lib/exitPrompt';
 import { hasJoined } from './lib/joined';
 import { sendFeedback } from './lib/feedback';
+import { initReveal } from './lib/reveal';
+import { loadGsap } from './lib/gsap';
 
 (window as any).nimoTrack = track;
 
@@ -19,24 +21,15 @@ import { sendFeedback } from './lib/feedback';
   "use strict";
   var REDUCE = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var TOUCH  = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
-  var hasGSAP = !!window.gsap;
 
   /* analytics + waitlist come from ES modules (src/lib) */
 
-  /* ---------- Lenis smooth scroll (mouse/trackpad only; phones keep native scroll) ---------- */
-  var lenis=null;
-  if (window.Lenis && !REDUCE && !TOUCH){
-    lenis = new Lenis({ duration:1.1, smoothWheel:true, lerp:0.09 });
-    if (hasGSAP){ gsap.ticker.add(function(t){ lenis.raf(t*1000); }); gsap.ticker.lagSmoothing(0); }
-    else { var raf=function(t){ lenis.raf(t); requestAnimationFrame(raf); }; requestAnimationFrame(raf); }
-  }
-  function lockScroll(){ document.body.style.overflow='hidden'; if(lenis){try{lenis.stop();}catch(_){}} }
-  function unlockScroll(){ document.body.style.overflow=''; if(lenis){try{lenis.start();}catch(_){}} }
-  // anchor smooth-scroll (works with or without Lenis)
+  /* Native scrolling everywhere; sections carry scroll-margin-top for the fixed nav. */
+  function lockScroll(){ document.body.style.overflow='hidden'; }
+  function unlockScroll(){ document.body.style.overflow=''; }
   function scrollToEl(el){
     if(!el) return;
-    if(lenis){ lenis.scrollTo(el, {offset:-70}); }
-    else { el.scrollIntoView({behavior:REDUCE?'auto':'smooth', block:'start'}); }
+    el.scrollIntoView({behavior:REDUCE?'auto':'smooth', block:'start'});
   }
   // The shared nav/footer link to "/#about" etc. so they work from every page; here on the
   // home page those scroll in place instead of reloading. "/" (the logo) scrolls to the top.
@@ -49,7 +42,7 @@ import { sendFeedback } from './lib/feedback';
   document.querySelectorAll('a[href="/"]').forEach(function(a){
     a.addEventListener('click', function(e){
       e.preventDefault(); closeMenu();
-      if(lenis){ lenis.scrollTo(0); } else { window.scrollTo({top:0, behavior:REDUCE?'auto':'smooth'}); }
+      window.scrollTo({top:0, behavior:REDUCE?'auto':'smooth'});
     });
   });
   initExploreMenu();
@@ -65,32 +58,8 @@ import { sendFeedback } from './lib/feedback';
     var open=menu.classList.toggle('open'); burger.setAttribute('aria-expanded', open?'true':'false');
   });}
 
-  /* ---------- GSAP motion system ----------
-     Content stays visible without JS. GSAP enhances the page with a short
-     editorial intro and section reveals, while reduced-motion stays still. */
-  var revealEls=[].slice.call(document.querySelectorAll('[data-anim]')).filter(function(el){ return !el.closest('.hero'); });
-  if (!REDUCE && hasGSAP){
-    var gs=window.gsap;
-    document.body.classList.add('gsap-running');
-    if(window.ScrollTrigger){ gs.registerPlugin(window.ScrollTrigger); }
-    gs.set(revealEls,{autoAlpha:0,y:24});
-    var heroItems=document.querySelectorAll('.hero-copy>.eyebrow,.hero-copy>h1,.hero-copy>.sub,.hero-copy>.waitlist-form,.hero-copy>.secondary-line,.hero-copy>.form-note,.hero-copy>.scroll-hint');
-    gs.fromTo(heroItems,{autoAlpha:0,y:26},{autoAlpha:1,y:0,duration:1,stagger:.11,ease:'power3.out',clearProps:'all',delay:.15});
-    if(window.ScrollTrigger){
-      revealEls.forEach(function(el){
-        gs.to(el,{autoAlpha:1,y:0,duration:.85,ease:'power3.out',clearProps:'transform',scrollTrigger:{trigger:el,start:'top 88%',once:true}});
-      });
-      gs.to('.hero-bg>.media-img',{yPercent:8,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:.6}});
-    }else{
-      var revealObserver=new IntersectionObserver(function(entries){ entries.forEach(function(entry){ if(entry.isIntersecting){ gs.to(entry.target,{autoAlpha:1,y:0,duration:.8,ease:'power3.out',clearProps:'transform'}); revealObserver.unobserve(entry.target); } }); },{rootMargin:'0px 0px -12% 0px'});
-      revealEls.forEach(function(el){ revealObserver.observe(el); });
-    }
-    gs.to('.badge-float.b1',{y:-10,duration:2.8,repeat:-1,yoyo:true,ease:'sine.inOut'});
-    gs.to('.badge-float.b2',{y:9,duration:3.4,repeat:-1,yoyo:true,ease:'sine.inOut',delay:.35});
-  }else if (!REDUCE && 'IntersectionObserver' in window && Element.prototype.animate){
-    var rio=new IntersectionObserver(function(en){ en.forEach(function(x){ if(!x.isIntersecting)return; rio.unobserve(x.target); x.target.classList.remove('reveal-wait'); x.target.animate([{opacity:0,translate:'0 26px'},{opacity:1,translate:'0 0'}],{duration:850,easing:'cubic-bezier(.22,.61,.36,1)'}); }); },{rootMargin:'0px 0px -12% 0px'});
-    revealEls.forEach(function(el){ el.classList.add('reveal-wait'); rio.observe(el); });
-  }
+  /* ---------- One fade-in for sections below the fold (the hero intro runs in CSS) ---------- */
+  initReveal('[data-anim]', '.hero');
 
     /* ---------- Waitlist forms (frictionless, Supabase-backed, src/lib/waitlistForms.ts) ---------- */
   initWaitlistForms(function(loc){ if(loc==='sticky'){ setTimeout(hideSticky,1600); } });
@@ -148,47 +117,6 @@ import { sendFeedback } from './lib/feedback';
     depths.forEach(function(d){ if(pct>=d && !fired[d]){ fired[d]=true; track.scrollDepth(d); } });
   }, {passive:true});
 
-  /* ---------- Magnetic buttons + cursor ---------- */
-  if(!TOUCH && !REDUCE){
-    var spot=document.getElementById('spotlight'), dot=document.getElementById('cursorDot');
-    var mx=window.innerWidth/2,my=window.innerHeight/2,sx=mx,sy=my;
-    window.addEventListener('mousemove',function(e){ mx=e.clientX; my=e.clientY;
-      dot.style.setProperty('--cursor-x', mx+'px'); dot.style.setProperty('--cursor-y', my+'px'); });
-    // Hide the dot when the pointer leaves the window, so it can't sit stranded on screen.
-    document.addEventListener('mouseleave',function(){ dot.style.opacity='0'; spot.style.opacity='0'; });
-    document.addEventListener('mouseenter',function(){spot.style.opacity='1'; dot.style.opacity='1';});
-    (function loop(){ sx+=(mx-sx)*.12; sy+=(my-sy)*.12; spot.style.transform='translate('+sx+'px,'+sy+'px)'; requestAnimationFrame(loop); })();
-    document.querySelectorAll('.magnetic').forEach(function(el){
-      el.addEventListener('mousemove',function(e){ var r=el.getBoundingClientRect(); var x=e.clientX-r.left-r.width/2, y=e.clientY-r.top-r.height/2; el.style.transform='translate('+x*.3+'px,'+y*.4+'px)'; });
-      el.addEventListener('mouseleave',function(){ el.style.transform=''; });
-    });
-    // Set the scale, never append it — appending compounded on every hover
-    // (2.4x, 5.8x, 13.8x ...) and eventually covered the whole viewport.
-    document.querySelectorAll('a,button,input,summary,.emo-chip,.cw-chip').forEach(function(el){
-      el.addEventListener('mouseenter',function(){ dot.style.setProperty('--cursor-scale','2.4'); dot.style.opacity='.5'; });
-      el.addEventListener('mouseleave',function(){ dot.style.setProperty('--cursor-scale','1'); dot.style.opacity='1'; });
-    });
-  }
-
-  /* ---------- Hero background parallax ---------- */
-  var heroBg=document.querySelector('.hero-bg'), heroSec=document.querySelector('.hero');
-  if(heroBg && heroSec && !TOUCH && !REDUCE){
-    heroSec.addEventListener('mousemove',function(e){
-      var r=heroSec.getBoundingClientRect(); var px=(e.clientX-r.left)/r.width-.5, py=(e.clientY-r.top)/r.height-.5;
-      heroBg.style.transform='scale(1.06) translate('+(px*-14)+'px,'+(py*-10)+'px)';
-    });
-    heroSec.addEventListener('mouseleave',function(){ heroBg.style.transform='scale(1.06)'; });
-  }
-
-  /* ---------- Card tilt (data-tilt) ---------- */
-  if(!TOUCH && !REDUCE){
-    document.querySelectorAll('[data-tilt]').forEach(function(c){
-      c.addEventListener('mousemove',function(e){ var r=c.getBoundingClientRect(); var px=(e.clientX-r.left)/r.width-.5, py=(e.clientY-r.top)/r.height-.5;
-        c.style.transform='translateY(-6px) perspective(700px) rotateY('+(px*6)+'deg) rotateX('+(-py*6)+'deg)'; });
-      c.addEventListener('mouseleave',function(){ c.style.transform=''; });
-    });
-  }
-
   /* ---------- How-it-works step progress ---------- */
   var steps=[].slice.call(document.querySelectorAll('.step'));
   var prog=document.getElementById('howProgress');
@@ -211,15 +139,24 @@ import { sendFeedback } from './lib/feedback';
     setInterval(function(){ signals.forEach(function(s){s.classList.remove('lit');}); signals[si].classList.add('lit'); si=(si+1)%signals.length; }, 1100);
   } else { signals.forEach(function(s){s.classList.add('lit');}); }
 
-  /* ---------- Emotions: playground Nimo (src/nimo), fetched only when the section gets close ---------- */
+  /* ---------- Emotions: playground Nimo (src/nimo) ----------
+     Its one-time setup costs a few hundred ms, so it runs while the page is idle after load
+     rather than mid-scroll. Scrolling close before then still starts it straight away. */
   (function(){
     var sec=document.getElementById('emotions'); if(!sec) return;
-    var load=function(){ import('./nimo/playground').then(function(m){ m.mountPlayground({ reduce: REDUCE, touch: TOUCH }); }); };
+    var started=false, io=null;
+    // GSAP is fetched here, only for the playground, alongside its own chunk.
+    var load=function(){
+      if(started) return; started=true; if(io) io.disconnect();
+      Promise.all([loadGsap(), import('./nimo/playground')]).then(function(r){ r[1].mountPlayground({ reduce: REDUCE, touch: TOUCH }); });
+    };
     if(!('IntersectionObserver' in window)){ load(); return; }
-    var io=new IntersectionObserver(function(en){
-      if(en.some(function(x){ return x.isIntersecting; })){ io.disconnect(); load(); }
+    io=new IntersectionObserver(function(en){
+      if(en.some(function(x){ return x.isIntersecting; })) load();
     },{rootMargin:'600px 0px'});
     io.observe(sec);
+    var idle=function(){ if('requestIdleCallback' in window) requestIdleCallback(load,{timeout:3000}); else setTimeout(load,1500); };
+    if(document.readyState==='complete') idle(); else window.addEventListener('load', idle, {once:true});
   })();
 
   /* ---------- Colorways ---------- */
@@ -234,37 +171,6 @@ import { sendFeedback } from './lib/feedback';
       track.colorwaySelect(c.textContent.trim());
     });
   });
-
-  /* ---------- Ambient particle canvas ---------- */
-  (function(){
-    if(REDUCE || TOUCH) return; // phones: skip the full-screen canvas redraw every frame
-    var cv=document.getElementById('particles'); if(!cv) return;
-    var ctx=cv.getContext('2d'), W,H,DPR=Math.min(window.devicePixelRatio||1,2), pts=[], N=0, mouse={x:-999,y:-999};
-    function resize(){ W=cv.width=innerWidth*DPR; H=cv.height=innerHeight*DPR; cv.style.width=innerWidth+'px'; cv.style.height=innerHeight+'px';
-      N=Math.min(90, Math.round(innerWidth/16)); pts=[];
-      for(var i=0;i<N;i++){ pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.18*DPR,vy:(Math.random()-.5)*.18*DPR,r:(Math.random()*1.6+.4)*DPR}); }
-    }
-    resize(); addEventListener('resize',resize);
-    addEventListener('mousemove',function(e){ mouse.x=e.clientX*DPR; mouse.y=e.clientY*DPR; });
-    var running=true; document.addEventListener('visibilitychange',function(){ running=!document.hidden; if(running) draw(); });
-    function draw(){
-      if(!running) return;
-      ctx.clearRect(0,0,W,H);
-      for(var i=0;i<N;i++){ var p=pts[i]; p.x+=p.vx; p.y+=p.vy;
-        if(p.x<0)p.x=W; if(p.x>W)p.x=0; if(p.y<0)p.y=H; if(p.y>H)p.y=0;
-        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,6.28); ctx.fillStyle='rgba(120,210,255,.5)'; ctx.fill();
-        // link near mouse
-        var dxm=p.x-mouse.x, dym=p.y-mouse.y, dm=dxm*dxm+dym*dym;
-        if(dm< (150*DPR)*(150*DPR)){ ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(mouse.x,mouse.y);
-          ctx.strokeStyle='rgba(53,224,255,'+(.16*(1-dm/((150*DPR)*(150*DPR))))+')'; ctx.lineWidth=DPR*.6; ctx.stroke(); }
-        for(var j=i+1;j<N;j++){ var q=pts[j], dx=p.x-q.x, dy=p.y-q.y, d=dx*dx+dy*dy;
-          if(d<(120*DPR)*(120*DPR)){ ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y);
-            ctx.strokeStyle='rgba(90,150,255,'+(.09*(1-d/((120*DPR)*(120*DPR))))+')'; ctx.lineWidth=DPR*.5; ctx.stroke(); } }
-      }
-      requestAnimationFrame(draw);
-    }
-    draw();
-  })();
 
   /* ---------- FAQ: single-open + track ---------- */
   var qas=[].slice.call(document.querySelectorAll('.faq details'));
@@ -287,11 +193,11 @@ import { sendFeedback } from './lib/feedback';
         note.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#59e6a0" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span>You\'re already on the list, so you\'ll be among the first to see it.</span>';
         note.classList.add('show');
       }
-      modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; if(lenis){try{lenis.stop();}catch(_){}}
+      modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
       // Desktop: cursor straight into the email box. Phones: don't pop the keyboard up uninvited.
       setTimeout(function(){ var t=(!TOUCH && input && form && form.style.display!=='none') ? input : closeBtn; if(t) t.focus(); },60);
     }
-    function closeModal(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; if(lenis){try{lenis.start();}catch(_){}} if(lastFocus && lastFocus.focus) lastFocus.focus(); }
+    function closeModal(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; if(lastFocus && lastFocus.focus) lastFocus.focus(); }
     document.querySelectorAll('[data-cta="watch-film"]').forEach(function(b){ b.addEventListener('click', function(e){
       e.preventDefault();
       var where=b.closest('.hero')?'hero':(b.closest('section[id]')||{id:'page'}).id;
@@ -315,8 +221,8 @@ import { sendFeedback } from './lib/feedback';
     if(!openBtn || !modal) return;
     var sendBtn=document.getElementById('fbSend'), msg=document.getElementById('fbMessage'), em=document.getElementById('fbEmail'), note=document.getElementById('fbNote');
     var lastFocus=null;
-    function openFb(){ lastFocus=document.activeElement; modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; if(lenis){try{lenis.stop();}catch(_){}} setTimeout(function(){ if(msg) msg.focus(); },60); }
-    function closeFb(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; if(lenis){try{lenis.start();}catch(_){}} if(lastFocus && lastFocus.focus) lastFocus.focus(); }
+    function openFb(){ lastFocus=document.activeElement; modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; setTimeout(function(){ if(msg) msg.focus(); },60); }
+    function closeFb(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; if(lastFocus && lastFocus.focus) lastFocus.focus(); }
     openBtn.addEventListener('click', openFb);
     if(closeBtn) closeBtn.addEventListener('click', closeFb);
     modal.addEventListener('click', function(e){ if(e.target===modal) closeFb(); });

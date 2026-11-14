@@ -8,11 +8,9 @@ interface ImportMetaEnv {
 }
 interface ImportMeta { readonly env: ImportMetaEnv }
 
-// UMD globals loaded from CDN in index.html
+// GSAP's UMD global, loaded on demand by src/lib/gsap.ts for the playground
 declare const gsap: any;
-declare const ScrollTrigger: any;
-declare const Lenis: any;
 interface Window {
-  gsap?: any; ScrollTrigger?: any; Lenis?: any;
+  gsap?: any;
   gtag?: (...args: any[]) => void; dataLayer?: any[]; nimoTrack?: any;
 }
