@@ -132,13 +132,6 @@ import { loadGsap } from './lib/gsap';
     steps[0].classList.add('active');
   }
 
-  /* ---------- Ride-along signals: sequential light-up ---------- */
-  var signals=[].slice.call(document.querySelectorAll('#signals .signal'));
-  if(signals.length && !REDUCE){
-    var si=0;
-    setInterval(function(){ signals.forEach(function(s){s.classList.remove('lit');}); signals[si].classList.add('lit'); si=(si+1)%signals.length; }, 1100);
-  } else { signals.forEach(function(s){s.classList.add('lit');}); }
-
   /* ---------- Emotions: playground Nimo (src/nimo) ----------
      Its one-time setup costs a few hundred ms, so it runs while the page is idle after load
      rather than mid-scroll. Scrolling close before then still starts it straight away. */
@@ -158,19 +151,6 @@ import { loadGsap } from './lib/gsap';
     var idle=function(){ if('requestIdleCallback' in window) requestIdleCallback(load,{timeout:3000}); else setTimeout(load,1500); };
     if(document.readyState==='complete') idle(); else window.addEventListener('load', idle, {once:true});
   })();
-
-  /* ---------- Colorways ---------- */
-  var cwBody=document.getElementById('cwBody'), cwBase=document.getElementById('cwBase');
-  document.querySelectorAll('.cw-chip').forEach(function(c){
-    c.addEventListener('click',function(){
-      var col=c.getAttribute('data-cw');
-      document.querySelectorAll('.cw-chip').forEach(function(x){x.setAttribute('aria-pressed','false');});
-      c.setAttribute('aria-pressed','true');
-      if(cwBody) cwBody.style.setProperty('--nimo',col);
-      if(cwBase) cwBase.style.background=col;
-      track.colorwaySelect(c.textContent.trim());
-    });
-  });
 
   /* ---------- FAQ: single-open + track ---------- */
   var qas=[].slice.call(document.querySelectorAll('.faq details'));

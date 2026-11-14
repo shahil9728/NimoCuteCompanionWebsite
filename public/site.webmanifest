@@ -1,12 +1,12 @@
 {
-  "name": "Nimo \u2014 AI Companion Robot for Your Car Dashboard",
+  "name": "Nimo — AI Companion Robot for Your Car Dashboard",
   "short_name": "Nimo",
-  "description": "An emotionally intelligent AI companion robot that lives on your car dashboard.",
+  "description": "An emotionally intelligent AI companion robot for your desk and your car dashboard.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#05070a",
-  "theme_color": "#05070a",
+  "background_color": "#F5F2EC",
+  "theme_color": "#F5F2EC",
   "lang": "en",
   "icons": [
     {

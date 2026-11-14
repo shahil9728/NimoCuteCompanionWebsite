@@ -1,6 +1,6 @@
-# Nimo — AI Car‑Dashboard Companion (Landing Page)
+# Nimo — AI Desk & Dashboard Companion (Landing Page)
 
-A premium, dark‑mode, motion‑driven landing page for **Nimo**, an emotionally intelligent AI companion that rides on your car dashboard. Optimised for one conversion: **Join the Waitlist**.
+A calm, product-first landing page for **Nimo**, an emotionally intelligent cat-eared AI companion robot for your desk and your car dashboard. Optimised for one conversion: **Join the Waitlist**. The visual rules (palette, type, components) are in [`DESIGN.md`](./DESIGN.md).
 
 Built as a lightweight **Vite + TypeScript** static site — no framework runtime, fast to build, trivial to deploy on Render.
 
@@ -8,12 +8,12 @@ Built as a lightweight **Vite + TypeScript** static site — no framework runtim
 
 ## ✨ Features
 
-- Full‑bleed cinematic hero (car‑dashboard shot) with an **inline, above‑the‑fold waitlist form**
+- Split hero (real desk photo) with an **inline, above‑the‑fold waitlist form**
 - Frictionless waitlist everywhere: hero form, sticky nav CTA, slide‑in bar, and a climax section — all email‑only with inline success
-- Scroll storytelling (GSAP + ScrollTrigger), smooth scroll (Lenis), ambient particle field, magnetic buttons, cursor spotlight
+- Light on purpose: native scrolling, one IntersectionObserver fade-in, no blur or endless loops. GSAP loads on demand only for the playground
 - Interactive **playground Nimo** (`src/nimo/`) — an SVG Nimo you can pet, boop, flick, hug and tickle (mouse or touch). He has a mood that changes over time, falls asleep when ignored, remembers past visits, and has 5 tricks to find that unlock an "Adopt Nimo" button
-- Sections: Hero · What is Nimo · Features (bento) · How it works · Ride‑along · Emotions · Before/After · Colorways · Testimonials · FAQ · Waitlist · Footer
-- SEO: canonical `https://www.heynimo.in/`, meta + Open Graph + Twitter with a **self-hosted** `og-image.jpg`, JSON‑LD graph (Organization, WebSite, WebPage, ImageObject, Product, FAQPage), image sitemap, crawler-friendly `robots.txt`, real `/privacy` + `/terms` pages, and a true 404 page. See [`SEO.md`](./SEO.md).
+- Sections: Hero · What is Nimo · Little moments (desk, bedside, car, backpack) · Playground · Features · How it works · Before/After · Guides · FAQ · Waitlist · Footer
+- SEO: canonical `https://www.heynimo.in/`, meta + Open Graph + Twitter with a **self-hosted** `og-nimo-desk-companion.jpg`, JSON‑LD graph (Organization, WebSite, WebPage, ImageObject, Product, FAQPage), image sitemap, crawler-friendly `robots.txt`, real `/privacy` + `/terms` pages, and a true 404 page. See [`SEO.md`](./SEO.md).
 - Analytics: **Google Analytics 4** (`G-3C9Z4YQVRT`) + **Google Tag** (`GT-WF4ZWBSR`) via `gtag.js`, with custom events
 - Accessibility: semantic HTML, ARIA, focus states, full `prefers-reduced-motion` support
 
@@ -25,12 +25,12 @@ Built as a lightweight **Vite + TypeScript** static site — no framework runtim
 |---|---|
 | Build | Vite 5 |
 | Language | TypeScript (bundled with esbuild — no blocking type‑check) |
-| Animation | GSAP + ScrollTrigger, Lenis (loaded from CDN) |
+| Animation | CSS + one IntersectionObserver; GSAP (CDN, loaded on demand) for the playground only |
 | Data | Supabase (`@supabase/supabase-js`) |
 | Analytics | Google `gtag.js` (GA4 + Google Tag) |
 | Hosting | Render.com static site |
 
-> The verified visual design is ported 1:1 from the approved single‑file build. Imagery lives in `public/images/` as WebP with JPEG fallbacks, served through `<picture>` elements with descriptive alt text — previously these were base64 data‑URIs inside the CSS, which made the render‑blocking stylesheet 422 KB. It is now 37 KB.
+> Imagery lives in `public/images/` as plain WebP files with descriptive names, explicit sizes and alt text. Fonts (Inter, Quicksand) are self-hosted in `public/fonts/`. Logo masters are in `public/brand/`.
 
 ---
 
@@ -48,13 +48,14 @@ Built as a lightweight **Vite + TypeScript** static site — no framework runtim
 ├── public/
 │   ├── favicon.svg / favicon.ico / apple-touch-icon.png / icon-*.png
 │   ├── site.webmanifest
-│   ├── og-image.jpg      # self-hosted social share image (1200x630)
-│   ├── images/           # hero + product WebP/JPEG
+│   ├── og-nimo-desk-companion.jpg  # social share image (1200x630)
+│   ├── brand/            # logo masters: nimo-logo(-white).svg, nimo-icon.svg
+│   ├── images/           # product photos (WebP)
 │   ├── robots.txt
 │   └── sitemap.xml
 ├── src/
 │   ├── main.ts           # all interactions (imports styles + lib modules)
-│   ├── page.ts           # content pages: nav, waitlist, sticky bar, dialogs (no GSAP/Lenis)
+│   ├── page.ts           # content pages: nav, waitlist, sticky bar, dialogs (no GSAP)
 │   ├── vite-env.d.ts
 │   ├── styles/
 │   │   └── main.css      # design system (imagery now lives in public/images)
@@ -211,5 +212,5 @@ Build Command `npm install && npm run build`, Publish Directory `dist`, add the 
 ## 📝 Notes
 
 - Testimonials and the "642 friends" count are placeholders — swap in real ones before a serious launch. They carry no Review schema, deliberately, so no fabricated ratings reach Google.
-- The OG/social image is self‑hosted at `/og-image.jpg`.
+- The OG/social image is self‑hosted at `/og-nimo-desk-companion.jpg`.
 - Want a full **React + React‑Three‑Fiber** version with a real interactive 3D Nimo? That path is available on request.

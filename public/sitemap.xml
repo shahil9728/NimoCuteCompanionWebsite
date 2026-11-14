@@ -3,20 +3,36 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.heynimo.in/</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://www.heynimo.in/images/nimo-ai-companion-robot-car-dashboard-hero.webp</image:loc>
-      <image:title>Nimo AI companion robot on a car dashboard</image:title>
+      <image:loc>https://www.heynimo.in/images/nimo-ai-desk-companion-robot-hero.webp</image:loc>
+      <image:title>Nimo, a cat-eared AI companion robot, on a desk beside a notebook</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://www.heynimo.in/images/nimo-companion-robot-product-shot.webp</image:loc>
-      <image:title>Nimo companion robot product shot</image:title>
+      <image:loc>https://www.heynimo.in/images/nimo-cat-ear-robot-on-sunny-desk.webp</image:loc>
+      <image:title>Nimo smiling on a sunny desk next to books and a plant</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://www.heynimo.in/images/nimo-robot-on-dashboard-night-drive.webp</image:loc>
-      <image:title>Nimo glowing on the dashboard during a night drive</image:title>
+      <image:loc>https://www.heynimo.in/images/nimo-robot-winking-by-laptop.webp</image:loc>
+      <image:title>Nimo winking on a desk next to a laptop</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.heynimo.in/images/nimo-robot-sleepy-on-bedside-table.webp</image:loc>
+      <image:title>Sleepy Nimo on a bedside table</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.heynimo.in/images/nimo-robot-on-car-dashboard-daytime.webp</image:loc>
+      <image:title>Nimo on a car dashboard on a sunny day</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.heynimo.in/images/nimo-robot-peeking-out-of-backpack.webp</image:loc>
+      <image:title>Nimo peeking out of a backpack</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.heynimo.in/images/nimo-robot-desk-keyboard-and-mug.webp</image:loc>
+      <image:title>Nimo on a desk between a keyboard and a mug</image:title>
     </image:image>
   </url>
   <!-- guides -->

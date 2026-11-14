@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<meta name="theme-color" content="#05070a" />
+<meta name="theme-color" content="#F5F2EC" />
 <title>Privacy Policy | Nimo</title>
 <meta name="description" content="How Nimo Robotics collects, uses and protects the personal information you share with heynimo.in - including waitlist emails, cookies and analytics." />
 <meta name="robots" content="index, follow, max-image-preview:large" />
@@ -13,51 +13,20 @@
 <meta property="og:title" content="Privacy Policy | Nimo" />
 <meta property="og:description" content="How Nimo Robotics collects, uses and protects the personal information you share with heynimo.in - including waitlist emails, cookies and analytics." />
 <meta property="og:url" content="https://www.heynimo.in/privacy" />
-<meta property="og:image" content="https://www.heynimo.in/og-image.jpg" />
+<meta property="og:image" content="https://www.heynimo.in/og-nimo-desk-companion.jpg" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://www.heynimo.in/og-image.jpg" />
+<meta name="twitter:image" content="https://www.heynimo.in/og-nimo-desk-companion.jpg" />
 <link rel="icon" href="/favicon.ico" sizes="48x48" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" sizes="any" />
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
 <link rel="icon" type="image/png" sizes="144x144" href="/favicon-144x144.png" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
-<link rel="preload" as="font" type="font/woff2" href="/fonts/inter-tight-latin-var.woff2" crossorigin />
+<link rel="preload" as="font" type="font/woff2" href="/fonts/quicksand-latin-var.woff2" crossorigin />
 <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-var.woff2" crossorigin />
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebPage","name":"Privacy Policy","url":"https://www.heynimo.in/privacy","description":"How Nimo Robotics collects, uses and protects the personal information you share with heynimo.in.","inLanguage":"en","isPartOf":{"@type":"WebSite","name":"Nimo","url":"https://www.heynimo.in/"},"publisher":{"@type":"Organization","name":"Nimo Robotics Inc.","url":"https://www.heynimo.in/"},"dateModified":"2026-08-13"}
 </script>
-<style>
-/* ---- self-hosted variable fonts (latin) ----
-   Previously loaded from fonts.googleapis.com + fonts.gstatic.com, which put
-   two extra third-party origins on the critical rendering path. Same files,
-   served from our own domain. */
-@font-face{font-family:'Inter';font-style:normal;font-weight:400 600;font-display:swap;src:url('/fonts/inter-latin-var.woff2') format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
-@font-face{font-family:'Inter Tight';font-style:normal;font-weight:400 800;font-display:swap;src:url('/fonts/inter-tight-latin-var.woff2') format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
-@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 500;font-display:swap;src:url('/fonts/jetbrains-mono-latin-var.woff2') format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
-*{box-sizing:border-box}
-:root{--bg:#05070a;--panel:#0b0f16;--ink:#eef4f8;--muted:#93a3b2;--cyan:#35e0ff;--stroke:rgba(255,255,255,.09)}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.75 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
-a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline}
-.wrap{max-width:760px;margin:0 auto;padding:0 6vw}
-header.site{border-bottom:1px solid var(--stroke);padding:18px 0;position:sticky;top:0;background:rgba(5,7,10,.85);backdrop-filter:blur(12px);z-index:5}
-.brand{display:inline-flex;align-items:center;color:var(--ink)}
-.brand .logo{display:block;height:30px;width:auto}
-main{padding:60px 0 40px}
-h1{font:800 clamp(30px,5vw,44px)/1.1 'Inter Tight',Inter,sans-serif;letter-spacing:-.03em;margin:0 0 12px}
-h2{font:700 22px/1.3 'Inter Tight',Inter,sans-serif;letter-spacing:-.02em;margin:44px 0 12px;scroll-margin-top:90px}
-h3{font:600 17px/1.4 'Inter Tight',Inter,sans-serif;margin:26px 0 8px}
-p,li{color:#c6d2dc}
-.lede{color:var(--muted);font-size:17px}
-.updated{color:var(--muted);font-size:14px;margin:0 0 8px;letter-spacing:.04em;text-transform:uppercase}
-ul{padding-left:20px}li{margin:7px 0}
-.card{background:var(--panel);border:1px solid var(--stroke);border-radius:16px;padding:20px 22px;margin:26px 0}
-.back{display:inline-block;margin-top:44px;padding:11px 20px;border-radius:999px;background:var(--cyan);color:#04252e;font-weight:700}
-.back:hover{text-decoration:none;filter:brightness(1.08)}
-footer.site{border-top:1px solid var(--stroke);margin-top:60px;padding:26px 0;color:var(--muted);font-size:14px;display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between}
-footer.site a{color:var(--muted)}
-</style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=GT-WF4ZWBSR"></script>
 <script>
   // Off on localhost and LAN addresses, so visits while working on the site never reach GA.
@@ -73,6 +42,7 @@ footer.site a{color:var(--muted)}
     gtag("config", "G-3C9Z4YQVRT");
   })();
 </script>
+<link rel="stylesheet" href="/legal-pages.css" />
 </head>
 <body>
 <header class="site"><div class="wrap"><a class="brand" href="/" aria-label="Nimo home"><svg class="logo" viewBox="28 34 496 190" width="496" height="190" aria-hidden="true"><path fill="currentColor" d="M30 86A10 10 0 0 1 50 86L50 166A10 10 0 0 1 30 166L30 86ZM30 126A50 50 0 0 1 130 126L110 126A30 30 0 0 0 50 126L30 126ZM110 126A10 10 0 0 1 130 126L130 166A10 10 0 0 1 110 166L110 126ZM174 86A10 10 0 0 1 194 86L194 166A10 10 0 0 1 174 166L174 86ZM172 48A12 12 0 1 1 196 48A12 12 0 1 1 172 48ZM238 86A10 10 0 0 1 258 86L258 166A10 10 0 0 1 238 166L238 86ZM238 118A42 42 0 0 1 322 118L302 118A22 22 0 0 0 258 118L238 118ZM302 118A10 10 0 0 1 322 118L322 166A10 10 0 0 1 302 166L302 118ZM302 118A42 42 0 0 1 386 118L366 118A22 22 0 0 0 322 118L302 118ZM366 118A10 10 0 0 1 386 118L386 166A10 10 0 0 1 366 166L366 118ZM422 126A50 50 0 1 1 522 126A50 50 0 1 1 422 126ZM442 126A30 30 0 1 0 502 126A30 30 0 1 0 442 126ZM235.11 196.34A19 19 0 0 0 268.89 196.34A8 8 0 0 1 283.11 196.34A19 19 0 0 0 316.89 196.34A8 8 0 0 1 331.11 203.66A35 35 0 0 1 276 213.11A35 35 0 0 1 220.89 203.66A8 8 0 0 1 235.11 196.34Z"/></svg></a></div></header>
