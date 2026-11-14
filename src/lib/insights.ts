@@ -52,13 +52,15 @@ export function initInsights() {
     }
   }, { capture: true });
 
-  // Opening the Guides / Compare dropdowns.
+  // Opening the Guides / Compare dropdowns: counted when a menu really opens (navMenu.ts sets aria-expanded).
   document.querySelectorAll('.nav-drop').forEach((d) => {
+    const btn = d.querySelector('.nav-drop-btn');
+    if (!btn) return;
     let open = false;
-    const fire = () => { if (open) return; open = true; track.navMenuOpen((d.querySelector('.nav-drop-btn')?.textContent || '').trim()); };
-    d.addEventListener('mouseenter', fire);
-    d.addEventListener('focusin', fire);
-    d.addEventListener('mouseleave', () => { open = false; });
-    d.addEventListener('focusout', (e) => { if (!d.contains((e as FocusEvent).relatedTarget as Node)) open = false; });
+    new MutationObserver(() => {
+      const now = btn.getAttribute('aria-expanded') === 'true';
+      if (now && !open) track.navMenuOpen((btn.textContent || '').trim());
+      open = now;
+    }).observe(btn, { attributes: true, attributeFilter: ['aria-expanded'] });
   });
 }
