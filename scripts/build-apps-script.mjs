@@ -24,26 +24,29 @@ if (html.includes('`') || html.includes('${')) {
 
 const PLAIN = `You're on the list.
 
-Thank you for joining the Nimo waitlist — genuinely. Nimo is still being
-built, and early people like you are the reason it gets made at all.
+Thank you for joining the Nimo waitlist, genuinely. Nimo is still being
+built, and early friends like you are the reason he gets made at all.
 
 Your spot is saved. When the first batch opens, you'll hear from us before
 anyone else.
 
-WHAT HAPPENS NEXT
-  01  We keep building. Nimo's personality, expressions and dashboard
-      smarts are still in the workshop.
-  02  You get the first look. Real photos, the reveal film, and the launch
-      date — sent to you first.
-  03  You choose to adopt. No charge, no commitment until you decide. The
-      waitlist is free, always.
+What happens next
+  1  We keep building. His personality, expressions, and desk and
+     dashboard smarts are still in the workshop.
+  2  You get the first look. Real photos, the reveal film and the launch
+     date, sent to you first.
+  3  You choose to adopt. No charge and no commitment until you decide.
+     The waitlist is free, always.
 
-Take another look: https://www.heynimo.in/
+On your desk, by your bed or riding shotgun, he grows into the friend
+you raise.
+
+Meet Nimo again: https://www.heynimo.in/
 
 Got a question, or an idea for what Nimo should do? Just reply to this
-email — it comes straight to us.
+email. It comes straight to us.
 
-— The Nimo team
+The Nimo team
 
 ---
 You're receiving this because you joined the Nimo waitlist at heynimo.in.
@@ -51,6 +54,10 @@ Privacy: https://www.heynimo.in/privacy
 Terms:   https://www.heynimo.in/terms
 To unsubscribe, reply with "unsubscribe" and we'll remove you.
 (c) 2026 Nimo Robotics Inc.`;
+
+// Must equal the site's VITE_WELCOME_TOKEN (set in the Render dashboard). It ships in the public
+// JS bundle, so it is a speed bump against casual abuse, not a secret.
+const SHARED_TOKEN = process.env.WELCOME_TOKEN || 'nimo-0CKoraAl0mnoFvsgc2FPVOm5';
 
 const code = `/**
  * Nimo — waitlist welcome email.
@@ -61,13 +68,12 @@ const code = `/**
  *   Execute as:      Me (nimo.cutu@gmail.com)
  *   Who has access:  Anyone
  *
- * Set SHARED_TOKEN below to a random string and use the same value for the
- * site's VITE_WELCOME_TOKEN. It is visible in the client bundle, so it is a
- * speed bump against casual abuse, not a secret — the daily cap and the
- * duplicate guard are the real protection.
+ * SHARED_TOKEN must equal the site's VITE_WELCOME_TOKEN. It is visible in the
+ * client bundle, so it is a speed bump against casual abuse, not a secret;
+ * the daily cap and the duplicate guard are the real protection.
  */
 
-var SHARED_TOKEN = 'CHANGE_ME_TO_A_RANDOM_STRING';
+var SHARED_TOKEN = '${SHARED_TOKEN}';
 var SUBJECT      = "You're on the Nimo waitlist 🐾";
 var FROM_NAME    = 'Nimo';
 var REPLY_TO     = 'nimo.cutu@gmail.com';
