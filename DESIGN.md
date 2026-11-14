@@ -11,11 +11,11 @@ Tokens live as CSS variables at the top of `src/styles/main.css`; pages use the 
 | `--paper` | `#F5F2EC` | Page background. Warm, so white Nimo never melts into a white page. |
 | `--paper-2` | `#EDE8DF` | Alternate section bands, table header cells, quiet fills. |
 | `--card` | `#FFFFFF` | Cards, inputs, dialogs, the sticky bar. |
-| `--ink` | `#111318` | Text and headings; the footer and closing waitlist band. |
+| `--ink` | `#111318` | Text, headings, primary buttons and selected chips (it matches Nimo's black screen face); the footer. |
 | `--muted` | `#565B66` | Secondary text (6:1 on paper). |
 | `--faint` | `#666B76` | Hints and captions (4.8:1 on paper). |
 | `--line` / `--line-strong` | `#E2DCD1` / `#CFC8BB` | Borders and dividers / input borders. |
-| `--blue` | `#2F5F9E` | The one action color: buttons, links, focus ring, selected states. White text on it is 6.3:1. |
+| `--blue` | `#2F5F9E` | Links, focus rings, small labels and progress accents. White text on it is 6.3:1. |
 | `--blue-ink` / `--blue-soft` | `#244B7E` / `#E4ECF7` | Hover / selected chip and table highlight fills. |
 | `--ear` | `#A9C8EE` | Nimo's inner-ear blue. Decorative only (playground disc, small accents), never text. |
 | `--blush` | `#F28EA0` | Nimo's cheeks. Tiny accents (hearts, the live dot), never text. |
@@ -54,7 +54,7 @@ One shadow, `--shadow`, only on things that float: dropdowns, the sticky bar, di
 
 ## Components
 
-- **Buttons:** primary = blue pill with white text, darker on hover; secondary = white pill with an ink
+- **Buttons:** primary = ink pill with white text, a shade lighter on hover; secondary = white pill with an ink
   label and a line border. Visible 3px focus ring in `--blue`. Disabled at 45% opacity.
 - **Links:** `--blue`, underlined in body text.
 - **Inputs:** white pill, `--line-strong` border, blue border and ring on focus, error text in `--err`.

@@ -13,6 +13,10 @@
 <link rel="preload" as="font" type="font/woff2" href="/fonts/quicksand-latin-var.woff2" crossorigin />
 <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-var.woff2" crossorigin />
 
+<script>
+  // Already on the waitlist in this browser? Mark it before first paint (nav says "On the list").
+  try { if (localStorage.getItem('nimo_joined') === '1' || JSON.parse(localStorage.getItem('nimo_waitlist') || '[]').length) document.documentElement.classList.add('is-joined'); } catch (e) {}
+</script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=GT-WF4ZWBSR"></script>
 <script>

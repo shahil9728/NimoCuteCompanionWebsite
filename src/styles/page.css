@@ -114,7 +114,7 @@
 .cta-band .txt{flex:1 1 240px;min-width:0}
 .cta-band .txt b{display:block;font-family:var(--font-display);font-size:22px;font-weight:700;line-height:1.25;color:var(--ink)}
 .cta-band .txt span{display:block;color:var(--muted);font-size:15.5px;margin-top:6px}
-.cta-band .form-slot{flex:1 1 320px;max-width:440px}
+.cta-band .form-slot{flex:1 1 320px;max-width:440px;display:flex;flex-direction:column;align-items:flex-end}
 .cta-band .waitlist-form{max-width:none}
 
 /* ============ keep reading ============ */
@@ -140,4 +140,5 @@
   .timeline::before,.timeline::after{left:20px}
   .moment .card{padding:18px}
   .cta-band{padding:22px 20px;margin:44px auto}
+  .cta-band .form-slot{align-items:flex-start}
 }
