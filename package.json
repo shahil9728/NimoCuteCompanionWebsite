@@ -5,10 +5,7 @@
   "type": "module",
   "description": "Nimo \u2014 AI car-dashboard companion landing page",
   "scripts": {
-    "assets": "node scripts/unpack-assets.mjs",
-    "predev": "npm run assets",
     "dev": "vite",
-    "prebuild": "npm run assets",
     "build": "vite build",
     "postbuild": "node scripts/clean-urls.mjs",
     "preview": "vite preview --host",
