@@ -179,7 +179,7 @@ import { nimoArt, type NimoFace } from './nimo/faceArt';
       // Already on the list: say so instead of asking for the email again.
       if(form && note && form.style.display!=='none' && hasJoined()){
         form.style.display='none';
-        note.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span>You\'re already on the list, so you\'ll be among the first to see it.</span>';
+        note.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span>You\'re on the list</span>';
         note.classList.add('show');
       }
       modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';

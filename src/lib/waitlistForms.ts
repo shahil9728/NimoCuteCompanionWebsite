@@ -78,8 +78,8 @@ export function initWaitlistForms(onJoined?: (loc: string) => void) {
         document.dispatchEvent(new CustomEvent('nimo:joined',{detail:{email:val, loc:loc, already:!!res.already}}));
         if(success){
           success.innerHTML = res.already
-            ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span>You're already on the list — see you on the road!</span>`
-            : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span>You're on the list! We'll email <b>${val.replace(/</g,'&lt;')}</b> the moment pre-orders open.</span>`;
+            ? TICK + "<span>You're already on the list</span>"
+            : TICK + "<span>You're on the list!</span>";
           success.classList.add('show'); form.style.display='none';
         } else {
           form.innerHTML = `<div class="form-success show" style="display:flex">🎉 You're on the list! We'll be in touch soon.</div>`;
@@ -100,6 +100,6 @@ export function initWaitlistForms(onJoined?: (loc: string) => void) {
 function showJoined(form: HTMLFormElement) {
   var sib = form.nextElementSibling;
   if (!sib || !sib.hasAttribute('data-success') || sib.classList.contains('show')) return;
-  sib.innerHTML = TICK + "<span>You're on the waitlist. We'll email you the moment pre-orders open.</span>";
+  sib.innerHTML = TICK + "<span>You're on the list</span>";
   sib.classList.add('show'); form.style.display = 'none';
 }

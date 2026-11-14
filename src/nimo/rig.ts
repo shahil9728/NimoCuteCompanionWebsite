@@ -79,7 +79,16 @@ function maskMarkup(s: 'l' | 'r'): string {
 // stay on the GPU compositor), and the dizzy stars. No SVG filters: glows are gradients, cheap to repaint.
 const SVG = `
 <svg class="np-svg np-back" viewBox="0 0 ${VB} ${VB}" aria-hidden="true" focusable="false">
-  <ellipse id="np-shadow" cx="200" cy="364" rx="112" ry="13" fill="rgba(17,19,24,.2)"/>
+  <defs>
+    <radialGradient id="np-podG" cx="50%" cy="35%" r="65%">
+      <stop offset="0" stop-color="#ffffff"/><stop offset=".7" stop-color="#eef3fa"/><stop offset="1" stop-color="#cddcf0"/>
+    </radialGradient>
+    <radialGradient id="np-shadowG">
+      <stop offset="0" stop-color="#1b2b45" stop-opacity=".5"/><stop offset=".55" stop-color="#1b2b45" stop-opacity=".2"/><stop offset="1" stop-color="#1b2b45" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <ellipse cx="200" cy="370" rx="106" ry="19" fill="url(#np-podG)"/>
+  <ellipse id="np-shadow" cx="200" cy="364" rx="118" ry="17" fill="url(#np-shadowG)"/>
 </svg>
 <svg class="np-svg np-bodySvg" viewBox="0 0 ${VB} ${VB}" aria-hidden="true" focusable="false">
   <defs>
@@ -292,7 +301,7 @@ export function createRig(stage: HTMLElement, reduce: boolean) {
     if (P.sweat > 0.01) set(el.sweat, 'transform', `translate(${f(300)} ${f(118 + Math.sin(t * 3) * 2 + (1 - P.sweat) * -10)}) scale(1.5)`);
     set(el.sweat, 'opacity', P.sweat);
 
-    set(el.shadow, 'rx', 96 * (1 + Math.min(0, b.y) / 260)); set(el.shadow, 'opacity', 1 + Math.min(0, b.y) / 160);
+    set(el.shadow, 'rx', 118 * (1 + Math.min(0, b.y) / 260)); set(el.shadow, 'opacity', 1 + Math.min(0, b.y) / 160);
 
     el.stars.forEach((s, i) => {
       const a = t * 3.2 + (i * Math.PI * 2) / 3;
