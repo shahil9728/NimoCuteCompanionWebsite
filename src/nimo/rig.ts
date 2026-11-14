@@ -56,7 +56,6 @@ function starPath(ro: number, ri: number): string {
 function eyeMarkup(s: 'l' | 'r'): string {
   return `
   <g id="np-eye-${s}">
-    <ellipse class="np-halo" fill="url(#np-haloG)"/>
     <g mask="url(#np-mask-${s})">
       <ellipse class="np-ball"/><ellipse class="np-iris"/><ellipse class="np-pupil"/>
       <circle class="np-hl" fill="#fff"/><circle class="np-hl2" fill="#fff"/>
@@ -80,35 +79,24 @@ function maskMarkup(s: 'l' | 'r'): string {
 // stay on the GPU compositor), and the dizzy stars. No SVG filters: glows are gradients, cheap to repaint.
 const SVG = `
 <svg class="np-svg np-back" viewBox="0 0 ${VB} ${VB}" aria-hidden="true" focusable="false">
-  <ellipse cx="200" cy="372" rx="165" ry="40" fill="url(#np-baseGlowG)"/>
-  <ellipse class="np-base" cx="200" cy="368" rx="124" ry="22"/>
-  <ellipse id="np-shadow" cx="200" cy="364" rx="96" ry="11" fill="rgba(0,0,0,.38)"/>
+  <ellipse id="np-shadow" cx="200" cy="364" rx="112" ry="13" fill="rgba(17,19,24,.2)"/>
 </svg>
 <svg class="np-svg np-bodySvg" viewBox="0 0 ${VB} ${VB}" aria-hidden="true" focusable="false">
   <defs>
-    <radialGradient id="np-shellG" cx="36%" cy="28%" r="78%">
-      <stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#e2e7eb"/><stop offset="1" stop-color="#8b97a1"/>
+    <radialGradient id="np-shellG" cx="36%" cy="28%" r="80%">
+      <stop offset="0" stop-color="#ffffff"/><stop offset=".6" stop-color="#f2f4f6"/><stop offset="1" stop-color="#c3cad3"/>
     </radialGradient>
-    <radialGradient id="np-visorG" cx="50%" cy="38%" r="70%">
-      <stop offset="0" stop-color="#141b24"/><stop offset="1" stop-color="#020305"/>
+    <radialGradient id="np-visorG" cx="50%" cy="36%" r="72%">
+      <stop offset="0" stop-color="#1b1e25"/><stop offset="1" stop-color="#050608"/>
     </radialGradient>
     <linearGradient id="np-earInG" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#aab4bd"/><stop offset="1" stop-color="#d7dde2"/>
+      <stop offset="0" stop-color="#8fb4e4"/><stop offset="1" stop-color="#c4d9f3"/>
     </linearGradient>
     <radialGradient id="np-flushG">
-      <stop offset="0" stop-color="#ff5d73" stop-opacity=".8"/><stop offset="1" stop-color="#ff5d73" stop-opacity="0"/>
+      <stop offset="0" stop-color="#f28ea0" stop-opacity=".85"/><stop offset="1" stop-color="#f28ea0" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="np-glareG">
       <stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="np-cheekG">
-      <stop offset="0" stop-color="#ff6fa5" stop-opacity=".9"/><stop offset="1" stop-color="#ff6fa5" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="np-haloG">
-      <stop class="np-glowStop" offset="0" stop-opacity=".55"/><stop class="np-glowStop" offset=".5" stop-opacity=".22"/><stop class="np-glowStop" offset="1" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="np-baseGlowG">
-      <stop class="np-glowStop" offset="0" stop-opacity=".42"/><stop class="np-glowStop" offset="1" stop-opacity="0"/>
     </radialGradient>
     <clipPath id="np-visorClip"><ellipse cx="200" cy="224" rx="118" ry="80"/></clipPath>
     ${maskMarkup('l')}${maskMarkup('r')}
@@ -117,18 +105,14 @@ const SVG = `
     <g id="np-ear-l"><path d="${EAR_OUT}" fill="url(#np-shellG)"/><path d="${EAR_IN}" fill="url(#np-earInG)"/></g>
     <g id="np-ear-r"><path d="${EAR_OUT}" fill="url(#np-shellG)"/><path d="${EAR_IN}" fill="url(#np-earInG)"/></g>
     <circle cx="200" cy="215" r="150" fill="url(#np-shellG)"/>
-    <path class="np-seam" d="M51 232 Q200 258 349 232"/>
-    <path class="np-seam" d="M200 65 Q207 100 206 142"/>
-    <path class="np-seam" d="M206 306 Q207 338 200 365"/>
-    <circle class="np-dot" cx="64" cy="238" r="2.6"/><circle class="np-dot" cx="336" cy="238" r="2.6"/>
     <ellipse id="np-hit-l" cx="80" cy="252" rx="48" ry="42" fill="url(#np-flushG)" opacity="0"/>
     <ellipse id="np-hit-r" cx="320" cy="252" rx="48" ry="42" fill="url(#np-flushG)" opacity="0"/>
-    <ellipse cx="200" cy="224" rx="124" ry="86" fill="#c3ccd3"/>
+    <ellipse cx="200" cy="224" rx="124" ry="86" fill="#e4e8ed"/>
     <ellipse cx="200" cy="224" rx="118" ry="80" fill="url(#np-visorG)"/>
     <g clip-path="url(#np-visorClip)">
       <g id="np-face">
-        <ellipse id="np-cheek-l" cx="128" cy="258" rx="26" ry="15" fill="url(#np-cheekG)"/>
-        <ellipse id="np-cheek-r" cx="272" cy="258" rx="26" ry="15" fill="url(#np-cheekG)"/>
+        <path id="np-cheek-l" d="M113 268 l5 -9 M123 268 l5 -9 M133 268 l5 -9" stroke="#f28ea0" stroke-width="4" stroke-linecap="round"/>
+        <path id="np-cheek-r" d="M263 268 l5 -9 M273 268 l5 -9 M283 268 l5 -9" stroke="#f28ea0" stroke-width="4" stroke-linecap="round"/>
         ${eyeMarkup('l')}${eyeMarkup('r')}
         <g id="np-mouth" transform="translate(${MOUTH.x} ${MOUTH.y})">
           <path id="np-mouthGlow" fill="none" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" opacity=".2"/>
@@ -138,8 +122,8 @@ const SVG = `
       </g>
       <ellipse cx="262" cy="174" rx="40" ry="22" fill="url(#np-glareG)" transform="rotate(-18 262 174)"/>
     </g>
-    <g id="np-tearShift"><path id="np-tear" d="${DROP}" fill="#8cefff"/></g>
-    <path id="np-sweat" d="${DROP}" fill="#bfefff" stroke="#7fd3ea" stroke-width="1"/>
+    <g id="np-tearShift"><path id="np-tear" d="${DROP}" fill="#a9c8ee"/></g>
+    <path id="np-sweat" d="${DROP}" fill="#dce8f7" stroke="#8fb4e4" stroke-width="1"/>
     <ellipse cx="128" cy="118" rx="36" ry="20" fill="url(#np-glareG)" transform="rotate(-34 128 118)"/>
   </g>
 </svg>
@@ -154,12 +138,7 @@ export function hexToRgb(hex: string): RGB {
   const n = parseInt(hex.slice(1), 16);
   return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
 }
-const rgb = (c: RGB) => `rgb(${Math.round(c.r)},${Math.round(c.g)},${Math.round(c.b)})`;
-function mix(a: RGB, b: RGB, t: number): string {
-  return `rgb(${Math.round(a.r + (b.r - a.r) * t)},${Math.round(a.g + (b.g - a.g) * t)},${Math.round(a.b + (b.b - a.b) * t)})`;
-}
-const IRIS_DARK = { r: 2, g: 18, b: 24 };
-const PUPIL_DARK = { r: 1, g: 7, b: 10 };
+const EYE_WHITE = '#ffffff', IRIS = '#1a1d24', PUPIL = '#050608', BLUSH = '#f28ea0', FACE_LINE = '#ffffff';
 
 function eye(): EyeP { return { w: 54, h: 56, lidY: 0, lidRot: 0, botY: 0, rot: 0, dy: 0, blink: 1 }; }
 
@@ -195,13 +174,12 @@ export function createRig(stage: HTMLElement, reduce: boolean) {
     hitL: $('#np-hit-l'), hitR: $('#np-hit-r'), cheekL: $('#np-cheek-l'), cheekR: $('#np-cheek-r'),
     mouthLine: $('#np-mouthLine'), mouthGlow: $('#np-mouthGlow'), mouthO: $('#np-mouthO'), shadow: $('#np-shadow'),
     stars: [].slice.call(stage.querySelectorAll('.np-star')) as SVGElement[],
-    glowStops: [].slice.call(stage.querySelectorAll('.np-glowStop')) as SVGElement[],
   };
 
   function eyeEls(s: 'l' | 'r') {
     const g = $('#np-eye-' + s), m = $('#np-mask-' + s);
     return {
-      g, halo: g.querySelector('.np-halo') as SVGElement, ballGroup: g.querySelector('[mask]') as SVGElement,
+      g, ballGroup: g.querySelector('[mask]') as SVGElement,
       ball: g.querySelector('.np-ball') as SVGElement, iris: g.querySelector('.np-iris') as SVGElement,
       pupil: g.querySelector('.np-pupil') as SVGElement, hl: g.querySelector('.np-hl') as SVGElement,
       hl2: g.querySelector('.np-hl2') as SVGElement, heart: g.querySelector('.np-heartEye') as SVGElement,
@@ -220,20 +198,19 @@ export function createRig(stage: HTMLElement, reduce: boolean) {
     if (c[k] !== s) { c[k] = s; e.setAttribute(k, s); }
   };
 
-  function renderEye(s: 'l' | 'r', E: EyeP, base: { x: number; y: number }, t: number, col: string) {
+  function renderEye(s: 'l' | 'r', E: EyeP, base: { x: number; y: number }, t: number) {
     const x = eyes[s], m = s === 'l' ? 1 : -1;
     const w = E.w * (1 + (1 - E.blink) * 0.12), h = Math.max(1, E.h * E.blink);
     set(x.g, 'transform', `translate(${f(base.x)} ${f(base.y + E.dy)}) rotate(${f(E.rot * m)})`);
 
-    set(x.halo, 'rx', E.w * 0.95 + 10); set(x.halo, 'ry', Math.max(h, E.h * 0.5) * 0.95 + 10);
     const shapes = 1 - Math.max(P.heart, P.spiral, P.closed);
     set(x.ballGroup, 'opacity', clamp01(shapes));
-    set(x.ball, 'rx', w / 2); set(x.ball, 'ry', h / 2); set(x.ball, 'fill', col);
+    set(x.ball, 'rx', w / 2); set(x.ball, 'ry', h / 2); set(x.ball, 'fill', EYE_WHITE);
     const px = P.look.x * w * 0.09, py = P.look.y * h * 0.09;
-    set(x.iris, 'cx', px * 0.6); set(x.iris, 'cy', py * 0.6); set(x.iris, 'rx', w * 0.35); set(x.iris, 'ry', h * 0.35);
-    set(x.iris, 'fill', mix(P.color, IRIS_DARK, 0.62));
-    set(x.pupil, 'cx', px); set(x.pupil, 'cy', py); set(x.pupil, 'rx', w * 0.2); set(x.pupil, 'ry', h * 0.2);
-    set(x.pupil, 'fill', mix(P.color, PUPIL_DARK, 0.9));
+    set(x.iris, 'cx', px * 0.7); set(x.iris, 'cy', py * 0.7); set(x.iris, 'rx', w * 0.4); set(x.iris, 'ry', h * 0.4);
+    set(x.iris, 'fill', IRIS);
+    set(x.pupil, 'cx', px); set(x.pupil, 'cy', py); set(x.pupil, 'rx', w * 0.27); set(x.pupil, 'ry', h * 0.27);
+    set(x.pupil, 'fill', PUPIL);
     const hr = Math.min(w, h);
     set(x.hl, 'cx', w * 0.17 + px); set(x.hl, 'cy', -h * 0.19 + py); set(x.hl, 'r', hr * 0.12);
     set(x.hl2, 'cx', -w * 0.14 + px); set(x.hl2, 'cy', h * 0.16 + py); set(x.hl2, 'r', hr * 0.05);
@@ -249,20 +226,20 @@ export function createRig(stage: HTMLElement, reduce: boolean) {
     const beat = 1 + Math.sin(t * 9) * 0.06 * P.heart;
     set(x.heart, 'opacity', P.heart);
     if (P.heart > 0.01) {
-      set(x.heart, 'fill', col);
+      set(x.heart, 'fill', BLUSH);
       set(x.heart, 'transform', `scale(${f((E.w / 66) * (0.55 + 0.45 * P.heart) * beat)})`);
     }
 
     set(x.spiral, 'opacity', P.spiral);
     if (P.spiral > 0.01) {
-      set(x.spiral, 'stroke', col);
+      set(x.spiral, 'stroke', FACE_LINE);
       set(x.spiral, 'transform', `rotate(${f(t * 420 * m)}) scale(${f((E.w / 54) * (0.5 + 0.5 * P.spiral))})`);
     }
 
     const k = P.closedCurve * E.h * 0.42;
     set(x.closed, 'opacity', P.closed);
     if (P.closed > 0.01) {
-      set(x.closed, 'stroke', col);
+      set(x.closed, 'stroke', FACE_LINE);
       set(x.closed, 'd', `M${f(-E.w / 2)} 0 Q0 ${f(k)} ${f(E.w / 2)} 0`);
     }
   }
@@ -272,7 +249,7 @@ export function createRig(stage: HTMLElement, reduce: boolean) {
   bodySvg.style.transformOrigin = `50% ${(PIVOT.y / VB) * 100}%`;
   function render(now: number) {
     const t = reduce ? 0 : now;
-    const b = P.body, col = rgb(P.color);
+    const b = P.body;
     if (!reduce) phase += (lastT ? Math.min(0.1, now - lastT) : 0) * P.breathRate;
     lastT = now;
     const br = Math.sin(phase) * P.breath;
@@ -287,23 +264,26 @@ export function createRig(stage: HTMLElement, reduce: boolean) {
 
     const fx = P.look.x * 14, fy = P.look.y * 9;
     set(el.face, 'transform', `translate(${f(fx)} ${f(fy)})`);
-    renderEye('l', P.eyeL, EYE_L, t, col);
-    renderEye('r', P.eyeR, EYE_R, t, col);
+    renderEye('l', P.eyeL, EYE_L, t);
+    renderEye('r', P.eyeR, EYE_R, t);
 
     const M = P.mouth, open = clamp01(M.open * 2);
     let d = '';
-    for (let i = 0; i <= 12; i++) {
-      const u = i / 12 - 0.5, x = u * M.w;
-      const y = M.curve * 9 * (1 - 4 * u * u) + M.wavy * 3.2 * Math.sin(u * Math.PI * 4 + t * 12);
+    const mw = M.w * 1.15;
+    for (let i = 0; i <= 16; i++) {
+      const u = i / 16 - 0.5, x = u * mw, s2 = 4 * Math.abs(u) - 1;
+      const shape = M.curve > 0 ? M.curve * 7 * (1 - s2 * s2) : M.curve * 9 * (1 - 4 * u * u);
+      const y = shape + M.wavy * 3.2 * Math.sin(u * Math.PI * 4 + t * 12);
       d += (i ? ' L' : 'M') + f(x) + ' ' + f(y);
     }
-    set(el.mouthLine, 'd', d); set(el.mouthLine, 'stroke', col); set(el.mouthLine, 'opacity', 1 - open);
-    set(el.mouthGlow, 'd', d); set(el.mouthGlow, 'stroke', col); set(el.mouthGlow, 'opacity', 0.2 * (1 - open));
+    set(el.mouthLine, 'd', d); set(el.mouthLine, 'stroke', FACE_LINE); set(el.mouthLine, 'opacity', 1 - open);
+    set(el.mouthGlow, 'opacity', 0);
     set(el.mouthO, 'rx', Math.max(5, M.w * 0.32) * (0.7 + 0.3 * M.open)); set(el.mouthO, 'ry', 2 + M.open * 11);
-    set(el.mouthO, 'cy', M.open * 3); set(el.mouthO, 'stroke', col); set(el.mouthO, 'fill', mix(P.color, PUPIL_DARK, 0.55));
+    set(el.mouthO, 'cy', M.open * 3); set(el.mouthO, 'stroke', FACE_LINE); set(el.mouthO, 'fill', '#3a1820');
     set(el.mouthO, 'opacity', open);
 
-    set(el.cheekL, 'opacity', P.cheeks * 0.6); set(el.cheekR, 'opacity', P.cheeks * 0.6);
+    // the blush is part of his face; flustered moods make it stronger
+    set(el.cheekL, 'opacity', 0.6 + P.cheeks * 0.4); set(el.cheekR, 'opacity', 0.6 + P.cheeks * 0.4);
     set(el.hitL, 'opacity', P.hitL); set(el.hitR, 'opacity', P.hitR);
 
     const fall = reduce ? 10 : (t * 34) % 46;
@@ -313,7 +293,6 @@ export function createRig(stage: HTMLElement, reduce: boolean) {
     set(el.sweat, 'opacity', P.sweat);
 
     set(el.shadow, 'rx', 96 * (1 + Math.min(0, b.y) / 260)); set(el.shadow, 'opacity', 1 + Math.min(0, b.y) / 160);
-    el.glowStops.forEach((g) => set(g, 'stop-color', col));
 
     el.stars.forEach((s, i) => {
       const a = t * 3.2 + (i * Math.PI * 2) / 3;

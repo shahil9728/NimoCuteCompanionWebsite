@@ -138,7 +138,8 @@ export function mountPlayground(opts: { reduce: boolean; touch: boolean }) {
       li.classList.toggle('found', on);
       if (k === 'tickle' && on) {
         const ic = li.querySelector('.ic'), b = li.querySelector('b'), d = li.querySelector('.d');
-        if (ic) ic.textContent = '😆';
+        // the lock turns into a laughing face (same line-icon style as the other tricks)
+        if (ic) ic.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9h.01M15 9h.01"/></svg>';
         if (b) b.textContent = 'Tickle';
         if (d) d.textContent = 'under the chin';
       }
