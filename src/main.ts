@@ -10,6 +10,9 @@ import { hasJoined } from './lib/joined';
 import { sendFeedback } from './lib/feedback';
 import { initReveal } from './lib/reveal';
 import { loadGsap } from './lib/gsap';
+import { initFaq } from './lib/faq';
+import { initFooterNimo } from './lib/footerNimo';
+import { nimoArt, type NimoFace } from './nimo/faceArt';
 
 (window as any).nimoTrack = track;
 
@@ -152,10 +155,16 @@ import { loadGsap } from './lib/gsap';
     if(document.readyState==='complete') idle(); else window.addEventListener('load', idle, {once:true});
   })();
 
-  /* ---------- FAQ: single-open + track ---------- */
-  var qas=[].slice.call(document.querySelectorAll('.faq details'));
-  // The first FAQ starts open and may fire one toggle on load; only count opens a visitor caused.
-  qas.forEach(function(d){ var skip=d.open; d.addEventListener('toggle',function(){ if(d.open){ qas.forEach(function(o){ if(o!==d) o.open=false; }); if(!skip) track.faqOpen(d.querySelector('summary').textContent); } skip=false; }); });
+  /* ---------- "He grows with you": a little Nimo face on each card ---------- */
+  document.querySelectorAll<HTMLElement>('.grow-face[data-face]').forEach(function(el, i){
+    el.innerHTML = nimoArt('grow' + i, el.getAttribute('data-face') as NimoFace);
+  });
+
+  /* ---------- FAQ: smooth single-open accordion + tracking (src/lib/faq.ts) ---------- */
+  initFaq();
+
+  /* ---------- Nimo resting (and rolling) on the footer ---------- */
+  initFooterNimo();
 
 
   /* ---------- "Watch the film" modal: the film isn't out yet, so it takes the email right there ---------- */
@@ -170,7 +179,7 @@ import { loadGsap } from './lib/gsap';
       // Already on the list: say so instead of asking for the email again.
       if(form && note && form.style.display!=='none' && hasJoined()){
         form.style.display='none';
-        note.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#59e6a0" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span>You\'re already on the list, so you\'ll be among the first to see it.</span>';
+        note.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span>You\'re already on the list, so you\'ll be among the first to see it.</span>';
         note.classList.add('show');
       }
       modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';

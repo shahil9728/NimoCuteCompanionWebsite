@@ -74,5 +74,8 @@ One shadow, `--shadow`, only on things that float: dropdowns, the sticky bar, di
 ## Motion
 
 One fade-in (opacity plus 14px) as blocks enter the viewport, plus a short CSS intro on the hero.
-Playground interactions animate with GSAP. Everything respects `prefers-reduced-motion`.
-No endless loops, no scroll-linked effects, no backdrop-filter.
+Playground interactions animate with GSAP. Answers in the FAQ open and close with a short height
+animation; the phone menu slides in. Two deliberate pieces of character, both transform/opacity
+only: the guide-page timeline fills its line as you scroll and lights each Nimo, and a little
+Nimo rolls along the top of the footer (stare, wink, "pop pop" with confetti, sad) only while the
+footer is on screen. Everything respects `prefers-reduced-motion`. No backdrop-filter.

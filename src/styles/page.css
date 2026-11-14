@@ -2,7 +2,7 @@
    Guide and comparison pages — loaded after main.css and built
    on its tokens (see DESIGN.md). Plain CSS, no effects.
    ============================================================ */
-.mobile-menu.open a[aria-current=page]{color:var(--blue)}
+.mobile-menu a[aria-current=page]{color:var(--blue)}
 
 /* ============ hero: text on the left, a real photo on the right ============ */
 .page-hero{padding:clamp(112px,12vw,150px) 0 clamp(40px,6vw,72px)}
@@ -37,7 +37,18 @@
 
 /* ============ day timeline ============ */
 .prose .timeline{list-style:none;padding:0;margin:36px 0 10px;position:relative}
-.timeline::before{content:"";position:absolute;left:31px;top:20px;bottom:20px;width:2px;border-radius:2px;background:var(--ear)}
+.timeline::before,.timeline::after{content:"";position:absolute;left:30px;top:20px;bottom:20px;width:4px;border-radius:4px}
+.timeline::before{background:var(--ear-soft)}
+/* the filled part of the line, driven by --fill (0..1) from src/lib/timeline.ts */
+.timeline::after{background:var(--blue);transform:scaleY(var(--fill,1));transform-origin:top}
+/* a Nimo the line hasn't reached yet waits with his screen dimmed */
+.timeline.is-live .mini-nimo{transition:background .45s,transform .5s cubic-bezier(.34,1.56,.64,1),box-shadow .45s}
+.timeline.is-live .mini-nimo::before,.timeline.is-live .mini-nimo::after{transition:opacity .4s}
+.timeline.is-live .moment:not(.lit) .mini-nimo{background:#3A3D45;transform:scale(.86)}
+.timeline.is-live .moment:not(.lit) .mini-nimo::before,.timeline.is-live .moment:not(.lit) .mini-nimo::after{opacity:.12}
+.timeline.is-live .moment.lit .mini-nimo{box-shadow:0 0 0 1px var(--line-strong),0 0 0 7px var(--ear-soft)}
+.timeline.is-live .moment .card{transition:border-color .45s}
+.timeline.is-live .moment.lit .card{border-color:var(--ear)}
 .prose .moment{position:relative;display:grid;grid-template-columns:64px minmax(0,1fr);gap:20px;margin:0 0 18px}
 .moment .card{padding:24px 26px}
 .moment time{display:block;font-size:14px;font-weight:600;color:var(--blue)}
@@ -119,7 +130,7 @@
   .prose>h2{margin-top:56px;padding-top:20px}
   .prose .moment{grid-template-columns:44px minmax(0,1fr);gap:14px}
   .mini-nimo{width:44px;height:40px;border-width:3px}
-  .timeline::before{left:21px}
+  .timeline::before,.timeline::after{left:20px}
   .moment .card{padding:18px}
   .cta-band{padding:22px 20px;margin:44px auto}
 }

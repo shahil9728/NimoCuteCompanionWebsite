@@ -12,7 +12,7 @@ Built as a lightweight **Vite + TypeScript** static site — no framework runtim
 - Frictionless waitlist everywhere: hero form, sticky nav CTA, slide‑in bar, and a climax section — all email‑only with inline success
 - Light on purpose: native scrolling, one IntersectionObserver fade-in, no blur or endless loops. GSAP loads on demand only for the playground
 - Interactive **playground Nimo** (`src/nimo/`) — an SVG Nimo you can pet, boop, flick, hug and tickle (mouse or touch). He has a mood that changes over time, falls asleep when ignored, remembers past visits, and has 5 tricks to find that unlock an "Adopt Nimo" button
-- Sections: Hero · What is Nimo · Little moments (desk, bedside, car, backpack) · Playground · Features · How it works · Before/After · Guides · FAQ · Waitlist · Footer
+- Sections: Hero · What is Nimo · Little moments (desk, bedside, car, backpack) · Playground · He grows with you · Features · How it works · Before/After · Guides · FAQ · Waitlist · Footer (with a rolling Nimo)
 - SEO: canonical `https://www.heynimo.in/`, meta + Open Graph + Twitter with a **self-hosted** `og-nimo-desk-companion.jpg`, JSON‑LD graph (Organization, WebSite, WebPage, ImageObject, Product, FAQPage), image sitemap, crawler-friendly `robots.txt`, real `/privacy` + `/terms` pages, and a true 404 page. See [`SEO.md`](./SEO.md).
 - Analytics: **Google Analytics 4** (`G-3C9Z4YQVRT`) + **Google Tag** (`GT-WF4ZWBSR`) via `gtag.js`, with custom events
 - Accessibility: semantic HTML, ARIA, focus states, full `prefers-reduced-motion` support

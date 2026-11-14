@@ -1,6 +1,9 @@
 import { track } from './analytics';
 import { joinWaitlist } from './supabase';
 import { bumpWaitlistCount } from './count';
+import { hasJoined } from './joined';
+
+const TICK = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>';
 
 /* Every .waitlist-form on the page: validate, save (Supabase + owner email), swap in the
    success note that sits right after the form ([data-success]). Shared by the home page
@@ -8,6 +11,13 @@ import { bumpWaitlistCount } from './count';
 export const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function initWaitlistForms(onJoined?: (loc: string) => void) {
+  // Already joined in this browser: every form on every page says so instead of asking again,
+  // and the sticky join bar stays away (.is-joined in main.css).
+  if (hasJoined()) {
+    document.documentElement.classList.add('is-joined');
+    document.querySelectorAll<HTMLFormElement>('.waitlist-form').forEach(showJoined);
+    return;
+  }
   document.querySelectorAll('.waitlist-form').forEach(function(form: HTMLFormElement){
     var loc=form.getAttribute('data-loc')||'unknown';
     var input=form.querySelector('input[type=email]') as HTMLInputElement;
@@ -61,12 +71,15 @@ export function initWaitlistForms(onJoined?: (loc: string) => void) {
         track.markJoined();
         if(!res.already){ track.lead(loc); bumpWaitlistCount(); }
         try{ localStorage.setItem('nimo_joined','1'); }catch(_){}
+        document.documentElement.classList.add('is-joined');
+        // every other form on the page now says "you're on the waitlist" too
+        document.querySelectorAll<HTMLFormElement>('.waitlist-form').forEach(function(f){ if(f!==form) showJoined(f); });
         // survey + exit prompt listen for this
         document.dispatchEvent(new CustomEvent('nimo:joined',{detail:{email:val, loc:loc, already:!!res.already}}));
         if(success){
           success.innerHTML = res.already
-            ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#59e6a0" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span>You're already on the list — see you on the road!</span>`
-            : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#59e6a0" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span>You're on the list! We'll email <b style="color:#fff">${val.replace(/</g,'&lt;')}</b> the moment pre-orders open.</span>`;
+            ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span>You're already on the list — see you on the road!</span>`
+            : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span>You're on the list! We'll email <b>${val.replace(/</g,'&lt;')}</b> the moment pre-orders open.</span>`;
           success.classList.add('show'); form.style.display='none';
         } else {
           form.innerHTML = `<div class="form-success show" style="display:flex">🎉 You're on the list! We'll be in touch soon.</div>`;
@@ -81,4 +94,12 @@ export function initWaitlistForms(onJoined?: (loc: string) => void) {
       }
     });
   });
+}
+
+/* Swap a form for the "you're on the waitlist" note that sits right after it ([data-success]). */
+function showJoined(form: HTMLFormElement) {
+  var sib = form.nextElementSibling;
+  if (!sib || !sib.hasAttribute('data-success') || sib.classList.contains('show')) return;
+  sib.innerHTML = TICK + "<span>You're on the waitlist. We'll email you the moment pre-orders open.</span>";
+  sib.classList.add('show'); form.style.display = 'none';
 }

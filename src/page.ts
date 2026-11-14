@@ -8,6 +8,9 @@ import { initExitPrompt } from './lib/exitPrompt';
 import { initExploreMenu } from './lib/navMenu';
 import { initInsights } from './lib/insights';
 import { initReveal } from './lib/reveal';
+import { initFaq } from './lib/faq';
+import { initFooterNimo } from './lib/footerNimo';
+import { initTimeline } from './lib/timeline';
 
 /* =========================================================
    Content pages (guides + comparisons). Deliberately light:
@@ -99,10 +102,14 @@ import { initReveal } from './lib/reveal';
     depths.forEach(function(d){ if(pct>=d && !fired[d]){ fired[d]=true; track.scrollDepth(d); } });
   }, {passive:true});
 
-  /* ---------- FAQ: single-open + track ---------- */
-  var qas=[].slice.call(document.querySelectorAll('.faq details'));
-  // The first FAQ starts open and may fire one toggle on load; only count opens a visitor caused.
-  qas.forEach(function(d){ var skip=d.open; d.addEventListener('toggle',function(){ if(d.open){ qas.forEach(function(o){ if(o!==d) o.open=false; }); if(!skip) track.faqOpen(d.querySelector('summary').textContent); } skip=false; }); });
+  /* ---------- FAQ: smooth single-open accordion + tracking (src/lib/faq.ts) ---------- */
+  initFaq();
+
+  /* ---------- Day timeline: the line fills and each Nimo lights up as you scroll ---------- */
+  initTimeline();
+
+  /* ---------- Nimo resting (and rolling) on the footer ---------- */
+  initFooterNimo();
 
   /* ---------- GA4: section views, link clicks, menu opens (src/lib/insights.ts) ---------- */
   initInsights();
