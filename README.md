@@ -45,11 +45,15 @@ Built as a lightweight **Vite + TypeScript** static site — no framework runtim
 ├── privacy/index.html    # /privacy
 ├── terms/index.html      # /terms
 ├── SEO.md                # what's implemented + owner checklist
+├── DESIGN.md             # palette, type, components and motion rules
+├── email/welcome.html    # the welcome email (source of truth)
+├── apps-script/Code.gs   # generated from email/welcome.html; pasted into Google Apps Script
 ├── public/
 │   ├── favicon.svg / favicon.ico / apple-touch-icon.png / icon-*.png
 │   ├── site.webmanifest
 │   ├── og-nimo-desk-companion.jpg  # social share image (1200x630)
 │   ├── brand/            # logo masters: nimo-logo(-white).svg, nimo-icon.svg
+│   ├── email/            # images the welcome email loads (keep these filenames)
 │   ├── images/           # product photos (WebP)
 │   ├── robots.txt
 │   └── sitemap.xml
@@ -92,6 +96,8 @@ npm run preview            # serve the production build
 | `VITE_WAITLIST_TABLE` | no | `waitlist` | Destination table name |
 | `VITE_WEB3FORMS_KEY` | no | — | Emails you on each signup. Free key at [web3forms.com](https://web3forms.com) |
 | `VITE_WAITLIST_COUNT_OFFSET` | no | `696` | Added to the real signup count shown on the page. Set to `0` once the real list is big enough |
+| `VITE_WELCOME_ENDPOINT` | no | — | The Apps Script web app URL (ends in `/exec`) that sends the welcome email. Empty = no welcome email |
+| `VITE_WELCOME_TOKEN` | with the endpoint | — | Must equal `SHARED_TOKEN` in `scripts/build-apps-script.mjs`. Public by design (it ships in the JS bundle) |
 
 Until the anon key is set, the form still works — emails are cached in `localStorage` and the success state shows. Once the key is present, submissions are written to Supabase.
 
@@ -142,6 +148,40 @@ Every waitlist submission is stored in Supabase **and** emailed to the owner (`s
 
 The access key is safe to expose in the client (it only ever sends to your address). Until it's set, signups still work and are stored in Supabase — you just won't get the email.
 
+## 💌 Welcome email to new signups
+
+**Live since 15 Nov 2026.** Every *new* address that joins gets a "You're on the Nimo waitlist 🐾" email
+from **nimo.cutu@gmail.com** (re-joining with the same address does not send a second one).
+
+How it works:
+- After a successful join, `src/lib/welcome.ts` POSTs the address and `VITE_WELCOME_TOKEN` to
+  `VITE_WELCOME_ENDPOINT`, a Google Apps Script web app running as nimo.cutu@gmail.com. Sending from
+  that account (Google's own DKIM) is what keeps it out of spam; a third-party sender cannot send
+  "from" a gmail.com address.
+- The script checks the token, skips an address it mailed in the last 6 hours, and stops at
+  **80 emails a day** (consumer Gmail allows about 100). Past that, signups still save; they just
+  don't get the welcome. Move to a real email service before daily signups get near that.
+- If `VITE_WELCOME_ENDPOINT` is empty at build time, the sending code is left out of the bundle
+  entirely and nothing is sent.
+- Check the deployment is alive: open the `/exec` URL in a browser; it answers
+  `{"ok":true,"quotaRemaining":…}`.
+
+**Change the email:**
+1. Edit `email/welcome.html` (email-safe HTML: tables and inline styles; images from
+   `https://www.heynimo.in/email/…` as JPEG/PNG, not WebP or SVG). The plain-text version lives in
+   `scripts/build-apps-script.mjs`.
+2. `npm run email:script` regenerates `apps-script/Code.gs`.
+3. Paste it over the code in the Apps Script project and save. Run `sendTestEmail` to get a
+   "[TEST]" copy.
+4. **Deploy → Manage deployments → ✏️ Edit → Version: New version → Deploy.** This keeps the same
+   `/exec` URL. ("New deployment" would create a new URL, which then has to go into Render.)
+
+If you ever change the token, update it in both `scripts/build-apps-script.mjs` and Render's
+`VITE_WELCOME_TOKEN`, then redeploy both. Keep the image filenames in `public/email/`: sent emails
+keep loading them for as long as people keep the email.
+
+---
+
 ## 💬 Feedback button
 
 The floating **Feedback** button sends the message straight to the owner's inbox through the same Web3Forms key as the signup alerts, and stores a backup row in the Supabase `feedback` table (run [`supabase/feedback.sql`](./supabase/feedback.sql) once). The visitor never leaves the page or opens an email app.
@@ -168,7 +208,6 @@ To change IDs, edit the two `gtag('config', …)` lines in each of those files. 
 | `section_view` | `section` (section id/label, or `h2: <heading>` on content pages) | a section's top passes 60% of the screen, once per page view |
 | `scroll_depth` | `percent` (25/50/75/100) | scroll milestones |
 | `faq_open` | `question` | a visitor opens an FAQ |
-| `colorway_select` | `colorway` (Glacier, Cloud, Ember) | a colorway is picked |
 | `emotion_select` | `emotion` | a mood chip is picked in the playground |
 | `nimo_play` | `gesture` | first use of each playground gesture per page view |
 | `nimo_milestone` | `name` (`love`, `furious`, `all_tricks`, `cta_shown`) | playground milestones |
